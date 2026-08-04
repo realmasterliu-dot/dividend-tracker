@@ -1,0 +1,95 @@
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant M as main.tsx
+    participant P as DataProvider
+    participant LS as Persistence(localStorage)
+    participant E as Engine(派生)
+    participant V as Dashboard
+
+    U->>M: 打开应用
+    M->>P: 挂载 <AppProvider>
+    P->>LS: load('dt:state:v1')
+    alt localStorage 为空
+        LS-->>P: null
+        P->>P: buildSeedState() 载入种子
+    else 有持久化数据
+        LS-->>P: DataState
+    end
+    P->>P: 校验 schema 版本（不匹配则重置种子）
+    P->>E: derivePositions(transactions, instruments, prices, fx)
+    E-->>P: Position[] + TaxLot[]
+    P->>E: computePortfolio(positions, settings)
+    E-->>P: PortfolioMetrics + ReturnBreakdown + snapshots
+    P->>LS: save(state) 回写
+    P-->>V: context 就绪
+    V->>V: 渲染九区块（总资产/三线/热力图/双口径股息率）
+
+== 手动录入流水（乐观更新 + 重算 + 持久化） ==
+
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant F as TransactionForm
+    participant P as DataProvider
+    participant E as PositionEngine
+    participant T as TaxEngine
+    participant LS as Persistence
+
+    U->>F: 填写流水（BUY 600519 ×100 @¥1,500）
+    F->>F: 校验（数量/日期/币种）
+    F->>P: dispatch({type:'ADD_TRANSACTION', tx})
+    P->>P: 乐观插入（status=CONFIRMED 立即生效 / 定投= PENDING）
+    P->>E: derivePositions(新流水)
+    E-->>P: 新 Position[]
+    P->>T: 关联分红事件重算三态税
+    T-->>P: 更新 contingentTax / daysToZeroTax
+    P->>LS: save(state)
+    P-->>F: 完成回调
+    F-->>U: toast「已录入 · 数据已更新」
+
+== ★A股税务拆解（三态 + 再持有 N 天归零） ==
+
+sequenceDiagram
+    autonumber
+    participant V as 标的详情页
+    participant H as useTaxBreakdown
+    participant T as TaxEngine
+    participant P as PositionEngine
+
+    V->>H: useTaxBreakdown(instrumentId)
+    H->>P: getLots(instrumentId)
+    P-->>H: TaxLot[]（含 originalBuyDate）
+    loop 每笔分红事件
+        H->>T: computeTax(dividend, lots, settings, today)
+        T->>T: 按 FIFO 各批次持股天数分档
+        alt A股
+            T-->>H: grossAmount(金色) + contingentTax(橙) + taxBracket + daysToZeroTax
+        else 美股
+            T-->>H: taxWithheld(灰)=gross×(W8BEN?10%:30% 或 REIT 30%)
+        else 港股本地券商 / 基金
+            T-->>H: taxWithheld=0, contingentTax=0
+        end
+    end
+    H-->>V: TaxBreakdown{到账/或有/已扣/预计到手/再持有N天}
+    V->>V: 渲染税务拆解卡片 + 「ⓘ 估算，实际以中登扣缴为准」
+
+== 分红日历渲染（待定区 vs 确定日期） ==
+
+sequenceDiagram
+    autonumber
+    participant V as 日历页
+    participant C as CalendarService
+    participant N as NotificationService
+
+    V->>C: buildMonthGrid(dividends, month)
+    C->>C: 按状态归类
+    alt recordDate/exDate 为空（PROPOSED/APPROVED）
+        C-->>V: PendingZone 条目（灰虚线/青色徽章）
+    else 日期确定（DECLARED 起）
+        C-->>V: 月格映射（●登记日 ◆除息日 ▲到账日）
+    end
+    V->>C: heatmap90(dividends)
+    C-->>V: 90 天热力格（颜色深浅=金额）
+    V->>N: generate(dividends, plans, prices)
+    N-->>V: 待办/通知（去重 key 校验）

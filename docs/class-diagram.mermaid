@@ -1,0 +1,170 @@
+classDiagram
+    direction LR
+
+    class Instrument {
+        +string id
+        +string symbol
+        +string name
+        +Market market
+        +Currency currency
+        +boolean dividendEligible
+        +SecurityType securityType
+        +number extraWithholdingRate
+        +DividendOption dividendOption
+        +CustodyChannel custodyChannel
+        +GoldForm goldForm
+    }
+    class Transaction {
+        +string id
+        +string instrumentId
+        +TransactionType type
+        +TransactionStatus status
+        +string date
+        +number quantity
+        +number price
+        +number amount
+        +number fxRate
+        +Record~string,unknown~ meta
+    }
+    class TaxLot {
+        +string id
+        +string instrumentId
+        +string buyDate
+        +string originalBuyDate
+        +number quantity
+        +number costPerShare
+        +TaxLotEvent[] events
+    }
+    class Position {
+        +string instrumentId
+        +TaxLot[] lots
+        +number totalQuantity
+        +number avgCostPerShare
+        +number marketValue
+        +number costValue
+        +number unrealizedPnl
+        +number ttmDividend
+        +number dividendYield
+        +number incomeYield
+        +number yoc
+        +number staleDays
+        +string navDate
+    }
+    class DividendEvent {
+        +string id
+        +string instrumentId
+        +DividendStatus status
+        +string recordDate
+        +string exDate
+        +string payDate
+        +number grossAmount
+        +number contingentTax
+        +number taxWithheld
+        +number netAmount
+        +number daysToZeroTax
+        +boolean isSpecial
+    }
+    class InvestmentPlan {
+        +string id
+        +string instrumentId
+        +number amount
+        +PlanFrequency frequency
+        +boolean autoConfirm
+        +PlanStatus status
+    }
+    class AppSettings {
+        +string baseCurrency
+        +Currency displayCurrency
+        +ColorScheme colorScheme
+        +boolean w8benFilled
+        +boolean fxNeutralMode
+    }
+    class Notification {
+        +string id
+        +string key
+        +string type
+        +string severity
+        +boolean read
+    }
+    class PriceSnapshot {
+        +string instrumentId
+        +string date
+        +number price
+        +string navDate
+    }
+    class DataState {
+        +Instrument[] instruments
+        +Transaction[] transactions
+        +DividendEvent[] dividends
+        +InvestmentPlan[] plans
+        +Notification[] notifications
+        +PriceSnapshot[] prices
+        +string lastUpdated
+    }
+
+    class PositionEngine {
+        +derivePositions(txs, instruments, prices, fx) Position[]
+        +buildTaxLots(txs) TaxLot[]
+        +consumeFifo(lots, sellQty) void
+    }
+    class TaxEngine {
+        +computeTax(dividend, lots, settings, today) TaxResult
+        +bracketFor(holdingDays) TaxBracket
+        +daysToZeroTax(lots, today) number
+    }
+    class PredictionEngine {
+        +predict(instrumentId, history) DividendPrediction
+        +detectFrequency(history) Frequency
+        +excludeSpecial(dividends) DividendEvent[]
+    }
+    class ReturnEngine {
+        +xirr(cashflows) number
+        +twr(snapshots) number
+        +yoc(ttmDividend, costValue) number
+        +breakdown(positions, fxNeutral) ReturnBreakdown
+    }
+    class CalendarService {
+        +buildMonthGrid(dividends, month) Cell[][]
+        +classifyPending(dividends) PendingItem[]
+        +heatmap90(dividends) HeatCell[]
+    }
+    class NotificationService {
+        +generate(dividends, plans, prices) Notification[]
+        +dedupKey(type, instrumentId, date) string
+    }
+    class Persistence {
+        +load(key) DataState
+        +save(key, state) void
+    }
+    class DataProvider {
+        +state DataState
+        +dispatch(action) void
+        +addTransaction(tx) void
+        +backfillDividend(id, actual) void
+        +confirmPending(id) void
+    }
+
+    Instrument "1" --> "0..*" Transaction
+    Instrument "1" --> "0..*" DividendEvent
+    Instrument "1" --> "0..*" InvestmentPlan
+    Instrument "1" --> "0..*" PriceSnapshot
+    Position "1" --> "1..*" TaxLot
+    Position --> Instrument
+    DataState --> Instrument
+    DataState --> Transaction
+    DataState --> DividendEvent
+    DataState --> InvestmentPlan
+    DataState --> Notification
+    DataState --> PriceSnapshot
+
+    PositionEngine ..> Transaction
+    PositionEngine ..> TaxLot
+    PositionEngine ..> Position
+    TaxEngine ..> Position
+    TaxEngine ..> DividendEvent
+    PredictionEngine ..> DividendEvent
+    ReturnEngine ..> Position
+    CalendarService ..> DividendEvent
+    NotificationService ..> DividendEvent
+    DataProvider ..> DataState
+    DataProvider ..> Persistence

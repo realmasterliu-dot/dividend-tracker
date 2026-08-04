@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-page text-primary font-sans antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-y: scroll;
+  }
+
+  /* 深色滚动条 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2a3446 transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #2a3446;
+    border-radius: 4px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::selection {
+    background: rgba(240, 185, 11, 0.25);
+  }
+}
+
+@layer components {
+  /* 数字规范：等宽 + tabular-nums + 右对齐（architecture.md §8.2） */
+  .num {
+    font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    font-feature-settings: 'tnum';
+  }
+
+  /* 卡片容器 */
+  .panel {
+    @apply bg-card border border-line rounded-lg shadow-card;
+  }
+
+  /* 密集表格基元 */
+  .tbl {
+    @apply w-full border-collapse text-table-cell;
+  }
+  .tbl thead th {
+    @apply text-left text-secondary font-medium sticky top-0 z-10 bg-card px-2 py-2 border-b border-line whitespace-nowrap select-none;
+  }
+  .tbl tbody td {
+    @apply px-2 py-2 border-b border-line-soft align-middle;
+  }
+  .tbl tbody tr:hover {
+    background: rgba(27, 35, 48, 0.6);
+  }
+  .tbl tbody tr.row-pending {
+    @apply opacity-60 border-dashed;
+  }
+
+  /* 隐藏滚动条（Ticker Tape 用） */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  /* Ticker 横向滚动动画 */
+  @keyframes ticker-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-ticker {
+    animation: ticker-scroll 38s linear infinite;
+  }
+  .animate-ticker:hover {
+    animation-play-state: paused;
+  }
+
+  /* 骨架/占位 */
+  .skeleton {
+    @apply bg-card border border-line rounded animate-pulse;
+  }
+}
