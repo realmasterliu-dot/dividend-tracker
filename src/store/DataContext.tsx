@@ -22,8 +22,8 @@ import {
   downloadHoldings,
   hasPersonalSlices,
   loadPersonalData,
+  mergeImportedSlices,
   mergePersonalData,
-  normalizePersonalData,
   PersonalDataBundle,
 } from '@/data/personalData';
 import { applyMarketData, loadMarketData, MarketDataBundle, stripUserEdits } from '@/data/realData';
@@ -46,6 +46,13 @@ import { useLocalStorage } from './useLocalStorage';
 /** ★v2：真实数据接入，schema 与持久化范围均变更，旧版 v1 种子缓存直接作废 */
 const STORAGE_KEY = 'dt:state:v2';
 const LEGACY_STORAGE_KEYS = ['dt:state:v1'];
+/** 上一次「已接受」的服务器基线元信息，用于提示服务器有更新版 holdings.json */
+const BASELINE_META_KEY = 'dt:baseline:v1';
+
+/** 服务器基线元信息（目前只记 generatedAt） */
+export interface BaselineMeta {
+  generatedAt?: string;
+}
 
 /** 持久化载荷：剔除体积最大且每次都会重新拉取的行情/汇率 */
 export type PersistedDataState = Omit<DataState, 'prices' | 'fx'>;
@@ -292,6 +299,24 @@ function fromPersisted(raw: PersistedDataState | null): DataState {
   };
 }
 
+/**
+ * 判断本机是否已有「运行期编辑」——即挂载瞬间的 localStorage 快照里存在非空个人数据切片。
+ * 首次访问（快照为 null / 三片皆空）不算 overlay：此时服务器基线本就会被完整采用，
+ * 再提示「服务器有更新」纯属噪音。
+ */
+function hasLocalOverlay(snapshot: PersistedDataState | null): boolean {
+  if (!snapshot) return false;
+  return (['instruments', 'transactions', 'plans'] as const).some((key) => {
+    const slice = snapshot[key] as unknown;
+    return Array.isArray(slice) && slice.length > 0;
+  });
+}
+
+/** ISO 时间戳 → 展示用日期（YYYY-MM-DD）；非法值原样返回 */
+function isoDate(value: string): string {
+  return /^\d{4}-\d{2}-\d{2}/.test(value) ? value.slice(0, 10) : value;
+}
+
 /** 清理旧版本缓存，避免 v1 种子行情占着配额还可能被误读 */
 function purgeLegacyStorage(): void {
   if (typeof window === 'undefined') return;
@@ -332,12 +357,18 @@ export interface DataContextValue {
   hydration: HydrationState;
   /** 手动重新拉取 public/data 管道数据 */
   reloadMarketData: () => void;
-  /** 重新拉取 public/data/holdings.json，用服务器基线覆盖个人数据三切片 */
-  reloadPersonalData: () => Promise<void>;
+  /**
+   * 重新拉取 public/data/holdings.json，用服务器基线覆盖个人数据三切片。
+   * 返回加载结果 bundle，调用方据此区分「真的从文件加载」还是「降级到内置种子」。
+   */
+  reloadPersonalData: () => Promise<PersonalDataBundle>;
   /** 导出当前个人数据为 holdings.json 文件（提交回仓库即可多设备同步） */
   exportPersonalData: () => void;
-  /** 从 holdings.json 文本导入个人数据；解析/校验失败抛错，由调用方提示 */
-  importPersonalData: (jsonText: string) => void;
+  /**
+   * 从 holdings.json 文本导入个人数据；解析/校验失败抛错，由调用方提示。
+   * 文件未包含的切片保留当前数据（不回退种子），返回相应提示文案。
+   */
+  importPersonalData: (jsonText: string) => string[];
   addTransaction: (tx: Transaction) => void;
   updateTransaction: (id: string, patch: Partial<Transaction>) => void;
   deleteTransaction: (id: string) => void;
@@ -363,6 +394,10 @@ const DataContext = createContext<DataContextValue | null>(null);
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { settings } = useSettings();
   const [persisted, setPersisted] = useLocalStorage<PersistedDataState | null>(STORAGE_KEY, null);
+  const [baselineMeta, setBaselineMeta] = useLocalStorage<BaselineMeta | null>(
+    BASELINE_META_KEY,
+    null,
+  );
   const [state, dispatch] = useReducer(reducer, persisted, fromPersisted);
   const [hydration, setHydration] = useState<HydrationState>({
     status: 'LOADING',
@@ -379,6 +414,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   //   若每渲染刷新此 ref，boot 的 await 结束后拿到的将是「种子回填后的 state」，
   //   overlay 永远命中 → holdings.json 基线形同虚设。
   const persistedRef = useRef<PersistedDataState | null>(persisted);
+
+  // 同理只取挂载瞬间的基线元信息：boot 内部会写入新值，逐渲染刷新会让「是否有更新」永远为假
+  const baselineRef = useRef<BaselineMeta | null>(baselineMeta);
 
   // 写穿透：reducer 后自动持久化（行情/汇率不落盘）
   useEffect(() => {
@@ -420,11 +458,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       const merged = mergePersonalData(personal, persistedRef.current);
       dispatch({ type: 'INIT_PERSONAL_DATA', payload: merged });
       dispatch({ type: 'HYDRATE_MARKET_DATA', payload: { bundle: market, settings: settingsRef.current } });
-      setHydration({
-        status: 'READY',
-        warnings: [...personal.warnings, ...market.warnings],
-        error: null,
-      });
+
+      const warnings = [...personal.warnings, ...market.warnings];
+      if (personal.source === 'file') {
+        // 回访用户：本地编辑优先（overlay 已胜出），此时若服务器基线更新只「告知」，
+        // 绝不自动覆盖用户数据 —— 静默覆盖等于数据丢失。
+        const previous = baselineRef.current?.generatedAt;
+        const incoming = personal.generatedAt;
+        if (hasLocalOverlay(persistedRef.current) && incoming && previous && incoming > previous) {
+          warnings.push(
+            `服务器有更新的 holdings.json（${isoDate(incoming)}），可在设置页点「从服务器重新加载」同步`,
+          );
+        }
+        setBaselineMeta({ generatedAt: incoming });
+      }
+
+      setHydration({ status: 'READY', warnings, error: null });
     } catch (error) {
       if (signal?.aborted) return;
       const message = error instanceof Error ? error.message : String(error);
@@ -432,7 +481,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       console.error('[DataProvider] 真实数据加载失败：', error);
       setHydration({ status: 'FAILED', warnings: [], error: message });
     }
-  }, []);
+  }, [setBaselineMeta]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -445,7 +494,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     void hydrate();
   }, [hydrate]);
 
-  const reloadPersonalData = useCallback(async (): Promise<void> => {
+  const reloadPersonalData = useCallback(async (): Promise<PersonalDataBundle> => {
     const bundle: PersonalDataBundle = await loadPersonalData();
     dispatch({
       type: 'INIT_PERSONAL_DATA',
@@ -455,7 +504,11 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         plans: bundle.plans,
       },
     });
-  }, []);
+    // 主动同步 = 用户已接受这份服务器基线，刷新元信息避免重复提示
+    if (bundle.source === 'file') setBaselineMeta({ generatedAt: bundle.generatedAt });
+    // ★把降级信号原样交回调用方：吞掉 source 会让「读取失败回退种子」看起来像成功
+    return bundle;
+  }, [setBaselineMeta]);
 
   const value = useMemo<DataContextValue>(() => {
     return {
@@ -467,12 +520,23 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       exportPersonalData: () => {
         triggerDownload('holdings.json', downloadHoldings(state));
       },
-      importPersonalData: (jsonText: string) => {
+      importPersonalData: (jsonText: string): string[] => {
         const raw: unknown = JSON.parse(jsonText);
         if (!hasPersonalSlices(raw)) {
           throw new Error('文件内容为空：至少需要 instruments / transactions / plans 中的一个非空数组');
         }
-        dispatch({ type: 'INIT_PERSONAL_DATA', payload: normalizePersonalData(raw) });
+        // ★以「当前数据」而非「演示种子」兜底：导入只含 instruments 的文件时，
+        //   流水与定投计划必须原样保留，否则一次导入就把用户账本换成了 demo。
+        const { slices, warnings } = mergeImportedSlices(
+          {
+            instruments: state.instruments,
+            transactions: state.transactions,
+            plans: state.plans,
+          },
+          raw,
+        );
+        dispatch({ type: 'INIT_PERSONAL_DATA', payload: slices });
+        return warnings;
       },
       addTransaction: (tx) => dispatch({ type: 'ADD_TRANSACTION', payload: tx }),
       updateTransaction: (id, patch) => dispatch({ type: 'UPDATE_TRANSACTION', payload: { id, patch } }),

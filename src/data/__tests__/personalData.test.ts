@@ -410,6 +410,19 @@ describe('downloadHoldings（导出文本可回环解析）', () => {
     expect(Array.isArray(parsed.plans)).toBe(true);
   });
 
+  it('写入 generatedAt 时间戳（合法 ISO，供回访时比对服务器基线新旧）', () => {
+    const before = Date.now();
+    const parsed = JSON.parse(downloadHoldings(baseline)) as Record<string, unknown>;
+    expect(typeof parsed.generatedAt).toBe('string');
+    const ts = Date.parse(parsed.generatedAt as string);
+    expect(Number.isNaN(ts)).toBe(false);
+    expect(ts).toBeGreaterThanOrEqual(before - 1000);
+
+    // 导出带 generatedAt 的文件再加载 → 原样透传
+    const roundTrip = normalizePersonalData(parsed);
+    expect(roundTrip.instruments).toEqual(baseline.instruments);
+  });
+
   it('导出 → 归一化回环后内容不变（可直接提交回 public/data）', () => {
     const roundTrip = normalizePersonalData(JSON.parse(downloadHoldings(baseline)));
     expect(roundTrip).toEqual(baseline);

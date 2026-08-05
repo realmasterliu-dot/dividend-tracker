@@ -786,6 +786,7 @@ AppProvider (AppContext.tsx)
 - **版本化 key**：`dt:state:v1` / `dt:settings:v1`。schema 变更时 bump 版本号自动重置（避免旧数据崩溃）。
 - **写穿透**：所有 dispatch 经 reducer 后自动 `save()` 到 localStorage（`useEffect` 订阅 state）。
 - **种子数据**：`buildSeedState()` 提供六类资产完整演示数据（含状态机全链路分红、PENDING 流水、定投计划、陈旧价格样例），保证首屏即可演示全部 PRD 特性，用户后续在设置页可「清空并重置」。
+- **个人数据基线（★现状）**：标的/流水/定投计划的基线已从内置种子抽出为 `public/data/holdings.json`，与市场数据同走 Git-as-DB，由 `src/data/personalData.ts` 的 `loadPersonalData()` 在启动时加载（文件缺失、HTTP 异常、JSON 损坏或整片脏数据一律降级内置种子并上报 warning，永不白屏）。localStorage 里的运行期编辑由 `mergePersonalData()` 作为 overlay 逐切片叠加在基线之上——本地编辑优先，未编辑的切片取服务器基线。设置页「数据与目标」卡片提供导出 / 导入 / 从服务器重新加载三个入口：导出写入 `generatedAt` 时间戳，导入以当前数据（而非种子）兜底缺失切片，回访时若服务器基线更新则只提示、不自动覆盖本地编辑。
 - **lastUpdated**：种子生成时写入；前端健康灯/陈旧角标基于价格日期与 lastUpdated 计算，为未来接真实管道预留同一套逻辑。
 
 ### 5.4 路由表

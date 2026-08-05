@@ -9,6 +9,12 @@ on:
     - cron: '15 22 * * *'   # 北京 06:15 —— 美股收盘价、加密、汇率
     - cron: '15 8  * * *'   # 北京 16:15 —— A股/港股收盘价、黄金
     - cron: '15 13 * * *'   # 北京 21:15 —— 基金净值（T+1 当晚公布）
+  # 代码/配置 push 也触发构建部署；paths-ignore 排除数据管道自身回写的 public/data，
+  # 否则每次定时抓取提交都会二次触发本 workflow。
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'public/data/**'
   workflow_dispatch:
     inputs:
       only:

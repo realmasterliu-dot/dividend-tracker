@@ -23,8 +23,10 @@ export function DataSettings() {
     if (!file) return;
     try {
       const text = await file.text();
-      importPersonalData(text);
-      setHoldingsHint({ tone: 'ok', text: `已导入 ${file.name}，记得导出后提交回仓库` });
+      const warnings = importPersonalData(text);
+      // 缺片不算失败：另两片按「保留当前数据」处理，只做如实告知
+      const suffix = warnings.length > 0 ? `（${warnings.join('；')}）` : '';
+      setHoldingsHint({ tone: 'ok', text: `已导入 ${file.name}，记得导出后提交回仓库${suffix}` });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       // eslint-disable-next-line no-console
@@ -35,9 +37,17 @@ export function DataSettings() {
 
   const handleReload = async () => {
     try {
-      await reloadPersonalData();
-      setHoldingsHint({ tone: 'ok', text: '已从服务器重新加载 holdings.json' });
+      const bundle = await reloadPersonalData();
+      if (bundle.source === 'file') {
+        const counts = `${bundle.instruments.length} 标的 / ${bundle.transactions.length} 流水 / ${bundle.plans.length} 计划`;
+        setHoldingsHint({ tone: 'ok', text: `已从服务器重新加载 holdings.json（${counts}）` });
+      } else {
+        // ★降级信号必须显性化：回退种子时报「成功」等于骗用户
+        const reason = bundle.warnings[0] ?? '未知原因';
+        setHoldingsHint({ tone: 'err', text: `holdings.json 读取失败，已回退内置种子：${reason}` });
+      }
     } catch (error) {
+      // loadPersonalData 承诺不抛出，此处仅作兜底
       const message = error instanceof Error ? error.message : String(error);
       setHoldingsHint({ tone: 'err', text: `重新加载失败：${message}` });
     }
@@ -156,7 +166,8 @@ export function DataSettings() {
           </div>
         )}
         <div className="text-[11px] text-disabled mt-1.5">
-          标的·流水·定投计划的基线存放在 public/data/holdings.json；编辑后提交该文件即可多设备同步
+          标的·流水·定投计划基线存于 public/data/holdings.json；编辑后提交仓库，
+          在本机点「从服务器重新加载」即可同步。回访时本地编辑优先于服务器基线
         </div>
       </div>
 

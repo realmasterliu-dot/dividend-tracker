@@ -41,10 +41,12 @@ export interface PersonalSlices {
 }
 
 export interface PersonalDataBundle extends PersonalSlices {
-  /** 加载过程中的降级告警（缺文件 / 格式异常） */
+  /** 加载过程中的降级告警（缺文件 / 格式异常 / 切片回退种子） */
   warnings: string[];
   /** file = 来自 holdings.json；seed-fallback = 文件不可用，用内置种子兜底 */
   source: 'file' | 'seed-fallback';
+  /** holdings.json 顶层 generatedAt（导出时写入）；文件未带则 undefined */
+  generatedAt?: string;
 }
 
 /** localStorage 运行期编辑（可能只覆盖部分切片） */
@@ -289,21 +291,72 @@ export function normalizePlans(raw: unknown): InvestmentPlan[] {
   return out;
 }
 
+/** normalizePersonalDataDetailed 的返回：切片 + 逐片回退告警 */
+export interface NormalizedPersonalData {
+  slices: PersonalSlices;
+  /** 每个「缺失 / 解析后为空」的切片各一条回退告警 */
+  warnings: string[];
+}
+
 /**
- * holdings.json → 个人数据三切片。
+ * holdings.json → 个人数据三切片（带回退告警）。
  * 任一切片解析后为空（文件缺该键 / 全是脏数据）→ 回退到对应内置种子，
- * 保证 demo 不被一次手滑编辑整段抹掉。
+ * 保证 demo 不被一次手滑编辑整段抹掉；同时如实记录一条 warning，
+ * 避免「用户以为在看自己的数据，实际是演示种子」的静默误导。
+ */
+export function normalizePersonalDataDetailed(raw: unknown): NormalizedPersonalData {
+  const root = isRecord(raw) ? raw : {};
+  const warnings: string[] = [];
+
+  /** 切片为空 → 回退种子并记一条告警 */
+  const fallback = <T>(parsed: T[], seed: T[], key: string): T[] => {
+    if (parsed.length > 0) return parsed;
+    warnings.push(`${HOLDINGS_FILE} 中 ${key} 为空/缺失，已回退内置种子`);
+    return seed;
+  };
+
+  const instruments = fallback(normalizeInstruments(root.instruments), seedInstruments, 'instruments');
+  const transactions = fallback(normalizeTransactions(root.transactions), seedTransactions, 'transactions');
+  const plans = fallback(normalizePlans(root.plans), seedPlans, 'plans');
+
+  return { slices: { instruments, transactions, plans }, warnings };
+}
+
+/**
+ * holdings.json → 个人数据三切片（丢弃告警的简版）。
+ * 保留原签名供导入路径与既有调用方使用；需要感知降级请用 normalizePersonalDataDetailed。
  */
 export function normalizePersonalData(raw: unknown): PersonalSlices {
+  return normalizePersonalDataDetailed(raw).slices;
+}
+
+/**
+ * 导入专用合并：文件里有的切片才覆盖，文件里没有的切片**保留当前数据**。
+ *
+ * 与 normalizePersonalData 的区别在于兜底对象：
+ * 后者缺片回退「内置演示种子」（适合冷启动基线），
+ * 导入场景下那样做会把用户当前的流水/计划被演示数据洗掉 —— 属于数据丢失，
+ * 因此这里以 current 兜底，只做增量替换。
+ */
+export function mergeImportedSlices(
+  current: PersonalSlices,
+  raw: unknown,
+): { slices: PersonalSlices; warnings: string[] } {
   const root = isRecord(raw) ? raw : {};
-  const instruments = normalizeInstruments(root.instruments);
-  const transactions = normalizeTransactions(root.transactions);
-  const plans = normalizePlans(root.plans);
-  return {
-    instruments: instruments.length > 0 ? instruments : seedInstruments,
-    transactions: transactions.length > 0 ? transactions : seedTransactions,
-    plans: plans.length > 0 ? plans : seedPlans,
+  const warnings: string[] = [];
+
+  /** 文件该切片为空 → 保留当前切片并记一条提示 */
+  const keepCurrent = <T>(parsed: T[], keep: T[], key: string): T[] => {
+    if (parsed.length > 0) return parsed;
+    warnings.push(`${HOLDINGS_FILE} 未包含 ${key}，已保留当前数据`);
+    return keep;
   };
+
+  const instruments = keepCurrent(normalizeInstruments(root.instruments), current.instruments, 'instruments');
+  const transactions = keepCurrent(normalizeTransactions(root.transactions), current.transactions, 'transactions');
+  const plans = keepCurrent(normalizePlans(root.plans), current.plans, 'plans');
+
+  return { slices: { instruments, transactions, plans }, warnings };
 }
 
 /**
@@ -361,8 +414,14 @@ export async function loadPersonalData(
       throw new Error(`${HOLDINGS_FILE} 请求失败（HTTP ${response.status}）`);
     }
     const raw = (await response.json()) as unknown;
-    const slices = normalizePersonalData(raw);
-    return { ...slices, warnings: [], source: 'file' };
+    const { slices, warnings } = normalizePersonalDataDetailed(raw);
+    // 文件读到了但某片为空 → 仍是 source:'file'，但要把回退告警如实带出去
+    return {
+      ...slices,
+      warnings,
+      source: 'file',
+      generatedAt: isRecord(raw) ? optString(raw.generatedAt) : undefined,
+    };
   } catch (error) {
     return seedBundle([`holdings.json 加载失败，已回退内置种子：${describeError(error)}`]);
   }
@@ -397,6 +456,8 @@ export function downloadHoldings(
 ): string {
   const payload = {
     version: HOLDINGS_VERSION,
+    // 导出时间戳：回访时用于判断「服务器基线是否比上次接受的更新」
+    generatedAt: new Date().toISOString(),
     instruments: state.instruments,
     transactions: state.transactions,
     plans: state.plans,
