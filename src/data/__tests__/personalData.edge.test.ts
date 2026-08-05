@@ -746,3 +746,72 @@ describe('isNewerIso · 时间语义比较，混合精度不误判（R4 回归�
     expect(shouldPrompt(incomingReallyNewer, undefined)).toBe(false); // 首次接受不提示
   });
 });
+
+// ============ 9. 告警 token 契约（R1 过滤器的跨文件耦合守护） ============
+
+/**
+ * R1 让 DataSettings 用 `hydration.warnings.filter(w => w.includes('holdings.json'))`
+ * 把个人数据告警挑进「个人数据」卡片。这是一条**靠字符串约定**维系的跨文件耦合：
+ * 若有人把告警文案改成「个人数据 instruments 为空」（不含 token），过滤器会静默
+ * 返回空数组 —— 告警重新变回用户不可见，而且没有任何现存用例会变红。
+ *
+ * 本节把该约定钉成回归用例：个人数据侧告警必须自带 'holdings.json' token，
+ * 市场侧告警必须不含该 token（否则行情问题会串进个人数据卡片）。
+ */
+describe('告警 token 契约 · R1 过滤器不被文案改动静默架空', () => {
+  /** DataSettings 中 personalWarnings 的过滤逻辑（等价复刻） */
+  const pickPersonal = (warnings: string[]): string[] =>
+    warnings.filter((w) => w.includes('holdings.json'));
+
+  it('三片全回退的 3 条告警都带 token → 能被 R1 过滤器一条不漏地捞出', () => {
+    const { warnings } = normalizePersonalDataDetailed({});
+
+    expect(warnings).toHaveLength(3);
+    expect(pickPersonal(warnings)).toEqual(warnings);
+  });
+
+  it('文件不可用（404 → seed-fallback）的告警同样带 token', async () => {
+    const bundle = await loadPersonalData({ fetchImpl: mkFetch({}) });
+
+    expect(bundle.source).toBe('seed-fallback');
+    expect(bundle.warnings.length).toBeGreaterThan(0);
+    expect(pickPersonal(bundle.warnings)).toEqual(bundle.warnings);
+  });
+
+  it('市场侧告警样本一律不含 token → 不会串进个人数据卡片', () => {
+    // 覆盖 realData.loadMarketData 的全部告警形态
+    const marketWarnings = [
+      'prices.json 加载失败：Failed to fetch',
+      'dividends.json 加载失败：HTTP 404',
+      '行情数据为空，持仓市值将无法计算',
+      '汇率数据为空，外币资产按 1:1 兜底换算',
+      '管道告警：yahoo 源连续 3 次失败',
+    ];
+
+    expect(pickPersonal(marketWarnings)).toEqual([]);
+  });
+
+  it('混合告警只挑出个人侧；无个人告警时为空数组（对应 UI 不渲染该块）', async () => {
+    const personal = await loadPersonalData({
+      fetchImpl: mkFetch({ 'holdings.json': { version: 1 } }),
+    });
+    const mixed = [...personal.warnings, '行情数据为空，持仓市值将无法计算'];
+
+    expect(personal.warnings.length).toBeGreaterThan(0);
+    expect(pickPersonal(mixed)).toEqual(personal.warnings);
+    expect(pickPersonal([])).toEqual([]); // personalWarnings.length > 0 为假 → 整块不渲染
+  });
+
+  it('boot() 的「服务器有更新」文案也必须带 token（源码级契约检查）', () => {
+    const src = readFileSync(
+      fileURLToPath(new URL('../../store/DataContext.tsx', import.meta.url)),
+      'utf-8',
+    );
+    const pushed = [...src.matchAll(/warnings\.push\(\s*`([^`]*)`/g)].map((m) => m[1]);
+
+    // 失败提示：boot 新增/改写了告警文案，请保证仍含 'holdings.json'，
+    // 否则 DataSettings 的 personalWarnings 过滤器会把它丢掉（R1 回归）。
+    expect(pushed.length).toBeGreaterThan(0);
+    for (const text of pushed) expect(text).toContain('holdings.json');
+  });
+});
