@@ -27,7 +27,7 @@ const SEED_SOURCE_HEALTH: DataState['sourceHealth'] = {
 };
 
 /**
- * 个人数据基线：标的 / 流水 / 定投计划来自种子（个人数据 JSON 化为后续任务）。
+ * 个人数据基线已抽出为 public/data/holdings.json（loadPersonalData 加载，种子为兜底）。
  * 市场数据切片留空，由 realData.loadMarketData() 在启动时用 public/data 真实数据填充，
  * 从而杜绝"先渲染假行情再被真实数据覆盖"的闪烁。
  */

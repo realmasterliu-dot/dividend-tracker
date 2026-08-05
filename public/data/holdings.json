@@ -1,0 +1,527 @@
+{
+  "version": 1,
+  "instruments": [
+    {
+      "id": "600519.SH",
+      "symbol": "600519.SH",
+      "name": "贵州茅台",
+      "market": "A_SHARE",
+      "currency": "CNY",
+      "dividendEligible": true,
+      "securityType": "COMMON",
+      "extraWithholdingRate": 0,
+      "custodyChannel": "CN_BROKER",
+      "tags": [
+        "核心持仓",
+        "白酒"
+      ]
+    },
+    {
+      "id": "000001.SZ",
+      "symbol": "000001.SZ",
+      "name": "平安银行",
+      "market": "A_SHARE",
+      "currency": "CNY",
+      "dividendEligible": true,
+      "securityType": "COMMON",
+      "extraWithholdingRate": 0,
+      "custodyChannel": "CN_BROKER",
+      "tags": [
+        "银行"
+      ]
+    },
+    {
+      "id": "00700.HK",
+      "symbol": "00700.HK",
+      "name": "腾讯控股",
+      "market": "HK",
+      "currency": "HKD",
+      "dividendEligible": true,
+      "securityType": "COMMON",
+      "extraWithholdingRate": 0,
+      "custodyChannel": "HK_LOCAL_BROKER",
+      "tags": [
+        "互联网"
+      ]
+    },
+    {
+      "id": "AAPL",
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "market": "US",
+      "currency": "USD",
+      "dividendEligible": true,
+      "securityType": "COMMON",
+      "extraWithholdingRate": 0,
+      "custodyChannel": "US_BROKER",
+      "tags": [
+        "美股"
+      ]
+    },
+    {
+      "id": "110011",
+      "symbol": "110011",
+      "name": "易方达优质精选混合",
+      "market": "FUND",
+      "currency": "CNY",
+      "dividendEligible": true,
+      "securityType": "FUND",
+      "extraWithholdingRate": 0,
+      "dividendOption": "CASH",
+      "custodyChannel": "CN_BROKER",
+      "tags": [
+        "定投",
+        "基金"
+      ]
+    },
+    {
+      "id": "BTC",
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "market": "CRYPTO",
+      "currency": "USD",
+      "dividendEligible": false,
+      "securityType": "CRYPTO",
+      "extraWithholdingRate": 0,
+      "custodyChannel": "CEX",
+      "tags": [
+        "加密",
+        "增值型"
+      ]
+    },
+    {
+      "id": "Au99.99",
+      "symbol": "Au99.99",
+      "name": "上金所黄金 Au99.99",
+      "market": "GOLD",
+      "currency": "CNY",
+      "dividendEligible": false,
+      "securityType": "GOLD",
+      "extraWithholdingRate": 0,
+      "custodyChannel": "SGE",
+      "goldForm": "PHYSICAL",
+      "tags": [
+        "黄金",
+        "增值型"
+      ]
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx-600519-buy1",
+      "instrumentId": "600519.SH",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2023-03-15",
+      "quantity": 100,
+      "price": 1700,
+      "amount": 170000,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "建仓"
+    },
+    {
+      "id": "tx-600519-buy2",
+      "instrumentId": "600519.SH",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2024-06-10",
+      "quantity": 50,
+      "price": 1450,
+      "amount": 72500,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "加仓"
+    },
+    {
+      "id": "tx-600519-sell1",
+      "instrumentId": "600519.SH",
+      "type": "SELL",
+      "status": "CONFIRMED",
+      "date": "2025-05-20",
+      "quantity": -30,
+      "price": 1520,
+      "amount": 45600,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "部分止盈（FIFO 演示）"
+    },
+    {
+      "id": "tx-600519-buy3",
+      "instrumentId": "600519.SH",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2025-08-10",
+      "quantity": 20,
+      "price": 1420,
+      "amount": 28400,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "满 1 年前 6 天（税档提醒演示）"
+    },
+    {
+      "id": "tx-000001-buy1",
+      "instrumentId": "000001.SZ",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2024-08-01",
+      "quantity": 2000,
+      "price": 10.5,
+      "amount": 21000,
+      "currency": "CNY",
+      "fxRate": 1
+    },
+    {
+      "id": "tx-000001-bonus1",
+      "instrumentId": "000001.SZ",
+      "type": "BONUS",
+      "status": "CONFIRMED",
+      "date": "2025-06-30",
+      "quantity": 0,
+      "price": 0,
+      "amount": 0,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "每10股送2股 → 数量×1.2，成本摊薄，持股期限起算日不变",
+      "meta": {
+        "ratio": 1.2
+      }
+    },
+    {
+      "id": "tx-000001-buy2",
+      "instrumentId": "000001.SZ",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2026-01-20",
+      "quantity": 500,
+      "price": 11.2,
+      "amount": 5600,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "1个月-1年档（10%）演示"
+    },
+    {
+      "id": "tx-000001-buy3",
+      "instrumentId": "000001.SZ",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2026-07-20",
+      "quantity": 300,
+      "price": 11.5,
+      "amount": 3450,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "≤1个月档（20%）演示"
+    },
+    {
+      "id": "tx-00700-buy1",
+      "instrumentId": "00700.HK",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2023-11-20",
+      "quantity": 200,
+      "price": 310,
+      "amount": 62000,
+      "currency": "HKD",
+      "fxRate": 0.92
+    },
+    {
+      "id": "tx-00700-buy2",
+      "instrumentId": "00700.HK",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2025-01-15",
+      "quantity": 100,
+      "price": 380,
+      "amount": 38000,
+      "currency": "HKD",
+      "fxRate": 0.91
+    },
+    {
+      "id": "tx-00700-fee1",
+      "instrumentId": "00700.HK",
+      "type": "FEE",
+      "status": "CONFIRMED",
+      "date": "2024-12-31",
+      "quantity": 0,
+      "price": 0,
+      "amount": 30,
+      "currency": "HKD",
+      "fxRate": 0.92,
+      "note": "券商月费"
+    },
+    {
+      "id": "tx-aapl-buy1",
+      "instrumentId": "AAPL",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2023-09-01",
+      "quantity": 20,
+      "price": 185,
+      "amount": 3700,
+      "currency": "USD",
+      "fxRate": 7.2
+    },
+    {
+      "id": "tx-aapl-buy2",
+      "instrumentId": "AAPL",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2024-12-10",
+      "quantity": 10,
+      "price": 235,
+      "amount": 2350,
+      "currency": "USD",
+      "fxRate": 7.28
+    },
+    {
+      "id": "tx-aapl-fee1",
+      "instrumentId": "AAPL",
+      "type": "FEE",
+      "status": "CONFIRMED",
+      "date": "2025-12-31",
+      "quantity": 0,
+      "price": 0,
+      "amount": 3,
+      "currency": "USD",
+      "fxRate": 7.25,
+      "note": "账户年费"
+    },
+    {
+      "id": "tx-110011-buy1",
+      "instrumentId": "110011",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2023-06-01",
+      "quantity": 5000,
+      "price": 3.2,
+      "amount": 16000,
+      "currency": "CNY",
+      "fxRate": 1
+    },
+    {
+      "id": "tx-110011-reinvest1",
+      "instrumentId": "110011",
+      "type": "DIVIDEND_REINVEST",
+      "status": "CONFIRMED",
+      "date": "2024-03-25",
+      "quantity": 80,
+      "price": 3,
+      "amount": 240,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "红利再投（估算份额，可手动修正）",
+      "meta": {
+        "estimated": true,
+        "dividendId": "div-110011-2023"
+      }
+    },
+    {
+      "id": "tx-110011-buy2",
+      "instrumentId": "110011",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2025-01-10",
+      "quantity": 2000,
+      "price": 3.5,
+      "amount": 7000,
+      "currency": "CNY",
+      "fxRate": 1
+    },
+    {
+      "id": "tx-110011-div-cash",
+      "instrumentId": "110011",
+      "type": "DIVIDEND_CASH",
+      "status": "CONFIRMED",
+      "date": "2025-12-19",
+      "quantity": 0,
+      "price": 0,
+      "amount": 1132.8,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "2025 年度现金分红到账"
+    },
+    {
+      "id": "tx-110011-dca-pending",
+      "instrumentId": "110011",
+      "type": "BUY",
+      "status": "PENDING",
+      "date": "2026-08-01",
+      "quantity": 0,
+      "price": 0,
+      "amount": 1000,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "定投待确认：金额已知，净值 T+1 回填份额",
+      "source": "DCA",
+      "meta": {
+        "planId": "plan-110011",
+        "expectedAmount": 1000
+      }
+    },
+    {
+      "id": "tx-btc-buy1",
+      "instrumentId": "BTC",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2024-01-10",
+      "quantity": 0.5,
+      "price": 42000,
+      "amount": 21000,
+      "currency": "USD",
+      "fxRate": 7.18
+    },
+    {
+      "id": "tx-btc-buy2",
+      "instrumentId": "BTC",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2024-10-01",
+      "quantity": 0.25,
+      "price": 61000,
+      "amount": 15250,
+      "currency": "USD",
+      "fxRate": 7.12
+    },
+    {
+      "id": "tx-btc-income1",
+      "instrumentId": "BTC",
+      "type": "INCOME",
+      "status": "CONFIRMED",
+      "date": "2025-02-01",
+      "quantity": 0.001,
+      "price": 0,
+      "amount": 40,
+      "currency": "USD",
+      "fxRate": 7.2,
+      "note": "staking 收益（未计税）"
+    },
+    {
+      "id": "tx-au-buy1",
+      "instrumentId": "Au99.99",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2023-10-01",
+      "quantity": 200,
+      "price": 450,
+      "amount": 90000,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "实物金条"
+    },
+    {
+      "id": "tx-au-buy2",
+      "instrumentId": "Au99.99",
+      "type": "BUY",
+      "status": "CONFIRMED",
+      "date": "2025-03-01",
+      "quantity": 100,
+      "price": 520,
+      "amount": 52000,
+      "currency": "CNY",
+      "fxRate": 1
+    },
+    {
+      "id": "tx-aapl-tax1",
+      "instrumentId": "AAPL",
+      "type": "TAX_WITHHELD",
+      "status": "CONFIRMED",
+      "date": "2025-08-15",
+      "quantity": 0,
+      "price": 0,
+      "amount": 15,
+      "currency": "USD",
+      "fxRate": 7.25,
+      "note": "美股预扣税（W-8BEN 未填 30% 档示例）"
+    },
+    {
+      "id": "tx-voided-demo",
+      "instrumentId": "000001.SZ",
+      "type": "BUY",
+      "status": "VOIDED",
+      "date": "2025-09-01",
+      "quantity": 100,
+      "price": 11,
+      "amount": 1100,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "误操作已作废"
+    },
+    {
+      "id": "tx-voided-split",
+      "instrumentId": "00700.HK",
+      "type": "SPLIT",
+      "status": "VOIDED",
+      "date": "2026-01-05",
+      "quantity": 0,
+      "price": 0,
+      "amount": 0,
+      "currency": "HKD",
+      "fxRate": 0.91,
+      "note": "拆股（作废示例）",
+      "meta": {
+        "ratio": 5
+      }
+    },
+    {
+      "id": "tx-voided-transfer",
+      "instrumentId": "000001.SZ",
+      "type": "TRANSFER",
+      "status": "VOIDED",
+      "date": "2026-02-02",
+      "quantity": 0,
+      "price": 0,
+      "amount": 0,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "转增（作废示例）",
+      "meta": {
+        "ratio": 1.1
+      }
+    },
+    {
+      "id": "tx-voided-fundsplit",
+      "instrumentId": "110011",
+      "type": "FUND_SPLIT",
+      "status": "VOIDED",
+      "date": "2026-03-03",
+      "quantity": 0,
+      "price": 0,
+      "amount": 0,
+      "currency": "CNY",
+      "fxRate": 1,
+      "note": "基金拆分（作废示例）",
+      "meta": {
+        "ratio": 2
+      }
+    }
+  ],
+  "plans": [
+    {
+      "id": "plan-110011",
+      "instrumentId": "110011",
+      "amount": 1000,
+      "frequency": "MONTHLY",
+      "executionDay": 10,
+      "startDate": "2026-01-10",
+      "holidayPolicy": "NEXT_TRADING_DAY",
+      "monthEndPolicy": "LAST_TRADING_DAY",
+      "autoConfirm": false,
+      "status": "ACTIVE",
+      "nextRunDate": "2026-08-10"
+    },
+    {
+      "id": "plan-btc",
+      "instrumentId": "BTC",
+      "amount": 200,
+      "frequency": "WEEKLY",
+      "executionDay": 1,
+      "startDate": "2026-02-02",
+      "holidayPolicy": "NEXT_TRADING_DAY",
+      "monthEndPolicy": "LAST_TRADING_DAY",
+      "autoConfirm": false,
+      "status": "ACTIVE",
+      "nextRunDate": "2026-08-03"
+    }
+  ]
+}

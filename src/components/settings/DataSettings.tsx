@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Download, RotateCcw } from 'lucide-react';
 import { useData } from '@/store/DataContext';
 import { useSettings } from '@/store/SettingsContext';
@@ -8,12 +8,45 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 
-/** 数据导出 CSV/JSON + 年度被动收入目标 + 重置 */
+/** 数据导出 CSV/JSON + 个人数据 holdings.json 维护 + 年度被动收入目标 + 重置 */
 export function DataSettings() {
-  const { state, resetState } = useData();
+  const { state, resetState, exportPersonalData, importPersonalData, reloadPersonalData } = useData();
   const { settings, update } = useSettings();
   const { ttmDividendTotal } = usePortfolio();
   const [resetOpen, setResetOpen] = useState(false);
+  const [holdingsHint, setHoldingsHint] = useState<{ tone: 'ok' | 'err'; text: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // 允许连续选同一个文件重试
+    if (!file) return;
+    try {
+      const text = await file.text();
+      importPersonalData(text);
+      setHoldingsHint({ tone: 'ok', text: `已导入 ${file.name}，记得导出后提交回仓库` });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      // eslint-disable-next-line no-console
+      console.warn('[DataSettings] 个人数据导入失败：', error);
+      setHoldingsHint({ tone: 'err', text: `导入失败：${message}` });
+    }
+  };
+
+  const handleReload = async () => {
+    try {
+      await reloadPersonalData();
+      setHoldingsHint({ tone: 'ok', text: '已从服务器重新加载 holdings.json' });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      setHoldingsHint({ tone: 'err', text: `重新加载失败：${message}` });
+    }
+  };
+
+  const handleExport = () => {
+    exportPersonalData();
+    setHoldingsHint({ tone: 'ok', text: '已下载 holdings.json，替换 public/data/holdings.json 后提交即可' });
+  };
 
   const exportCsv = () => {
     const rows = [
@@ -82,6 +115,48 @@ export function DataSettings() {
         <div className="text-[11px] text-disabled mt-1.5">
           个人数据保存在浏览器 localStorage（key: dt:state:v2 / dt:settings:v1）；
           行情·汇率·分红事件每次启动从 public/data 数据管道重新加载，不占用本地配额。导出 JSON 可作备份
+        </div>
+      </div>
+
+      <div className="pt-3 border-t border-line-soft">
+        <div className="text-[13px] text-primary font-medium mb-2">个人数据（holdings.json）</div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={handleExport}
+            className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
+          >
+            导出个人数据
+          </button>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
+          >
+            从文件导入
+          </button>
+          <button
+            type="button"
+            onClick={() => void handleReload()}
+            className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
+          >
+            从服务器重新加载
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json"
+            className="hidden"
+            onChange={(e) => void handleImportFile(e)}
+          />
+        </div>
+        {holdingsHint && (
+          <div className={`text-[11px] mt-1.5 ${holdingsHint.tone === 'err' ? 'text-danger' : 'text-secondary'}`}>
+            {holdingsHint.text}
+          </div>
+        )}
+        <div className="text-[11px] text-disabled mt-1.5">
+          标的·流水·定投计划的基线存放在 public/data/holdings.json；编辑后提交该文件即可多设备同步
         </div>
       </div>
 
