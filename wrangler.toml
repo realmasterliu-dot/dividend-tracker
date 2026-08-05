@@ -1,0 +1,10 @@
+name = "dividend-tracker"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-08-01"
+
+# 部署方式二选一：
+# A) Git 集成（推荐，零 CLI）：在 Cloudflare 控制台 → Workers & Pages → 连接本 GitHub 仓库
+#    Build command = npm run build
+#    Output directory = dist
+#    之后 fetch-data.yml 每次提交 data/ 变更都会自动触发重新部署。
+# B) CLI 部署：wrangler pages deploy dist --branch main  （需 CF_API_TOKEN 环境变量）
