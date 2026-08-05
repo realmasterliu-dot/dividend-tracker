@@ -1,0 +1,32 @@
+name: keepalive
+
+# GitHub 会在仓库连续 60 天无活动后自动禁用所有 schedule 触发的工作流，
+# 且只发一封邮件通知 —— 很容易被忽略，等发现时数据已经断更很久。
+#
+# 正常情况下 fetch-data 每天提交数据即可保持活跃，这个工作流是兜底：
+# 万一 fetch-data 因故长期失败（不产生 commit），它仍能维持仓库活动。
+on:
+  schedule:
+    - cron: '20 4 1 * *'   # 每月 1 号 北京 12:20
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 更新心跳时间戳
+        run: |
+          mkdir -p .github
+          date -u +'%Y-%m-%dT%H:%M:%SZ' > .github/.keepalive
+          git config user.name  "dividend-pipeline[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/.keepalive
+          git diff --staged --quiet || git commit -m "chore: keepalive $(date -u +'%Y-%m-%d')"
+          git push

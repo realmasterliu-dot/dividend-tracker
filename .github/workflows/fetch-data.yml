@@ -1,0 +1,118 @@
+name: fetch-data
+
+# 每日数据抓取：行情 / 分红 / 汇率 → public/data/*.json → 提交回仓库
+#
+# cron 时间为 UTC，注释里标注对应的北京时间（UTC+8）。
+# GitHub Actions 的 schedule 在高峰期可能延迟 3-10 分钟，所以避开整点。
+on:
+  schedule:
+    - cron: '15 22 * * *'   # 北京 06:15 —— 美股收盘价、加密、汇率
+    - cron: '15 8  * * *'   # 北京 16:15 —— A股/港股收盘价、黄金
+    - cron: '15 13 * * *'   # 北京 21:15 —— 基金净值（T+1 当晚公布）
+  workflow_dispatch:
+    inputs:
+      only:
+        description: '只抓指定类别（prices/dividends/fx，逗号分隔；留空=全量）'
+        required: false
+        default: ''
+      instruments:
+        description: '只抓指定标的（逗号分隔；留空=全部）'
+        required: false
+        default: ''
+      verbose:
+        description: '详细日志'
+        type: boolean
+        default: false
+
+# 防止多个定时任务并发写同一份数据造成 push 冲突
+concurrency:
+  group: fetch-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: scripts/pipeline/requirements.txt
+
+      - name: 安装依赖
+        run: pip install -r scripts/pipeline/requirements.txt
+
+      - name: 抓取数据
+        id: fetch
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.only }}" ];        then ARGS="$ARGS --only ${{ inputs.only }}"; fi
+          if [ -n "${{ inputs.instruments }}" ]; then ARGS="$ARGS --instruments ${{ inputs.instruments }}"; fi
+          if [ "${{ inputs.verbose }}" = "true" ]; then ARGS="$ARGS --verbose"; fi
+          echo "执行: python scripts/pipeline/fetch_all.py $ARGS"
+          python scripts/pipeline/fetch_all.py $ARGS
+
+      # 即使抓取部分失败也要提交已成功的数据 —— 免费源本就时好时坏，
+      # 全有或全无的策略会让一个源的故障阻塞掉其它 5 类资产的更新。
+      - name: 提交数据
+        if: always() && steps.fetch.outcome != 'cancelled'
+        run: |
+          git config user.name  "dividend-pipeline[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # cache/ 是增量基线，必须一起提交，否则每次 CI 都退化成全量回填
+          git add public/data/ scripts/pipeline/cache/
+
+          if git diff --staged --quiet; then
+            echo "数据无变化，跳过提交"
+          else
+            git commit -m "data: 自动刷新 $(date -u +'%Y-%m-%d %H:%M') UTC"
+            # 并发/竞态时 rebase 重试，避免非快进推送失败
+            for i in 1 2 3; do
+              if git push; then echo "推送成功"; break; fi
+              echo "推送失败，第 $i 次重试..."
+              git pull --rebase --autostash || true
+              sleep 5
+            done
+          fi
+
+      - name: 汇总报告
+        if: always()
+        run: |
+          echo "### 数据抓取结果" >> $GITHUB_STEP_SUMMARY
+          if [ -f public/data/meta.json ]; then
+            python - <<'PY' >> $GITHUB_STEP_SUMMARY
+          import json, pathlib
+
+          meta = json.loads(pathlib.Path("public/data/meta.json").read_text())
+          print(f"- 生成时间：`{meta.get('generatedAt')}`")
+          print(f"- 耗时：{meta.get('durationSeconds')}s")
+          print(f"- 标的数：{meta.get('instrumentCount')}")
+
+          warns = meta.get("warnings") or []
+          if warns:
+              print(f"\n**警告 {len(warns)} 条**\n")
+              for w in warns[:20]:
+                  print(f"- {w}")
+          else:
+              print("\n无警告")
+
+          health = json.loads(pathlib.Path("public/data/source_health.json").read_text())
+          bad = {k: v for k, v in health.items() if v.get("status") != "GREEN"}
+          if bad:
+              print("\n**异常数据源**\n")
+              print("| 源 | 状态 | 连续失败 |")
+              print("|---|---|---|")
+              for k, v in bad.items():
+                  print(f"| `{k}` | {v.get('status')} | {v.get('consecutiveFailures')} |")
+          PY
+          else
+            echo "未生成 meta.json —— 抓取可能整体失败，请查看上方日志" >> $GITHUB_STEP_SUMMARY
+          fi
