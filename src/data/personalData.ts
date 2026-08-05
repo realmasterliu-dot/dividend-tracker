@@ -372,6 +372,27 @@ export function hasPersonalSlices(raw: unknown): boolean {
   });
 }
 
+// ============ 时间戳比较 ============
+
+/**
+ * 判断 a 是否严格晚于 b（基于 Date.parse，NaN 安全；任一非法返回 false）。
+ *
+ * 为什么不能直接用字符串比较：holdings.json 的 generatedAt 可能来自不同生成方式，
+ * 精度并不统一 —— 数据管道写 6 位微秒（`...52.048750Z`），downloadHoldings 写 3 位毫秒
+ * （`...52.048Z`），甚至可能出现无小数秒的 `...52Z`。字典序在这些混合精度下会误判
+ * （'...52.048Z' > '...52.048750Z' 为 true、'...52.048750Z' > '...52Z' 为 false），
+ * 导致「服务器有更新」提示误报或漏报。改用时间语义比较，跨精度稳定。
+ *
+ * 注意：Date.parse 只保留到毫秒，亚毫秒差异（如 048750µs vs 048ms）视为同一时刻 →
+ * 返回 false（宁可漏提示，也不误报「服务器有更新」诱导用户覆盖本地编辑）。
+ */
+export function isNewerIso(a?: string, b?: string): boolean {
+  const ta = typeof a === 'string' ? Date.parse(a) : NaN;
+  const tb = typeof b === 'string' ? Date.parse(b) : NaN;
+  if (!Number.isFinite(ta) || !Number.isFinite(tb)) return false;
+  return ta > tb;
+}
+
 // ============ 加载 ============
 
 export interface LoadPersonalDataOptions {

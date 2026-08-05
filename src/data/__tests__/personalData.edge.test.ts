@@ -5,6 +5,7 @@ import { Instrument, InvestmentPlan, Transaction } from '@/types';
 import {
   downloadHoldings,
   hasPersonalSlices,
+  isNewerIso,
   loadPersonalData,
   mergeImportedSlices,
   mergePersonalData,
@@ -669,5 +670,79 @@ describe('downloadHoldings.generatedAt · 字典序即时间序（QA 二轮 · P
       expect(samples[i] > samples[i - 1]).toBe(true);
       expect(Date.parse(samples[i])).toBeGreaterThan(Date.parse(samples[i - 1]));
     }
+  });
+});
+
+// ============ 8. isNewerIso：跨精度时间戳比较（R4 回归守护） ============
+
+/**
+ * boot() 判断「服务器基线是否比上次接受的更新」原本用 `incoming > previous` 字典序。
+ * 但 generatedAt 的精度并不统一：数据管道写 6 位微秒（...52.048750Z），
+ * downloadHoldings 写 3 位毫秒（...52.048Z），历史文件甚至可能无小数秒（...52Z）。
+ * 混合精度下字典序既会漏报也会误报，故改用 isNewerIso（Date.parse 时间语义）。
+ */
+describe('isNewerIso · 时间语义比较，混合精度不误判（R4 回归）', () => {
+  it('同精度正常时序：a 晚于 b → true；反序 → false；同值 → false', () => {
+    const early = '2026-08-05T10:11:52.048Z';
+    const late = '2026-08-05T10:11:52.049Z';
+
+    expect(isNewerIso(late, early)).toBe(true);
+    expect(isNewerIso(early, late)).toBe(false);
+    expect(isNewerIso(early, early)).toBe(false); // 严格晚于：相等不算更新
+    expect(isNewerIso('2027-01-01T00:00:00.000Z', '2026-12-31T23:59:59.999Z')).toBe(true);
+  });
+
+  it('任一为 undefined / 空串 / 非法串 → false（NaN 安全，绝不误报「服务器有更新」）', () => {
+    const valid = '2026-08-05T10:11:52.048Z';
+
+    expect(isNewerIso(undefined, valid)).toBe(false);
+    expect(isNewerIso(valid, undefined)).toBe(false);
+    expect(isNewerIso(undefined, undefined)).toBe(false);
+    expect(isNewerIso('', valid)).toBe(false);
+    expect(isNewerIso('not-a-date', valid)).toBe(false);
+    expect(isNewerIso(valid, 'not-a-date')).toBe(false);
+    expect(isNewerIso('garbage', 'garbage')).toBe(false);
+  });
+
+  it('★微秒 vs 无小数秒：字典序漏报（false），isNewerIso 正确判定前者更新', () => {
+    const micro = '2026-08-05T10:11:52.048750Z'; // 管道产物，实际晚 48ms
+    const bare = '2026-08-05T10:11:52Z'; // 老格式，整秒
+
+    // 字典序在 '.'(0x2E) < 'Z'(0x5A) 上翻车 —— 这正是 R4 要消灭的错误
+    expect(micro > bare).toBe(false);
+    expect(isNewerIso(micro, bare)).toBe(true);
+    expect(isNewerIso(bare, micro)).toBe(false);
+  });
+
+  it('★毫秒 vs 同毫秒微秒：字典序误报（true），isNewerIso 判为「非更新」不惊扰用户', () => {
+    const ms = '2026-08-05T10:11:52.048Z'; // downloadHoldings 产物
+    const us = '2026-08-05T10:11:52.048750Z'; // 管道产物，同一毫秒内
+
+    // 字典序会认为 ms 比 us 新 → 每次启动都弹「服务器有更新」，属误报
+    expect(ms > us).toBe(true);
+    // Date.parse 截断到毫秒 → 两者同刻，双向皆非「严格更新」
+    expect(isNewerIso(ms, us)).toBe(false);
+    expect(isNewerIso(us, ms)).toBe(false);
+  });
+
+  it('微秒时间戳确实更晚（毫秒位有差）→ true，跨精度不影响真实更新的识别', () => {
+    expect(isNewerIso('2026-08-05T10:11:52.049750Z', '2026-08-05T10:11:52.048Z')).toBe(true);
+    expect(isNewerIso('2026-08-05T10:11:53.000001Z', '2026-08-05T10:11:52.999Z')).toBe(true);
+    expect(isNewerIso('2026-08-05T10:11:52.048Z', '2026-08-05T10:11:52.049750Z')).toBe(false);
+  });
+
+  it('boot() 判定等价链路：混合精度的新旧基线不会再触发错误提示', () => {
+    // 场景：上次接受的是 downloadHoldings 导出的毫秒时间戳，本次服务器是管道微秒时间戳
+    const accepted = '2026-08-05T10:11:52.048Z';
+    const incomingSameMoment = '2026-08-05T10:11:52.048750Z';
+    const incomingReallyNewer = '2026-08-06T02:00:00.000000Z';
+
+    const shouldPrompt = (incoming?: string, previous?: string): boolean =>
+      isNewerIso(incoming, previous);
+
+    expect(shouldPrompt(incomingSameMoment, accepted)).toBe(false); // 同刻不提示
+    expect(shouldPrompt(incomingReallyNewer, accepted)).toBe(true); // 真更新才提示
+    expect(shouldPrompt(undefined, accepted)).toBe(false); // 文件无 generatedAt 不提示
+    expect(shouldPrompt(incomingReallyNewer, undefined)).toBe(false); // 首次接受不提示
   });
 });

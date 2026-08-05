@@ -21,6 +21,7 @@ import { buildPersonalState } from '@/data';
 import {
   downloadHoldings,
   hasPersonalSlices,
+  isNewerIso,
   loadPersonalData,
   mergeImportedSlices,
   mergePersonalData,
@@ -465,7 +466,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         // 绝不自动覆盖用户数据 —— 静默覆盖等于数据丢失。
         const previous = baselineRef.current?.generatedAt;
         const incoming = personal.generatedAt;
-        if (hasLocalOverlay(persistedRef.current) && incoming && previous && incoming > previous) {
+        // ★用时间语义而非字典序：generatedAt 存在毫秒/微秒混合精度，字符串比较会误判。
+        //   incoming 的真值判断只为窄化类型（isNewerIso 对 undefined 本就返回 false）。
+        if (hasLocalOverlay(persistedRef.current) && incoming && isNewerIso(incoming, previous)) {
           warnings.push(
             `服务器有更新的 holdings.json（${isoDate(incoming)}），可在设置页点「从服务器重新加载」同步`,
           );
@@ -496,6 +499,11 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   const reloadPersonalData = useCallback(async (): Promise<PersonalDataBundle> => {
     const bundle: PersonalDataBundle = await loadPersonalData();
+    // ★只有真的读到 holdings.json 才落地：seed-fallback 时若照样 dispatch，
+    //   写穿透会把用户 localStorage 里的编辑替换成演示种子且不可撤销 ——
+    //   「文件读不到」绝不能变成「清空用户数据」。此时只把 bundle 交回调用方报错。
+    if (bundle.source !== 'file') return bundle;
+
     dispatch({
       type: 'INIT_PERSONAL_DATA',
       payload: {
@@ -505,7 +513,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       },
     });
     // 主动同步 = 用户已接受这份服务器基线，刷新元信息避免重复提示
-    if (bundle.source === 'file') setBaselineMeta({ generatedAt: bundle.generatedAt });
+    setBaselineMeta({ generatedAt: bundle.generatedAt });
     // ★把降级信号原样交回调用方：吞掉 source 会让「读取失败回退种子」看起来像成功
     return bundle;
   }, [setBaselineMeta]);

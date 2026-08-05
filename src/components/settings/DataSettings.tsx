@@ -10,7 +10,8 @@ import { Modal } from '@/components/ui/Modal';
 
 /** 数据导出 CSV/JSON + 个人数据 holdings.json 维护 + 年度被动收入目标 + 重置 */
 export function DataSettings() {
-  const { state, resetState, exportPersonalData, importPersonalData, reloadPersonalData } = useData();
+  const { state, hydration, resetState, exportPersonalData, importPersonalData, reloadPersonalData } =
+    useData();
   const { settings, update } = useSettings();
   const { ttmDividendTotal } = usePortfolio();
   const [resetOpen, setResetOpen] = useState(false);
@@ -40,7 +41,10 @@ export function DataSettings() {
       const bundle = await reloadPersonalData();
       if (bundle.source === 'file') {
         const counts = `${bundle.instruments.length} 标的 / ${bundle.transactions.length} 流水 / ${bundle.plans.length} 计划`;
-        setHoldingsHint({ tone: 'ok', text: `已从服务器重新加载 holdings.json（${counts}）` });
+        // ★文件读到了 ≠ 内容完整：某片为空会被回退成演示种子，
+        //   只报「已加载 N 标的」会让用户把 demo 数据当成自己的账本。
+        const suffix = bundle.warnings.length > 0 ? `；注意：${bundle.warnings.join('；')}` : '';
+        setHoldingsHint({ tone: 'ok', text: `已从服务器重新加载 holdings.json（${counts}）${suffix}` });
       } else {
         // ★降级信号必须显性化：回退种子时报「成功」等于骗用户
         const reason = bundle.warnings[0] ?? '未知原因';
@@ -92,6 +96,10 @@ export function DataSettings() {
 
   const target = settings.annualIncomeTarget;
   const progress = target && target > 0 ? Math.min(1, ttmDividendTotal / target) : 0;
+
+  // ★启动时写入的个人数据告警（切片回退种子 / 文件加载失败 / 服务器有更新）此前无人消费，
+  //   用户完全看不到降级信号。只挑 holdings.json 相关的进本卡片，行情类告警不掺和。
+  const personalWarnings = hydration.warnings.filter((w) => w.includes('holdings.json'));
 
   return (
     <Card title="数据与目标" bodyClassName="p-4 space-y-4">
@@ -163,6 +171,13 @@ export function DataSettings() {
         {holdingsHint && (
           <div className={`text-[11px] mt-1.5 ${holdingsHint.tone === 'err' ? 'text-danger' : 'text-secondary'}`}>
             {holdingsHint.text}
+          </div>
+        )}
+        {personalWarnings.length > 0 && (
+          <div className="text-[11px] text-warning mt-1.5 space-y-0.5">
+            {personalWarnings.map((w) => (
+              <div key={w}>启动提示：{w}</div>
+            ))}
           </div>
         )}
         <div className="text-[11px] text-disabled mt-1.5">
