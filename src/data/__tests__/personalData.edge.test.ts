@@ -496,3 +496,178 @@ describe('public/data/holdings.json 基线体检（QA 数据回归）', () => {
     expect(out.plans.filter((p) => !ids.has(p.instrumentId)).map((p) => p.id)).toEqual([]);
   });
 });
+
+// ============ 7. QA 二轮质量关卡补强（P3-1 / P3-2 / P2-2 未覆盖分支） ============
+
+/**
+ * 以下用例为二轮验收补强，只覆盖前一轮未触达的分支：
+ * - 缺 plans 单片的告警计数（前一轮只测了 instruments 单片）
+ * - 真实基线文件「零告警」（前一轮只测了零丢行，没断言 warnings）
+ * - mergeImportedSlices 在「current 自身某片为空」时不得注入种子
+ * - importPersonalData 全链路（门禁 + 合并）的等价单测
+ * - downloadHoldings 时间戳的「字典序 == 时间序」契约（boot 比对新旧基线的前提）
+ */
+
+describe('normalizePersonalDataDetailed · 缺片告警计数精确性（QA 二轮）', () => {
+  const fullFile = {
+    version: 1,
+    instruments: [rawInstrument],
+    transactions: [rawTransaction],
+    plans: [rawPlan],
+  };
+
+  it('只缺 plans 一个切片 → warnings 恰好 1 条且点名 plans，另两片仍取文件内容', () => {
+    const { slices, warnings } = normalizePersonalDataDetailed({
+      version: 1,
+      instruments: [rawInstrument],
+      transactions: [rawTransaction],
+      // plans 键整体缺失
+    });
+
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toBe('holdings.json 中 plans 为空/缺失，已回退内置种子');
+    expect(slices.plans).toEqual(seedPlans);
+    // ★没被牵连：另两片既不回退种子也不产生告警
+    expect(slices.instruments.map((i) => i.id)).toEqual(['TEST.SZ']);
+    expect(slices.transactions.map((t) => t.id)).toEqual(['tx-test-1']);
+    expect(warnings.some((w) => w.includes('instruments') || w.includes('transactions'))).toBe(false);
+  });
+
+  it('全量有效文件多次调用均为零告警（告警数组不得跨调用累积）', () => {
+    expect(normalizePersonalDataDetailed(fullFile).warnings).toEqual([]);
+    expect(normalizePersonalDataDetailed(fullFile).warnings).toEqual([]);
+    expect(normalizePersonalDataDetailed(fullFile).warnings).toEqual([]);
+  });
+
+  it('★真实 public/data/holdings.json 不得触发任何回退告警（基线健康红线）', () => {
+    const file: unknown = JSON.parse(
+      readFileSync(fileURLToPath(new URL('../../../public/data/holdings.json', import.meta.url)), 'utf-8'),
+    ) as unknown;
+    const { warnings, slices } = normalizePersonalDataDetailed(file);
+
+    expect(warnings).toEqual([]);
+    // 基线内容目前与种子等价（holdings.json 由种子导出而来），故只能以引用判定是否走了兜底：
+    // 回退分支会原样返回 seed 数组本身，解析成功则是新数组。
+    expect(slices.instruments).not.toBe(seedInstruments);
+    expect(slices.transactions).not.toBe(seedTransactions);
+    expect(slices.plans).not.toBe(seedPlans);
+  });
+});
+
+describe('mergeImportedSlices · 兜底对象必须是 current 而非种子（QA 二轮）', () => {
+  it('current 自身某片为空 + 文件也缺该片 → 保留空数组，绝不注入演示种子', () => {
+    // 场景：用户刚清空全部流水，导入一份只含标的的文件 —— 不能凭空冒出 demo 流水
+    const emptied: PersonalSlices = {
+      instruments: [localInstrument],
+      transactions: [],
+      plans: [],
+    };
+    const { slices, warnings } = mergeImportedSlices(emptied, { version: 1, instruments: [rawInstrument] });
+
+    expect(slices.transactions).toEqual([]);
+    expect(slices.plans).toEqual([]);
+    expect(slices.transactions).not.toEqual(seedTransactions);
+    expect(slices.plans).not.toEqual(seedPlans);
+    expect(warnings).toHaveLength(2);
+  });
+
+  it('只含 transactions 的文件 → 标的与计划保留 current（缺片组合对称，不只 instruments 一种）', () => {
+    const current: PersonalSlices = {
+      instruments: [localInstrument],
+      transactions: [localTransaction],
+      plans: [localPlan],
+    };
+    const { slices, warnings } = mergeImportedSlices(current, { version: 1, transactions: [rawTransaction] });
+
+    expect(slices.transactions.map((t) => t.id)).toEqual(['tx-test-1']); // 文件胜出
+    expect(slices.instruments).toEqual([localInstrument]);
+    expect(slices.plans).toEqual([localPlan]);
+    expect(slices.instruments).not.toEqual(seedInstruments);
+    expect(warnings.some((w) => w.includes('instruments') && w.includes('已保留当前数据'))).toBe(true);
+    expect(warnings.some((w) => w.includes('plans') && w.includes('已保留当前数据'))).toBe(true);
+    expect(warnings.some((w) => w.includes('transactions'))).toBe(false);
+  });
+});
+
+describe('importPersonalData 等价链路 · 门禁 + 合并串联（QA 二轮）', () => {
+  /**
+   * DataContext.importPersonalData 的等价实现（逐行对齐源码，仅去掉 dispatch）：
+   * JSON.parse → hasPersonalSlices 门禁 → mergeImportedSlices(current, raw)。
+   * 仓库未装 jsdom/@testing-library，故以等价单测覆盖同一条链路。
+   */
+  const importPersonalData = (
+    current: PersonalSlices,
+    jsonText: string,
+  ): { slices: PersonalSlices; warnings: string[] } => {
+    const raw: unknown = JSON.parse(jsonText);
+    if (!hasPersonalSlices(raw)) {
+      throw new Error('文件内容为空：至少需要 instruments / transactions / plans 中的一个非空数组');
+    }
+    return mergeImportedSlices(current, raw);
+  };
+
+  const current: PersonalSlices = {
+    instruments: [localInstrument],
+    transactions: [localTransaction],
+    plans: [localPlan],
+  };
+
+  it('导入缺片文件 → 返回 warnings 且当前流水/计划一条不少（P3-2 核心防线）', () => {
+    const { slices, warnings } = importPersonalData(
+      current,
+      JSON.stringify({ version: 1, instruments: [rawInstrument] }),
+    );
+
+    expect(slices.transactions).toEqual(current.transactions);
+    expect(slices.plans).toEqual(current.plans);
+    expect(warnings).toHaveLength(2);
+    expect(warnings.every((w) => w.startsWith('holdings.json 未包含'))).toBe(true);
+  });
+
+  it('空文件 / 三片皆空 → 被门禁拦下抛错，current 不受任何影响', () => {
+    const snapshot = JSON.stringify(current);
+    expect(() => importPersonalData(current, '{}')).toThrow('文件内容为空');
+    expect(() =>
+      importPersonalData(current, JSON.stringify({ version: 1, instruments: [], transactions: [], plans: [] })),
+    ).toThrow('文件内容为空');
+    expect(JSON.stringify(current)).toBe(snapshot);
+  });
+
+  it('导出 → 重新导入的往返：全量替换且零 warning（导出文件天然三片齐备）', () => {
+    const text = downloadHoldings(current);
+    const { slices, warnings } = importPersonalData(
+      { instruments: [], transactions: [], plans: [] },
+      text,
+    );
+
+    expect(warnings).toEqual([]);
+    expect(slices).toEqual(current);
+  });
+});
+
+describe('downloadHoldings.generatedAt · 字典序即时间序（QA 二轮 · P2-2 前提）', () => {
+  it('导出时间戳为固定宽度 UTC ISO（Z 结尾），字符串比较等价于时间先后', () => {
+    const parsed = JSON.parse(downloadHoldings(baseline)) as Record<string, unknown>;
+    const generatedAt = parsed.generatedAt as string;
+
+    // boot() 用 `incoming > previous` 做字符串比较，前提是格式固定宽度且同为 UTC；
+    // 一旦改成本地时区/带偏移量格式，比较结果会静默出错 —— 此处把格式钉死。
+    expect(generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+    expect(generatedAt > '2000-01-01T00:00:00.000Z').toBe(true);
+    expect(generatedAt < '2999-01-01T00:00:00.000Z').toBe(true);
+  });
+
+  it('同格式时间戳的字典序与 Date.parse 序一致（抽样校验比较语义）', () => {
+    const samples = [
+      '2026-08-05T10:11:52.048Z',
+      '2026-08-05T10:11:52.049Z',
+      '2026-08-05T10:12:00.000Z',
+      '2026-12-31T23:59:59.999Z',
+      '2027-01-01T00:00:00.000Z',
+    ];
+    for (let i = 1; i < samples.length; i += 1) {
+      expect(samples[i] > samples[i - 1]).toBe(true);
+      expect(Date.parse(samples[i])).toBeGreaterThan(Date.parse(samples[i - 1]));
+    }
+  });
+});
