@@ -40,6 +40,7 @@ export function useTaxBreakdown(instrumentId: string): TaxBreakdown {
       settings,
       fx: state.fx,
       today,
+      transactions: state.transactions,
     }).filter((d) => d.instrumentId === instrumentId);
 
     const rows: DividendTaxRow[] = enriched.map((dividend) => ({

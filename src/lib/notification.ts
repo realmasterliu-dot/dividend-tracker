@@ -6,7 +6,7 @@ import {
   NotificationType,
   PlanFrequency,
 } from '@/types';
-import { addDays, daysBetween, todayISO } from './clock';
+import { addDays, daysBetween, todayISO, tradingDaysBetween } from './clock';
 
 /**
  * NotificationService（architecture.md 类图）
@@ -117,13 +117,14 @@ export function generate(state: DataState, stalenessThresholdHours: number, toda
     const snaps = state.prices.filter((p) => p.instrumentId === inst.id);
     if (snaps.length === 0) continue;
     const latest = snaps.reduce((a, b) => (a.date > b.date ? a : b));
-    const hours = daysBetween(latest.date, today) * 24;
+    const trading = tradingDaysBetween(latest.date, today);
+    const hours = trading * 24;
     if (hours >= stalenessThresholdHours) {
       push(out, seen, {
         key: dedupKey('DATA_STALE', inst.id, latest.date),
         type: 'DATA_STALE',
         title: `${inst.name} 价格数据陈旧`,
-        body: `最新价格 ${latest.date}，已 ${daysBetween(latest.date, today)} 天未更新（阈值 ${stalenessThresholdHours}h）`,
+        body: `最新价格 ${latest.date}，已 ${trading} 个交易日未更新（阈值 ${stalenessThresholdHours}h）`,
         severity: 'ERROR',
         createdAt: today,
         relatedInstrumentId: inst.id,

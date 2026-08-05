@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { DataState, DividendEvent, Instrument, PriceSnapshot, Transaction } from '@/types';
 import { derivePortfolio, selectCashflow12m, selectTickerItems } from '../selectors';
-import { SEED_TODAY } from '@/lib/clock';
+import { SEED_TODAY, addDays } from '@/lib/clock';
 
 const TODAY = SEED_TODAY;
 
@@ -109,7 +109,8 @@ describe('derivePortfolio 集成（引擎全链路）', () => {
     const paid = d.enrichedDividends.find((x) => x.id === 'd1')!;
     expect(paid.grossAmount).toBeCloseTo(500, 6); // 0.5 × 1000
     expect(paid.taxWithheld).toBe(0);
-    expect(paid.contingentTax).toBe(0); // 买入 2025-01-01，分红 2025-05-30 时已满 1 年 → 免税
+    // ★税档按「今天」的持股期限计算（先派后税：卖出时才补扣）；2025-01-01 建仓已满 1 年 → 免税
+    expect(paid.contingentTax).toBe(0);
     expect(paid.netAmount).toBeCloseTo(500, 6);
 
     expect(d.predictions['000001.SZ']).toBeDefined();
@@ -119,15 +120,30 @@ describe('derivePortfolio 集成（引擎全链路）', () => {
   });
 
   it('A股或有税负：持股不足 1 年时按 10% 档产生 contingentTax', () => {
+    // ★税档以「今天」为基准动态计算，SEED_TODAY 现在是真实系统日期，
+    //   买入日必须相对今天构造，否则用例会随时间推移跨档失效。
     const state = mkState({
-      transactions: [mkTx({ id: 'buy1', date: '2026-01-01' })],
-      dividends: [mkDiv({ id: 'd1', status: 'PAID', payDate: '2026-06-30' })],
+      transactions: [mkTx({ id: 'buy1', date: addDays(TODAY, -200) })],
+      dividends: [mkDiv({ id: 'd1', status: 'PAID', payDate: addDays(TODAY, -30) })],
     });
     const d = derivePortfolio(state, settings);
     const paid = d.enrichedDividends.find((x) => x.id === 'd1')!;
-    // 2026-01-01 买入 → 2026-08-04 约 215 天 → 10% 档
+    // 持股 200 天 → 1个月-1年 档（10%）
+    expect(paid.taxBracket).toBe('M1_1Y');
     expect(paid.taxRateApplied).toBeCloseTo(0.1, 6);
     expect(paid.contingentTax).toBeCloseTo(50, 6);
+  });
+
+  it('A股或有税负：持股满 1 年后归零（相对今天构造，不随时间失效）', () => {
+    const state = mkState({
+      transactions: [mkTx({ id: 'buy1', date: addDays(TODAY, -400) })],
+      dividends: [mkDiv({ id: 'd1', status: 'PAID', payDate: addDays(TODAY, -30) })],
+    });
+    const d = derivePortfolio(state, settings);
+    const paid = d.enrichedDividends.find((x) => x.id === 'd1')!;
+    expect(paid.taxBracket).toBe('GT1Y');
+    expect(paid.contingentTax).toBe(0);
+    expect(paid.netAmount).toBeCloseTo(500, 6);
   });
 
   it('selectTickerItems：包含涨跌幅', () => {

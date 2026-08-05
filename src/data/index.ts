@@ -9,8 +9,10 @@ import { seedSettings } from './seed/settings.seed';
 import { seedTransactions } from './seed/transactions.seed';
 
 /**
- * 种子聚合器：buildSeedState() 返回完整初始 state。
- * 通知由 NotificationService.generate 依据种子数据生成（去重 key 校验）。
+ * 数据聚合器。
+ * - buildPersonalState()：仅个人数据（标的/流水/计划），市场数据留空，等真实管道 hydrate 填充。
+ * - buildSeedState()：个人数据 + 种子行情，纯离线演示/回归用，不参与真实数据启动路径。
+ * 通知由 NotificationService.generate 依据数据生成（去重 key 校验）。
  */
 
 const SEED_SOURCE_HEALTH: DataState['sourceHealth'] = {
@@ -24,13 +26,29 @@ const SEED_SOURCE_HEALTH: DataState['sourceHealth'] = {
   'Frankfurter·汇率': { lastSuccess: `${SEED_TODAY}T06:00:00Z`, consecutiveFailures: 0, status: 'GREEN' },
 };
 
-export function buildSeedState(): DataState {
-  const base: DataState = {
+/**
+ * 个人数据基线：标的 / 流水 / 定投计划来自种子（个人数据 JSON 化为后续任务）。
+ * 市场数据切片留空，由 realData.loadMarketData() 在启动时用 public/data 真实数据填充，
+ * 从而杜绝"先渲染假行情再被真实数据覆盖"的闪烁。
+ */
+export function buildPersonalState(): DataState {
+  return {
     instruments: seedInstruments,
     transactions: seedTransactions,
-    dividends: seedDividends,
+    dividends: [],
     plans: seedPlans,
     notifications: [],
+    prices: [],
+    fx: [],
+    lastUpdated: '',
+    sourceHealth: {},
+  };
+}
+
+export function buildSeedState(): DataState {
+  const base: DataState = {
+    ...buildPersonalState(),
+    dividends: seedDividends,
     prices: seedPrices,
     fx: seedFx,
     lastUpdated: `${SEED_TODAY}T07:00:00Z`,

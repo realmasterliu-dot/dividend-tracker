@@ -1,15 +1,36 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
-import { DataState, DividendEvent, InvestmentPlan, Notification, Transaction } from '@/types';
-import { buildSeedState } from '@/data';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
+import { AppSettings, DataState, DividendEvent, InvestmentPlan, Notification, Transaction } from '@/types';
+import { buildPersonalState } from '@/data';
+import { applyMarketData, loadMarketData, MarketDataBundle, stripUserEdits } from '@/data/realData';
 import { uid } from '@/lib/clock';
+import { useSettings } from './SettingsContext';
 import { useLocalStorage } from './useLocalStorage';
 
 /**
  * DataStore（architecture.md §5.2）
  * useReducer + 自动持久化；所有业务变更经 actions，乐观更新 + 级联重算。
+ *
+ * 数据分层：
+ * - 个人数据（instruments/transactions/plans/notifications/分红手工订正）→ 持久化到 localStorage
+ * - 市场数据（prices/fx/dividends/sourceHealth）→ 每次启动从 public/data 真实管道重新加载，
+ *   既避免旧缓存覆盖真实行情，也避免 5MB 配额被上万条行情撑爆。
  */
 
-const STORAGE_KEY = 'dt:state:v1';
+/** ★v2：真实数据接入，schema 与持久化范围均变更，旧版 v1 种子缓存直接作废 */
+const STORAGE_KEY = 'dt:state:v2';
+const LEGACY_STORAGE_KEYS = ['dt:state:v1'];
+
+/** 持久化载荷：剔除体积最大且每次都会重新拉取的行情/汇率 */
+export type PersistedDataState = Omit<DataState, 'prices' | 'fx'>;
 
 export type DataAction =
   | { type: 'ADD_TRANSACTION'; payload: Transaction }
@@ -29,6 +50,7 @@ export type DataAction =
   | { type: 'END_PLAN'; payload: { id: string } }
   | { type: 'GENERATE_DCA_TX'; payload: { planId: string; date: string } }
   | { type: 'SET_LAST_UPDATED'; payload: string }
+  | { type: 'HYDRATE_MARKET_DATA'; payload: { bundle: MarketDataBundle; settings: AppSettings } }
   | { type: 'RESET_STATE' };
 
 function reducer(state: DataState, action: DataAction): DataState {
@@ -185,17 +207,88 @@ function reducer(state: DataState, action: DataAction): DataState {
     case 'SET_LAST_UPDATED':
       return { ...state, lastUpdated: action.payload };
 
-    case 'RESET_STATE':
-      return buildSeedState();
+    case 'HYDRATE_MARKET_DATA':
+      return applyMarketData(state, action.payload.bundle, action.payload.settings);
+
+    case 'RESET_STATE': {
+      // 个人数据回到初始种子，已加载的真实行情保留（避免重置后白屏），
+      // 分红只清除用户手工订正、保留管道事实。随后 DataProvider 会再跑一次 hydrate。
+      return {
+        ...buildPersonalState(),
+        prices: state.prices,
+        fx: state.fx,
+        dividends: stripUserEdits(state.dividends),
+        sourceHealth: state.sourceHealth,
+        lastUpdated: state.lastUpdated,
+      };
+    }
 
     default:
       return state;
   }
 }
 
+// ============ 持久化编解码 ============
+
+function toPersisted(state: DataState): PersistedDataState {
+  const { prices: _prices, fx: _fx, ...rest } = state;
+  return rest;
+}
+
+function isArrayOf<T>(value: unknown): value is T[] {
+  return Array.isArray(value);
+}
+
+/** 反序列化：缺字段/脏数据一律回落到个人数据基线，保证 state 形状始终合法 */
+function fromPersisted(raw: PersistedDataState | null): DataState {
+  const base = buildPersonalState();
+  if (!raw || typeof raw !== 'object') return base;
+
+  return {
+    ...base,
+    instruments: isArrayOf<DataState['instruments'][number]>(raw.instruments) && raw.instruments.length > 0
+      ? raw.instruments
+      : base.instruments,
+    transactions: isArrayOf<Transaction>(raw.transactions) ? raw.transactions : base.transactions,
+    plans: isArrayOf<InvestmentPlan>(raw.plans) ? raw.plans : base.plans,
+    notifications: isArrayOf<Notification>(raw.notifications) ? raw.notifications : [],
+    dividends: isArrayOf<DividendEvent>(raw.dividends) ? raw.dividends : [],
+    sourceHealth:
+      raw.sourceHealth && typeof raw.sourceHealth === 'object' ? raw.sourceHealth : {},
+    lastUpdated: typeof raw.lastUpdated === 'string' ? raw.lastUpdated : '',
+    prices: [],
+    fx: [],
+  };
+}
+
+/** 清理旧版本缓存，避免 v1 种子行情占着配额还可能被误读 */
+function purgeLegacyStorage(): void {
+  if (typeof window === 'undefined') return;
+  for (const key of LEGACY_STORAGE_KEYS) {
+    try {
+      window.localStorage.removeItem(key);
+    } catch {
+      // 隐私模式下不可写 → 忽略
+    }
+  }
+}
+
+export type HydrationStatus = 'LOADING' | 'READY' | 'FAILED';
+
+export interface HydrationState {
+  status: HydrationStatus;
+  /** 降级告警：缺文件、切片为空、管道自带 warnings */
+  warnings: string[];
+  error: string | null;
+}
+
 export interface DataContextValue {
   state: DataState;
   dispatch: React.Dispatch<DataAction>;
+  /** 真实数据加载状态，供数据新鲜度/告警 UI 使用 */
+  hydration: HydrationState;
+  /** 手动重新拉取 public/data 管道数据 */
+  reloadMarketData: () => void;
   addTransaction: (tx: Transaction) => void;
   updateTransaction: (id: string, patch: Partial<Transaction>) => void;
   deleteTransaction: (id: string) => void;
@@ -219,18 +312,60 @@ export interface DataContextValue {
 const DataContext = createContext<DataContextValue | null>(null);
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
-  const [persisted, setPersisted] = useLocalStorage<DataState>(STORAGE_KEY, buildSeedState());
-  const [state, dispatch] = useReducer(reducer, persisted);
+  const { settings } = useSettings();
+  const [persisted, setPersisted] = useLocalStorage<PersistedDataState | null>(STORAGE_KEY, null);
+  const [state, dispatch] = useReducer(reducer, persisted, fromPersisted);
+  const [hydration, setHydration] = useState<HydrationState>({
+    status: 'LOADING',
+    warnings: [],
+    error: null,
+  });
+  const [bypassBootError, setBypassBootError] = useState(false);
 
-  // 写穿透：reducer 后自动持久化
+  // settings 用 ref 读取：hydrate 不应因为主题/税务设置变动而重跑
+  const settingsRef = useRef<AppSettings>(settings);
+  settingsRef.current = settings;
+
+  // 写穿透：reducer 后自动持久化（行情/汇率不落盘）
   useEffect(() => {
-    setPersisted(state);
+    setPersisted(toPersisted(state));
   }, [state, setPersisted]);
+
+  useEffect(purgeLegacyStorage, []);
+
+  const hydrate = useCallback(async (signal?: AbortSignal): Promise<void> => {
+    setHydration((prev) => ({ ...prev, status: 'LOADING', error: null }));
+    try {
+      const bundle = await loadMarketData({ signal });
+      if (signal?.aborted) return;
+      dispatch({ type: 'HYDRATE_MARKET_DATA', payload: { bundle, settings: settingsRef.current } });
+      setHydration({ status: 'READY', warnings: bundle.warnings, error: null });
+    } catch (error) {
+      if (signal?.aborted) return;
+      const message = error instanceof Error ? error.message : String(error);
+      // eslint-disable-next-line no-console
+      console.error('[DataProvider] 真实数据加载失败：', error);
+      setHydration({ status: 'FAILED', warnings: [], error: message });
+    }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    void hydrate(controller.signal);
+    return () => controller.abort();
+  }, [hydrate]);
+
+  const reloadMarketData = useCallback(() => {
+    setBypassBootError(false);
+    void hydrate();
+  }, [hydrate]);
 
   const value = useMemo<DataContextValue>(() => {
     return {
       state,
       dispatch,
+      hydration,
+      reloadMarketData,
       addTransaction: (tx) => dispatch({ type: 'ADD_TRANSACTION', payload: tx }),
       updateTransaction: (id, patch) => dispatch({ type: 'UPDATE_TRANSACTION', payload: { id, patch } }),
       deleteTransaction: (id) => dispatch({ type: 'DELETE_TRANSACTION', payload: { id } }),
@@ -251,11 +386,74 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       endPlan: (id) => dispatch({ type: 'END_PLAN', payload: { id } }),
       generateDcaTx: (planId, date) => dispatch({ type: 'GENERATE_DCA_TX', payload: { planId, date } }),
       setLastUpdated: (ts) => dispatch({ type: 'SET_LAST_UPDATED', payload: ts }),
-      resetState: () => dispatch({ type: 'RESET_STATE' }),
+      resetState: () => {
+        dispatch({ type: 'RESET_STATE' });
+        void hydrate();
+      },
     };
-  }, [state]);
+  }, [state, hydration, reloadMarketData, hydrate]);
 
-  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
+  const hasMarketData = state.prices.length > 0;
+  const showBoot = !hasMarketData && !bypassBootError && hydration.status !== 'READY';
+
+  return (
+    <DataContext.Provider value={value}>
+      {showBoot ? (
+        <DataBootScreen
+          hydration={hydration}
+          onRetry={reloadMarketData}
+          onDismiss={() => setBypassBootError(true)}
+        />
+      ) : (
+        children
+      )}
+    </DataContext.Provider>
+  );
+}
+
+/** 启动屏：真实数据加载中 / 加载失败（可重试或空数据继续） */
+function DataBootScreen({
+  hydration,
+  onRetry,
+  onDismiss,
+}: {
+  hydration: HydrationState;
+  onRetry: () => void;
+  onDismiss: () => void;
+}) {
+  const failed = hydration.status === 'FAILED';
+  return (
+    <div className="min-h-screen flex items-center justify-center px-6">
+      <div className="max-w-md w-full text-center space-y-3">
+        <div className="text-[15px] text-primary font-medium">
+          {failed ? '市场数据加载失败' : '正在加载市场数据…'}
+        </div>
+        <div className="text-[12px] text-secondary leading-relaxed">
+          {failed
+            ? hydration.error ?? '未知错误'
+            : '从 public/data 读取行情、汇率与分红事件'}
+        </div>
+        {failed && (
+          <div className="flex items-center justify-center gap-2 pt-1">
+            <button
+              type="button"
+              onClick={onRetry}
+              className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
+            >
+              重试
+            </button>
+            <button
+              type="button"
+              onClick={onDismiss}
+              className="px-3 py-1.5 text-[12px] rounded-md text-secondary"
+            >
+              以空数据继续
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export function useData(): DataContextValue {

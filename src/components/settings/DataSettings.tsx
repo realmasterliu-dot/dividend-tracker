@@ -80,7 +80,8 @@ export function DataSettings() {
           </Button>
         </div>
         <div className="text-[11px] text-disabled mt-1.5">
-          数据保存在浏览器 localStorage（key: dt:state:v1 / dt:settings:v1）；导出 JSON 可作备份
+          个人数据保存在浏览器 localStorage（key: dt:state:v2 / dt:settings:v1）；
+          行情·汇率·分红事件每次启动从 public/data 数据管道重新加载，不占用本地配额。导出 JSON 可作备份
         </div>
       </div>
 

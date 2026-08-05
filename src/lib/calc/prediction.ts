@@ -64,9 +64,13 @@ export function predictForInstrument(
   const own = allDividends.filter((d) => d.instrumentId === instrumentId);
   const special = own.filter((d) => d.isSpecial);
   const paid = own.filter((d) => (d.status === 'PAID' || d.status === 'RECONCILED') && !d.isSpecial);
-  const sorted = [...paid].sort((a, b) => (a.payDate ?? a.exDate ?? '').localeCompare(b.payDate ?? b.exDate ?? ''));
+  const history = [...paid].sort((a, b) => (a.payDate ?? a.exDate ?? '').localeCompare(b.payDate ?? b.exDate ?? ''));
 
-  const frequency = detectFrequency(sorted);
+  // 频率识别用全量派息历史（样本越多越稳），金额统计只用"用户实际到手"的事件。
+  // ★接入真实数据管道后历史可回溯至建仓前数十年，那些事件到手金额为 0，
+  //   若计入年度汇总会把中位数与预测区间整体拉到 0。
+  const frequency = detectFrequency(history);
+  const sorted = history.filter((d) => d.netAmount > 0);
   const specialDividendsExcluded = special.map((d) => d.id);
 
   if (sorted.length === 0) {
@@ -80,7 +84,7 @@ export function predictForInstrument(
       sampleYears: 0,
       method: 'NONE',
       specialDividendsExcluded,
-      note: '无历史分红记录，无法预测',
+      note: '无已到账分红记录（建仓前的派息不计入），无法预测',
     };
   }
 

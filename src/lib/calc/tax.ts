@@ -7,9 +7,10 @@ import {
   TaxBracket,
   TaxLot,
   TaxResult,
+  Transaction,
 } from '@/types';
-import { todayISO } from '../clock';
 import { fxOn } from './fx';
+import { quantityOnDate } from './position';
 import { holdingDays, weightedRateByHolding } from './taxLot';
 
 /**
@@ -176,6 +177,37 @@ export interface EnrichContext {
   settings: AppSettings;
   fx: FxSnapshot[];
   today: string;
+  /**
+   * 用户流水。数据管道不掌握用户持仓，产出的 quantityAtRecord 恒为 0；
+   * 传入流水后由引擎按股权登记日推导实际持股数量（推导不存储）。
+   */
+  transactions?: Transaction[];
+}
+
+/** 权益归属基准日：股权登记日 > 除息日 > 派息日 */
+export function entitlementDate(dividend: DividendEvent): string | undefined {
+  return dividend.recordDate ?? dividend.exDate ?? dividend.payDate;
+}
+
+/**
+ * 解析"登记日持股数量"。
+ *
+ * 优先级：
+ * 1. 事件自带正数（种子数据 / 用户手工录入）→ 以其为准，不覆盖用户事实；
+ * 2. 否则（真实数据管道产出恒为 0）→ 按登记日从确认流水推导（含 FIFO 卖出与送转比例）。
+ *
+ * 用户建仓前的历史分红推导结果为 0 —— 这是正确的：那时并未持有，不应有到手金额。
+ */
+export function resolveQuantityAtRecord(
+  dividend: DividendEvent,
+  transactions?: Transaction[],
+): number {
+  const declared = dividend.quantityAtRecord;
+  if (Number.isFinite(declared) && declared > 0) return declared;
+  if (!transactions || transactions.length === 0) return 0;
+  const refDate = entitlementDate(dividend);
+  if (!refDate) return 0;
+  return Math.max(0, quantityOnDate(dividend.instrumentId, transactions, refDate));
 }
 
 /** 分红事件补全：计算 gross/tax/contingent/net 等推导字段（推导不存储） */
@@ -186,7 +218,8 @@ export function enrichDividend(dividend: DividendEvent, ctx: EnrichContext): Div
   const lots = ctx.lotsMap.get(dividend.instrumentId) ?? [];
   const refDate = dividend.payDate ?? dividend.exDate ?? dividend.recordDate ?? ctx.today;
   const fxRate = fxOn(ctx.fx, dividend.currency, ctx.settings.baseCurrency, refDate);
-  const grossAmount = dividend.perShareAmount * dividend.quantityAtRecord * fxRate;
+  const quantityAtRecord = resolveQuantityAtRecord(dividend, ctx.transactions);
+  const grossAmount = dividend.perShareAmount * quantityAtRecord * fxRate;
 
   const tax = computeTax(instrument, lots, ctx.settings, ctx.today, fxRate, grossAmount);
 
@@ -199,6 +232,7 @@ export function enrichDividend(dividend: DividendEvent, ctx: EnrichContext): Div
 
   return {
     ...dividend,
+    quantityAtRecord,
     grossAmount,
     taxRateApplied: tax.rate,
     taxWithheld,

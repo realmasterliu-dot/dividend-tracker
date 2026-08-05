@@ -101,12 +101,36 @@ describe('通知去重（PRD §5.7.3：重跑不重复推送）', () => {
     expect(out.some((n) => n.type === 'DIVIDEND_PROPOSED')).toBe(true);
   });
 
-  it('数据陈旧超过阈值触发 DATA_STALE', () => {
+  // ★DATA_STALE 已改为交易日口径（clock.tradingDaysBetween），
+  //   用例必须锚定固定星期几，不能用「今天 - N 个日历天」——否则周日/周一跑测试会假失败。
+  it('数据陈旧超过阈值触发 DATA_STALE（周五行情 → 周二已 2 个交易日）', () => {
+    const friday = '2026-07-31';
+    const tuesday = '2026-08-04';
     const prices: PriceSnapshot[] = [
-      { instrumentId: 'AAPL', date: addDays(SEED_TODAY, -3), price: 200, currency: 'USD', fxRate: 7.2, source: 'yf' },
+      { instrumentId: 'AAPL', date: friday, price: 200, currency: 'USD', fxRate: 7.2, source: 'yf' },
     ];
-    const out = generate(mkState({ prices }), 48, SEED_TODAY);
+    const out = generate(mkState({ prices }), 48, tuesday);
     expect(out.some((n) => n.type === 'DATA_STALE')).toBe(true);
+  });
+
+  it('周末隔夜不误报：周五行情在周一仅 1 个交易日，不触发 DATA_STALE', () => {
+    const friday = '2026-08-07';
+    const monday = '2026-08-10';
+    const prices: PriceSnapshot[] = [
+      { instrumentId: 'AAPL', date: friday, price: 200, currency: 'USD', fxRate: 7.2, source: 'yf' },
+    ];
+    const out = generate(mkState({ prices }), 48, monday);
+    expect(out.some((n) => n.type === 'DATA_STALE')).toBe(false);
+  });
+
+  it('长假停更仍会告警：连续 3 个交易日无新行情', () => {
+    const prices: PriceSnapshot[] = [
+      { instrumentId: 'AAPL', date: '2026-08-03', price: 200, currency: 'USD', fxRate: 7.2, source: 'yf' },
+    ];
+    const out = generate(mkState({ prices }), 48, '2026-08-06');
+    const stale = out.find((n) => n.type === 'DATA_STALE')!;
+    expect(stale).toBeDefined();
+    expect(stale.body).toContain('3 个交易日');
   });
 });
 

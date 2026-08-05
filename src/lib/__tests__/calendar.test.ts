@@ -3,7 +3,7 @@ import { DividendEvent } from '@/types';
 import { buildMonthGrid, classifyPending, heatmap90, markerForDate, timelineEvents } from '../calendar';
 import { SEED_TODAY, addDays } from '../clock';
 
-const TODAY = SEED_TODAY; // 2026-08-04
+const TODAY = SEED_TODAY; // 真实系统日期快照（clock.ts 已由硬编码基准日改为系统时钟）
 
 function mkDiv(over: Partial<DividendEvent> & { id: string }): DividendEvent {
   return {

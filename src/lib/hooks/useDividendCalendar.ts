@@ -37,6 +37,7 @@ export function useDividendCalendar(monthOffset = 0): DividendCalendarData {
       settings,
       fx: state.fx,
       today,
+      transactions: state.transactions,
     });
 
     const grid = buildMonthGrid(enriched, year, month);

@@ -10,7 +10,7 @@ import {
   TodoItem,
   Transaction,
 } from '@/types';
-import { daysBetween, todayISO } from '@/lib/clock';
+import { addDays, daysBetween, todayISO, tradingDaysBetween } from '@/lib/clock';
 import { buildTaxLots, derivePositionsFromLots } from '@/lib/calc/position';
 import { enrichAllDividends, isPaidStatus } from '@/lib/calc/tax';
 import { predictAll } from '@/lib/calc/prediction';
@@ -65,6 +65,7 @@ export function derivePortfolio(state: DataState, settings: AppSettings): Portfo
     settings,
     fx: state.fx,
     today,
+    transactions: state.transactions,
   });
 
   const heldIds = positions.map((p) => p.instrumentId);
@@ -110,7 +111,9 @@ export function derivePortfolio(state: DataState, settings: AppSettings): Portfo
   const todos = buildTodos(state, settings, enrichedPositions, enrichedDividends, lotsMap);
 
   const pendingTxCount = state.transactions.filter((t) => t.status === 'PENDING').length;
-  const staleCount = enrichedPositions.filter((p) => p.staleDays > 0).length;
+  const staleCount = enrichedPositions.filter((p) =>
+    isPositionStale(p, today, settings.stalenessThresholdHours),
+  ).length;
   const backfillCount = enrichedDividends.filter(
     (d) => isPaidStatus(d.status) && d.actualReceived === undefined,
   ).length;
@@ -139,6 +142,18 @@ export function derivePortfolio(state: DataState, settings: AppSettings): Portfo
 
 // ============ 待办区 ============
 
+/**
+ * 持仓是否「陈旧到需告警」：以交易日为口径，且达到 stalenessThresholdHours 阈值。
+ * staleDays 仍是日历日（用于展示「N天前」），此处仅用于告警判定，
+ * 避免「昨夜收盘 / 周末无交易」这类每日管道的常态被误判为数据陈旧。
+ */
+function isPositionStale(pos: Position, today: string, thresholdHours: number): boolean {
+  if (pos.staleDays <= 0) return false;
+  const priceDate = addDays(today, -pos.staleDays);
+  const trading = tradingDaysBetween(priceDate, today);
+  return trading * 24 >= thresholdHours;
+}
+
 export function buildTodos(
   state: DataState,
   settings: AppSettings,
@@ -162,7 +177,7 @@ export function buildTodos(
     });
   }
 
-  const stale = positions.filter((p) => p.staleDays > 0);
+  const stale = positions.filter((p) => isPositionStale(p, today, settings.stalenessThresholdHours));
   if (stale.length > 0) {
     todos.push({
       id: 'todo-stale',
