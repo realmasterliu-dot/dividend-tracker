@@ -1,0 +1,62 @@
+{
+  "akshare.fund_etf_hist_em": {
+    "lastSuccess": "2026-08-05T04:12:58Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.fund_fh_em": {
+    "lastSuccess": "2026-08-05T04:13:12Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.fund_open_fund_info_em": {
+    "lastSuccess": "2026-08-05T04:12:57Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.stock_fhps_detail_em": {
+    "lastSuccess": "2026-08-05T04:12:58Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.stock_hk_dividend_payout_em": {
+    "lastSuccess": "2026-08-05T04:12:58Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.stock_hk_hist": {
+    "lastSuccess": "2026-08-05T04:12:56Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.stock_us_hist": {
+    "lastSuccess": "2026-08-05T04:12:56Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "akshare.stock_zh_a_hist": {
+    "lastSuccess": "2026-08-05T04:12:56Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "binance.klines": {
+    "lastSuccess": "",
+    "consecutiveFailures": 3,
+    "status": "RED"
+  },
+  "frankfurter.dev.range": {
+    "lastSuccess": "2026-08-05T04:12:56Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "gold-api.crypto": {
+    "lastSuccess": "2026-08-05T04:12:57Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  },
+  "nasdaq.api.dividends": {
+    "lastSuccess": "2026-08-05T04:13:00Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
+  }
+}

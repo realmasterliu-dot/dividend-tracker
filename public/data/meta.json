@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-08-05T04:13:12Z",
+  "pipelineVersion": "1.0.0",
+  "instrumentCount": 7,
+  "warnings": [
+    "以下数据源已连续失败并进入熔断：binance.klines"
+  ],
+  "durationSeconds": 16.85,
+  "categories": [
+    "prices",
+    "dividends",
+    "fx"
+  ]
+}

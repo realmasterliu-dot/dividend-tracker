@@ -1,0 +1,7832 @@
+[
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-03",
+    "price": 6.1473,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-04",
+    "price": 6.2739,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-05",
+    "price": 6.4517,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-06",
+    "price": 6.4493,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-09",
+    "price": 6.5804,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-10",
+    "price": 6.5563,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-11",
+    "price": 6.5628,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-12",
+    "price": 6.5312,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-13",
+    "price": 6.6513,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-16",
+    "price": 6.7035,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-17",
+    "price": 6.6645,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-18",
+    "price": 6.6508,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-19",
+    "price": 6.6533,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-20",
+    "price": 6.7471,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-30",
+    "price": 6.7679,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-01-31",
+    "price": 6.6058,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-01-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-01",
+    "price": 6.6617,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-02",
+    "price": 6.6135,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-03",
+    "price": 6.5471,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-06",
+    "price": 6.3923,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-07",
+    "price": 6.4253,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-08",
+    "price": 6.3879,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-09",
+    "price": 6.527,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-10",
+    "price": 6.4343,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-13",
+    "price": 6.5551,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-14",
+    "price": 6.4719,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-15",
+    "price": 6.4204,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-16",
+    "price": 6.4793,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-17",
+    "price": 6.4106,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-20",
+    "price": 6.5084,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-21",
+    "price": 6.3601,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-22",
+    "price": 6.2808,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-23",
+    "price": 6.2952,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-24",
+    "price": 6.1519,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-27",
+    "price": 6.1998,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-02-28",
+    "price": 6.1499,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-02-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-01",
+    "price": 6.357,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-02",
+    "price": 6.2812,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-03",
+    "price": 6.3253,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-06",
+    "price": 6.2877,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-07",
+    "price": 6.2208,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-08",
+    "price": 6.1192,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-09",
+    "price": 6.077,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-10",
+    "price": 5.9095,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-13",
+    "price": 6.0069,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-14",
+    "price": 5.9077,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-15",
+    "price": 5.9121,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-16",
+    "price": 5.8609,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-17",
+    "price": 5.8456,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-20",
+    "price": 5.7307,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-21",
+    "price": 5.863,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-22",
+    "price": 5.9001,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-23",
+    "price": 6.0458,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-24",
+    "price": 6.0048,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-27",
+    "price": 5.9131,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-28",
+    "price": 6.0053,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-29",
+    "price": 6.1013,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-30",
+    "price": 6.156,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-03-31",
+    "price": 6.1737,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-03-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-03",
+    "price": 6.1546,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-04",
+    "price": 6.1254,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-06",
+    "price": 6.064,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-07",
+    "price": 6.0494,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-10",
+    "price": 6.0105,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-11",
+    "price": 5.9769,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-12",
+    "price": 5.8401,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-13",
+    "price": 5.8728,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-14",
+    "price": 5.8488,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-17",
+    "price": 5.938,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-18",
+    "price": 5.9365,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-19",
+    "price": 5.8747,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-20",
+    "price": 5.8373,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-21",
+    "price": 5.7498,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-24",
+    "price": 5.6628,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-25",
+    "price": 5.6217,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-26",
+    "price": 5.6678,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-27",
+    "price": 5.6525,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-04-28",
+    "price": 5.6849,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-04-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-04",
+    "price": 5.6369,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-05",
+    "price": 5.6993,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-08",
+    "price": 5.6884,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-09",
+    "price": 5.6143,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-10",
+    "price": 5.5903,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-11",
+    "price": 5.5785,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-12",
+    "price": 5.5977,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-15",
+    "price": 5.6687,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-16",
+    "price": 5.677,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-17",
+    "price": 5.6071,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-18",
+    "price": 5.606,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-19",
+    "price": 5.5741,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-22",
+    "price": 5.7122,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-23",
+    "price": 5.6473,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-24",
+    "price": 5.5595,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-25",
+    "price": 5.4546,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-26",
+    "price": 5.4572,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-29",
+    "price": 5.3825,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-30",
+    "price": 5.3794,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-05-31",
+    "price": 5.2562,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-05-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-01",
+    "price": 5.3124,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-02",
+    "price": 5.5169,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-05",
+    "price": 5.4913,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-06",
+    "price": 5.4952,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-07",
+    "price": 5.514,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-08",
+    "price": 5.5528,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-09",
+    "price": 5.5682,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-12",
+    "price": 5.6284,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-13",
+    "price": 5.693,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-14",
+    "price": 5.735,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-15",
+    "price": 5.8774,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-16",
+    "price": 5.9362,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-19",
+    "price": 5.8197,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-20",
+    "price": 5.7075,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-21",
+    "price": 5.6076,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-26",
+    "price": 5.4994,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-27",
+    "price": 5.5781,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-28",
+    "price": 5.5672,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-29",
+    "price": 5.4675,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-06-30",
+    "price": 5.4581,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-06-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-03",
+    "price": 5.593,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-04",
+    "price": 5.638,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-05",
+    "price": 5.5451,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-06",
+    "price": 5.4707,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-07",
+    "price": 5.4436,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-10",
+    "price": 5.4825,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-11",
+    "price": 5.5344,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-12",
+    "price": 5.5786,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-13",
+    "price": 5.76,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-14",
+    "price": 5.7598,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-17",
+    "price": 5.7189,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-18",
+    "price": 5.6301,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-19",
+    "price": 5.6094,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-20",
+    "price": 5.6005,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-21",
+    "price": 5.6674,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-24",
+    "price": 5.5911,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-25",
+    "price": 5.8706,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-26",
+    "price": 5.841,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-27",
+    "price": 5.8964,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-28",
+    "price": 6.0297,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-07-31",
+    "price": 6.0926,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-07-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-01",
+    "price": 6.0558,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-02",
+    "price": 5.95,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-03",
+    "price": 5.9611,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-04",
+    "price": 6.006,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-07",
+    "price": 5.9637,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-08",
+    "price": 5.9062,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-09",
+    "price": 5.9347,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-10",
+    "price": 5.9313,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-11",
+    "price": 5.8316,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-14",
+    "price": 5.7502,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-15",
+    "price": 5.7242,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-16",
+    "price": 5.7043,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-17",
+    "price": 5.7308,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-18",
+    "price": 5.597,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-21",
+    "price": 5.5316,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-22",
+    "price": 5.5607,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-23",
+    "price": 5.5231,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-24",
+    "price": 5.6685,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-25",
+    "price": 5.6066,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-28",
+    "price": 5.6409,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-29",
+    "price": 5.7229,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-30",
+    "price": 5.6842,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-08-31",
+    "price": 5.6354,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-08-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-01",
+    "price": 5.686,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-04",
+    "price": 5.8495,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-05",
+    "price": 5.7727,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-06",
+    "price": 5.7762,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-07",
+    "price": 5.6776,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-08",
+    "price": 5.6723,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-11",
+    "price": 5.6754,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-12",
+    "price": 5.6378,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-13",
+    "price": 5.6188,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-14",
+    "price": 5.6285,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-15",
+    "price": 5.61,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-18",
+    "price": 5.5951,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-19",
+    "price": 5.5881,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-20",
+    "price": 5.5388,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-21",
+    "price": 5.4457,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-22",
+    "price": 5.5875,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-25",
+    "price": 5.515,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-26",
+    "price": 5.4515,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-27",
+    "price": 5.4689,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-09-28",
+    "price": 5.4069,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-09-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-09",
+    "price": 5.3929,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-10",
+    "price": 5.3877,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-11",
+    "price": 5.4396,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-12",
+    "price": 5.4978,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-13",
+    "price": 5.3514,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-16",
+    "price": 5.2808,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-17",
+    "price": 5.3099,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-18",
+    "price": 5.2672,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-19",
+    "price": 5.1099,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-20",
+    "price": 5.096,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-23",
+    "price": 5.0916,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-24",
+    "price": 5.0907,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-25",
+    "price": 5.1687,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-26",
+    "price": 5.175,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-27",
+    "price": 5.2732,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-30",
+    "price": 5.3084,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-10-31",
+    "price": 5.2558,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-10-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-01",
+    "price": 5.2809,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-02",
+    "price": 5.2578,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-03",
+    "price": 5.3654,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-06",
+    "price": 5.441,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-07",
+    "price": 5.3791,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-08",
+    "price": 5.3668,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-09",
+    "price": 5.3506,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-10",
+    "price": 5.2618,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-13",
+    "price": 5.2762,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-14",
+    "price": 5.2506,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-15",
+    "price": 5.3812,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-16",
+    "price": 5.3269,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-17",
+    "price": 5.2292,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-20",
+    "price": 5.2918,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-21",
+    "price": 5.3325,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-22",
+    "price": 5.2989,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-23",
+    "price": 5.3093,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-24",
+    "price": 5.247,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-27",
+    "price": 5.2178,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-28",
+    "price": 5.175,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-29",
+    "price": 5.1069,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-11-30",
+    "price": 5.1234,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-11-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-01",
+    "price": 5.0649,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-04",
+    "price": 4.9357,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-05",
+    "price": 4.8121,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-06",
+    "price": 4.8361,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-07",
+    "price": 4.8042,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-08",
+    "price": 4.7996,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-11",
+    "price": 4.7256,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-12",
+    "price": 4.7756,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-13",
+    "price": 4.6548,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-14",
+    "price": 4.6208,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-15",
+    "price": 4.6983,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-18",
+    "price": 4.6979,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-19",
+    "price": 4.6815,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-20",
+    "price": 4.6869,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-21",
+    "price": 4.7184,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-22",
+    "price": 4.6104,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-25",
+    "price": 4.6256,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-26",
+    "price": 4.6092,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-27",
+    "price": 4.6509,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-28",
+    "price": 4.8162,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-29",
+    "price": 4.8085,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2023-12-31",
+    "price": 4.8081,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2023-12-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-02",
+    "price": 4.7169,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-03",
+    "price": 4.6981,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-04",
+    "price": 4.6603,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-05",
+    "price": 4.6145,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-08",
+    "price": 4.5305,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-09",
+    "price": 4.4949,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-10",
+    "price": 4.5007,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-11",
+    "price": 4.5726,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-12",
+    "price": 4.5434,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-15",
+    "price": 4.5345,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-16",
+    "price": 4.4936,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-17",
+    "price": 4.352,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-18",
+    "price": 4.4152,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-19",
+    "price": 4.3975,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-22",
+    "price": 4.3264,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-23",
+    "price": 4.3881,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-24",
+    "price": 4.4813,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-25",
+    "price": 4.5677,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-26",
+    "price": 4.4813,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-29",
+    "price": 4.5035,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-30",
+    "price": 4.3857,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-01-31",
+    "price": 4.3046,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-01-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-01",
+    "price": 4.3313,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-02",
+    "price": 4.2792,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-05",
+    "price": 4.3136,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-06",
+    "price": 4.5079,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-07",
+    "price": 4.5454,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-08",
+    "price": 4.4849,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-19",
+    "price": 4.5362,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-20",
+    "price": 4.5305,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-21",
+    "price": 4.6661,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-22",
+    "price": 4.7109,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-23",
+    "price": 4.722,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-26",
+    "price": 4.694,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-27",
+    "price": 4.697,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-28",
+    "price": 4.6443,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-02-29",
+    "price": 4.6775,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-02-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-01",
+    "price": 4.6901,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-04",
+    "price": 4.6687,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-05",
+    "price": 4.6254,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-06",
+    "price": 4.6521,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-07",
+    "price": 4.5889,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-08",
+    "price": 4.6037,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-11",
+    "price": 4.6945,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-12",
+    "price": 4.8684,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-13",
+    "price": 4.8524,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-14",
+    "price": 4.8391,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-15",
+    "price": 4.804,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-18",
+    "price": 4.8127,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-19",
+    "price": 4.8162,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-20",
+    "price": 4.8166,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-21",
+    "price": 4.8432,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-22",
+    "price": 4.7456,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-25",
+    "price": 4.7376,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-26",
+    "price": 4.8001,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-27",
+    "price": 4.7619,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-28",
+    "price": 4.7889,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-03-29",
+    "price": 4.7881,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-03-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-01",
+    "price": 4.8442,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-02",
+    "price": 4.8824,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-03",
+    "price": 4.8552,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-08",
+    "price": 4.7578,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-09",
+    "price": 4.7552,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-10",
+    "price": 4.772,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-11",
+    "price": 4.7692,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-12",
+    "price": 4.6857,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-15",
+    "price": 4.7513,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-16",
+    "price": 4.6788,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-17",
+    "price": 4.679,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-18",
+    "price": 4.6941,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-19",
+    "price": 4.6476,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-22",
+    "price": 4.7258,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-23",
+    "price": 4.8202,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-24",
+    "price": 4.8952,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-25",
+    "price": 4.8939,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-26",
+    "price": 5.0001,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-29",
+    "price": 4.9859,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-04-30",
+    "price": 4.9656,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-04-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-06",
+    "price": 5.1517,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-07",
+    "price": 5.1248,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-08",
+    "price": 5.0632,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-09",
+    "price": 5.103,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-10",
+    "price": 5.1245,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-13",
+    "price": 5.1036,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-14",
+    "price": 5.1157,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-15",
+    "price": 5.1097,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-16",
+    "price": 5.13,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-17",
+    "price": 5.2084,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-20",
+    "price": 5.2085,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-21",
+    "price": 5.1539,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-22",
+    "price": 5.1098,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-23",
+    "price": 5.0474,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-24",
+    "price": 5.0008,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-27",
+    "price": 5.0378,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-28",
+    "price": 5.0345,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-29",
+    "price": 4.9896,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-30",
+    "price": 4.9142,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-05-31",
+    "price": 4.889,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-05-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-03",
+    "price": 4.9353,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-04",
+    "price": 4.9622,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-05",
+    "price": 4.9366,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-06",
+    "price": 4.9357,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-07",
+    "price": 4.8911,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-11",
+    "price": 4.8209,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-12",
+    "price": 4.8004,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-13",
+    "price": 4.799,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-14",
+    "price": 4.792,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-17",
+    "price": 4.7717,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-18",
+    "price": 4.7272,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-19",
+    "price": 4.78,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-20",
+    "price": 4.7509,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-21",
+    "price": 4.682,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-24",
+    "price": 4.6788,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-25",
+    "price": 4.6972,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-26",
+    "price": 4.7043,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-27",
+    "price": 4.6533,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-28",
+    "price": 4.6053,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-06-30",
+    "price": 4.605,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-06-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-01",
+    "price": 4.5946,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-02",
+    "price": 4.6162,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-03",
+    "price": 4.6377,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-04",
+    "price": 4.6337,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-05",
+    "price": 4.5918,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-08",
+    "price": 4.5199,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-09",
+    "price": 4.5311,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-10",
+    "price": 4.5061,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-11",
+    "price": 4.5841,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-12",
+    "price": 4.662,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-15",
+    "price": 4.6111,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-16",
+    "price": 4.5693,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-17",
+    "price": 4.6122,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-18",
+    "price": 4.6089,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-19",
+    "price": 4.5909,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-22",
+    "price": 4.5816,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-23",
+    "price": 4.4837,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-24",
+    "price": 4.445,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-25",
+    "price": 4.3951,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-26",
+    "price": 4.401,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-29",
+    "price": 4.4041,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-30",
+    "price": 4.3602,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-07-31",
+    "price": 4.4795,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-07-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-01",
+    "price": 4.4386,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-02",
+    "price": 4.3735,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-05",
+    "price": 4.3735,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-06",
+    "price": 4.4012,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-07",
+    "price": 4.4613,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-08",
+    "price": 4.4846,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-09",
+    "price": 4.5053,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-12",
+    "price": 4.4995,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-13",
+    "price": 4.4905,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-14",
+    "price": 4.4437,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-15",
+    "price": 4.4203,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-16",
+    "price": 4.4686,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-19",
+    "price": 4.4644,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-20",
+    "price": 4.4284,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-21",
+    "price": 4.4073,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-22",
+    "price": 4.4096,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-23",
+    "price": 4.4177,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-26",
+    "price": 4.4086,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-27",
+    "price": 4.4013,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-28",
+    "price": 4.3142,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-29",
+    "price": 4.3812,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-08-30",
+    "price": 4.5094,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-08-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-02",
+    "price": 4.3789,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-03",
+    "price": 4.4064,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-04",
+    "price": 4.3518,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-05",
+    "price": 4.3518,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-06",
+    "price": 4.3156,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-09",
+    "price": 4.2453,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-10",
+    "price": 4.2613,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-11",
+    "price": 4.2507,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-12",
+    "price": 4.2104,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-13",
+    "price": 4.1729,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-18",
+    "price": 4.1666,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-19",
+    "price": 4.2514,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-20",
+    "price": 4.2664,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-23",
+    "price": 4.2542,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-24",
+    "price": 4.4819,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-25",
+    "price": 4.5021,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-26",
+    "price": 4.8011,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-27",
+    "price": 5.1139,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-09-30",
+    "price": 5.4293,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-09-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-08",
+    "price": 5.4686,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-09",
+    "price": 5.1911,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-10",
+    "price": 5.3206,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-11",
+    "price": 5.246,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-14",
+    "price": 5.2163,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-15",
+    "price": 5.0264,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-16",
+    "price": 5.0004,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-17",
+    "price": 4.9251,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-18",
+    "price": 5.0897,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-21",
+    "price": 5.0267,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-22",
+    "price": 5.0787,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-23",
+    "price": 5.1483,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-24",
+    "price": 5.0897,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-25",
+    "price": 5.1047,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-28",
+    "price": 5.181,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-29",
+    "price": 5.1447,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-30",
+    "price": 5.0685,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-10-31",
+    "price": 5.0387,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-10-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-01",
+    "price": 5.0732,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-04",
+    "price": 5.1206,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-05",
+    "price": 5.2414,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-06",
+    "price": 5.1744,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-07",
+    "price": 5.4184,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-08",
+    "price": 5.3161,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-11",
+    "price": 5.2555,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-12",
+    "price": 5.1568,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-13",
+    "price": 5.1447,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-14",
+    "price": 5.0927,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-15",
+    "price": 5.0612,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-18",
+    "price": 5.0277,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-19",
+    "price": 5.0353,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-20",
+    "price": 5.0414,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-21",
+    "price": 5.0294,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-22",
+    "price": 4.9008,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-25",
+    "price": 4.8818,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-26",
+    "price": 4.9088,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-27",
+    "price": 4.9876,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-28",
+    "price": 4.9134,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-11-29",
+    "price": 4.9407,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-11-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-02",
+    "price": 4.9719,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-03",
+    "price": 4.9931,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-04",
+    "price": 4.9689,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-05",
+    "price": 4.9361,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-06",
+    "price": 5.025,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-09",
+    "price": 5.0781,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-10",
+    "price": 5.119,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-11",
+    "price": 5.0895,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-12",
+    "price": 5.1803,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-13",
+    "price": 5.036,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-16",
+    "price": 4.9675,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-17",
+    "price": 4.9789,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-18",
+    "price": 5.0119,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-19",
+    "price": 4.9748,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-20",
+    "price": 4.9569,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-23",
+    "price": 4.9469,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-24",
+    "price": 4.979,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-25",
+    "price": 4.97,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-26",
+    "price": 4.9682,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-27",
+    "price": 4.9463,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-30",
+    "price": 4.9074,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2024-12-31",
+    "price": 4.8948,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2024-12-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-02",
+    "price": 4.8135,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-03",
+    "price": 4.7916,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-06",
+    "price": 4.7176,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-07",
+    "price": 4.6841,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-08",
+    "price": 4.6511,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-09",
+    "price": 4.6467,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-10",
+    "price": 4.5924,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-13",
+    "price": 4.5876,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-14",
+    "price": 4.6971,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-15",
+    "price": 4.683,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-16",
+    "price": 4.6937,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-17",
+    "price": 4.7067,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-20",
+    "price": 4.7961,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-21",
+    "price": 4.7925,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-22",
+    "price": 4.7093,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-23",
+    "price": 4.7121,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-24",
+    "price": 4.7503,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-01-27",
+    "price": 4.7868,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-01-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-05",
+    "price": 4.8218,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-06",
+    "price": 4.8547,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-07",
+    "price": 4.9129,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-10",
+    "price": 4.9666,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-11",
+    "price": 4.9145,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-12",
+    "price": 5.0077,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-13",
+    "price": 5.0967,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-14",
+    "price": 5.2332,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-17",
+    "price": 5.2307,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-18",
+    "price": 5.236,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-19",
+    "price": 5.2355,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-20",
+    "price": 5.1701,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-21",
+    "price": 5.323,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-24",
+    "price": 5.3113,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-25",
+    "price": 5.1678,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-26",
+    "price": 5.3024,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-27",
+    "price": 5.337,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-02-28",
+    "price": 5.2251,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-02-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-03",
+    "price": 5.2402,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-04",
+    "price": 5.223,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-05",
+    "price": 5.2718,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-06",
+    "price": 5.4438,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-07",
+    "price": 5.4545,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-10",
+    "price": 5.3781,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-11",
+    "price": 5.4463,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-12",
+    "price": 5.3846,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-13",
+    "price": 5.3429,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-14",
+    "price": 5.5254,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-17",
+    "price": 5.5469,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-18",
+    "price": 5.6226,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-19",
+    "price": 5.5945,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-20",
+    "price": 5.4585,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-21",
+    "price": 5.3844,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-24",
+    "price": 5.4041,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-25",
+    "price": 5.3337,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-26",
+    "price": 5.3584,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-27",
+    "price": 5.4005,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-28",
+    "price": 5.3831,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-03-31",
+    "price": 5.3059,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-03-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-01",
+    "price": 5.3394,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-02",
+    "price": 5.3218,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-03",
+    "price": 5.3044,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-07",
+    "price": 4.8327,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-08",
+    "price": 4.9517,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-09",
+    "price": 4.9983,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-10",
+    "price": 5.0759,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-11",
+    "price": 5.0397,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-14",
+    "price": 5.0833,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-15",
+    "price": 5.0917,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-16",
+    "price": 5.0524,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-17",
+    "price": 5.1166,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-18",
+    "price": 5.1058,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-21",
+    "price": 5.0751,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-22",
+    "price": 5.0636,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-23",
+    "price": 5.1315,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-24",
+    "price": 5.0897,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-25",
+    "price": 5.0877,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-28",
+    "price": 5.0864,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-29",
+    "price": 5.0796,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-04-30",
+    "price": 5.1049,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-04-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-06",
+    "price": 5.1824,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-07",
+    "price": 5.1878,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-08",
+    "price": 5.2015,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-09",
+    "price": 5.2114,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-12",
+    "price": 5.3259,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-13",
+    "price": 5.2729,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-14",
+    "price": 5.3958,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-15",
+    "price": 5.35,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-16",
+    "price": 5.2799,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-19",
+    "price": 5.2117,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-20",
+    "price": 5.2402,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-21",
+    "price": 5.2262,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-22",
+    "price": 5.172,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-23",
+    "price": 5.1647,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-26",
+    "price": 5.1114,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-27",
+    "price": 5.1133,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-28",
+    "price": 5.1204,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-29",
+    "price": 5.1539,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-05-30",
+    "price": 5.0681,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-05-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-03",
+    "price": 5.0545,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-04",
+    "price": 5.0412,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-05",
+    "price": 5.0717,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-06",
+    "price": 5.0389,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-09",
+    "price": 5.0632,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-10",
+    "price": 5.0418,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-11",
+    "price": 5.0624,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-12",
+    "price": 5.0082,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-13",
+    "price": 4.9129,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-16",
+    "price": 4.9296,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-17",
+    "price": 4.9499,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-18",
+    "price": 4.9338,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-19",
+    "price": 4.8634,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-20",
+    "price": 4.9329,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-23",
+    "price": 4.9024,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-24",
+    "price": 4.9705,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-25",
+    "price": 4.9925,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-26",
+    "price": 4.9763,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-27",
+    "price": 4.9405,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-06-30",
+    "price": 4.9307,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-06-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-01",
+    "price": 4.9168,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-02",
+    "price": 4.9183,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-03",
+    "price": 4.906,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-04",
+    "price": 4.915,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-07",
+    "price": 4.9259,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-08",
+    "price": 4.972,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-09",
+    "price": 4.9559,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-10",
+    "price": 4.9771,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-11",
+    "price": 5.0041,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-14",
+    "price": 5.0143,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-15",
+    "price": 5.0494,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-16",
+    "price": 5.0542,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-17",
+    "price": 5.0588,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-18",
+    "price": 5.1399,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-21",
+    "price": 5.1421,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-22",
+    "price": 5.2162,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-23",
+    "price": 5.2635,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-24",
+    "price": 5.2808,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-25",
+    "price": 5.2008,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-28",
+    "price": 5.1957,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-29",
+    "price": 5.1927,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-30",
+    "price": 5.1846,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-07-31",
+    "price": 5.0773,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-07-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-01",
+    "price": 5.0407,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-04",
+    "price": 5.0716,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-05",
+    "price": 5.1198,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-06",
+    "price": 5.1175,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-07",
+    "price": 5.1514,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-08",
+    "price": 5.1175,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-11",
+    "price": 5.1743,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-12",
+    "price": 5.1581,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-13",
+    "price": 5.2344,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-14",
+    "price": 5.2275,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-15",
+    "price": 5.2459,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-18",
+    "price": 5.2807,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-19",
+    "price": 5.3217,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-20",
+    "price": 5.3604,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-21",
+    "price": 5.353,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-22",
+    "price": 5.3965,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-25",
+    "price": 5.5373,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-26",
+    "price": 5.5434,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-27",
+    "price": 5.4431,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-28",
+    "price": 5.4398,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-08-29",
+    "price": 5.5141,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-08-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-01",
+    "price": 5.6059,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-02",
+    "price": 5.5886,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-03",
+    "price": 5.5409,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-04",
+    "price": 5.5021,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-05",
+    "price": 5.5472,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-08",
+    "price": 5.6414,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-09",
+    "price": 5.6925,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-10",
+    "price": 5.7157,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-11",
+    "price": 5.7339,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-12",
+    "price": 5.7451,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-15",
+    "price": 5.7614,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-16",
+    "price": 5.761,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-17",
+    "price": 5.8306,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-18",
+    "price": 5.7344,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-19",
+    "price": 5.758,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-22",
+    "price": 5.7075,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-23",
+    "price": 5.6789,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-24",
+    "price": 5.7668,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-25",
+    "price": 5.7453,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-26",
+    "price": 5.6582,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-29",
+    "price": 5.7831,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-09-30",
+    "price": 5.7973,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-09-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-09",
+    "price": 5.6941,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-10",
+    "price": 5.628,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-13",
+    "price": 5.5612,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-14",
+    "price": 5.5484,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-15",
+    "price": 5.6399,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-16",
+    "price": 5.6515,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-17",
+    "price": 5.5535,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-20",
+    "price": 5.6241,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-21",
+    "price": 5.6573,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-22",
+    "price": 5.6169,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-23",
+    "price": 5.6563,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-24",
+    "price": 5.6464,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-27",
+    "price": 5.665,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-28",
+    "price": 5.6531,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-29",
+    "price": 5.6337,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-30",
+    "price": 5.6043,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-10-31",
+    "price": 5.5908,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-10-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-03",
+    "price": 5.6156,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-04",
+    "price": 5.5838,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-05",
+    "price": 5.5521,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-06",
+    "price": 5.5971,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-07",
+    "price": 5.5432,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-10",
+    "price": 5.7468,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-11",
+    "price": 5.7621,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-12",
+    "price": 5.7994,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-13",
+    "price": 5.8359,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-14",
+    "price": 5.7576,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-17",
+    "price": 5.7416,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-18",
+    "price": 5.7167,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-19",
+    "price": 5.7137,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-20",
+    "price": 5.6817,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-21",
+    "price": 5.5757,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-24",
+    "price": 5.6063,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-25",
+    "price": 5.6252,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-26",
+    "price": 5.6136,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-27",
+    "price": 5.5905,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-11-28",
+    "price": 5.5964,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-11-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-01",
+    "price": 5.6342,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-02",
+    "price": 5.6024,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-03",
+    "price": 5.5498,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-04",
+    "price": 5.5189,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-05",
+    "price": 5.5227,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-08",
+    "price": 5.4723,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-09",
+    "price": 5.4094,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-10",
+    "price": 5.4384,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-11",
+    "price": 5.4133,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-12",
+    "price": 5.4807,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-15",
+    "price": 5.4395,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-16",
+    "price": 5.3967,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-17",
+    "price": 5.4504,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-18",
+    "price": 5.4384,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-19",
+    "price": 5.4683,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-22",
+    "price": 5.4857,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-23",
+    "price": 5.4427,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-24",
+    "price": 5.4226,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-25",
+    "price": 5.448,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-26",
+    "price": 5.4341,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-29",
+    "price": 5.3589,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-30",
+    "price": 5.3644,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2025-12-31",
+    "price": 5.3091,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2025-12-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-05",
+    "price": 5.4419,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-06",
+    "price": 5.5176,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-07",
+    "price": 5.49,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-08",
+    "price": 5.4661,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-09",
+    "price": 5.4976,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-12",
+    "price": 5.5835,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-13",
+    "price": 5.5826,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-14",
+    "price": 5.558,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-15",
+    "price": 5.4097,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-16",
+    "price": 5.3693,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-19",
+    "price": 5.3285,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-20",
+    "price": 5.3326,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-21",
+    "price": 5.298,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-22",
+    "price": 5.2984,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-23",
+    "price": 5.2949,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-26",
+    "price": 5.2894,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-27",
+    "price": 5.2983,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-28",
+    "price": 5.3388,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-29",
+    "price": 5.5299,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-01-30",
+    "price": 5.3999,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-01-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-02",
+    "price": 5.3658,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-03",
+    "price": 5.3738,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-04",
+    "price": 5.4177,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-05",
+    "price": 5.4613,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-06",
+    "price": 5.3969,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-09",
+    "price": 5.4406,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-10",
+    "price": 5.4242,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-11",
+    "price": 5.4064,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-12",
+    "price": 5.3505,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-13",
+    "price": 5.3277,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-24",
+    "price": 5.2775,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-25",
+    "price": 5.2897,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-26",
+    "price": 5.2166,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-02-27",
+    "price": 5.2384,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-02-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-02",
+    "price": 5.1606,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-03",
+    "price": 5.1318,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-04",
+    "price": 5.0374,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-05",
+    "price": 5.0025,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-06",
+    "price": 5.0801,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-09",
+    "price": 5.0443,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-10",
+    "price": 5.1204,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-11",
+    "price": 5.1225,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-12",
+    "price": 5.1148,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-13",
+    "price": 5.1389,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-16",
+    "price": 5.1998,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-17",
+    "price": 5.2045,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-18",
+    "price": 5.1864,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-19",
+    "price": 5.0888,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-20",
+    "price": 5.0452,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-23",
+    "price": 4.919,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-24",
+    "price": 4.975,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-25",
+    "price": 4.9934,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-26",
+    "price": 4.9174,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-27",
+    "price": 4.9595,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-30",
+    "price": 4.9203,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-03-31",
+    "price": 4.9102,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-03-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-01",
+    "price": 4.959,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-02",
+    "price": 4.9408,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-03",
+    "price": 4.9108,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-07",
+    "price": 4.8933,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-08",
+    "price": 4.9973,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-09",
+    "price": 4.9426,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-10",
+    "price": 4.9472,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-13",
+    "price": 4.8685,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-14",
+    "price": 4.9026,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-15",
+    "price": 4.9258,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-16",
+    "price": 5.0095,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-17",
+    "price": 4.9584,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-20",
+    "price": 4.9656,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-21",
+    "price": 4.9679,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-22",
+    "price": 4.9088,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-23",
+    "price": 4.9109,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-24",
+    "price": 4.941,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-27",
+    "price": 4.8592,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-28",
+    "price": 4.8295,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-29",
+    "price": 4.9176,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-04-30",
+    "price": 4.8599,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-04-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-06",
+    "price": 4.8072,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-07",
+    "price": 4.8419,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-08",
+    "price": 4.7972,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-11",
+    "price": 4.7477,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-12",
+    "price": 4.7064,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-13",
+    "price": 4.6931,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-14",
+    "price": 4.6747,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-15",
+    "price": 4.6076,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-18",
+    "price": 4.5668,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-19",
+    "price": 4.6007,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-19"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-20",
+    "price": 4.595,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-21",
+    "price": 4.5363,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-22",
+    "price": 4.5074,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-25",
+    "price": 4.5147,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-26",
+    "price": 4.4691,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-27",
+    "price": 4.4523,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-28",
+    "price": 4.3918,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-05-29",
+    "price": 4.4558,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-05-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-01",
+    "price": 4.4633,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-02",
+    "price": 4.5188,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-03",
+    "price": 4.4463,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-04",
+    "price": 4.4041,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-04"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-05",
+    "price": 4.3835,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-05"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-08",
+    "price": 4.3407,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-09",
+    "price": 4.3106,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-10",
+    "price": 4.3175,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-11",
+    "price": 4.3053,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-11"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-12",
+    "price": 4.3378,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-12"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-15",
+    "price": 4.3017,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-16",
+    "price": 4.2314,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-17",
+    "price": 4.1891,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-18",
+    "price": 4.1184,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-18"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-22",
+    "price": 4.1044,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-23",
+    "price": 4.0116,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-24",
+    "price": 3.991,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-25",
+    "price": 3.9828,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-25"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-26",
+    "price": 3.9126,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-26"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-29",
+    "price": 3.9807,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-06-30",
+    "price": 3.976,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-06-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-01",
+    "price": 3.9796,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-01"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-02",
+    "price": 3.9408,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-02"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-03",
+    "price": 3.9564,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-06",
+    "price": 3.9769,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-06"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-07",
+    "price": 3.9382,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-07"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-08",
+    "price": 4.0049,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-08"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-09",
+    "price": 3.9887,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-09"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-10",
+    "price": 3.9981,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-13",
+    "price": 3.9916,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-13"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-14",
+    "price": 4.0362,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-14"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-15",
+    "price": 4.1052,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-15"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-16",
+    "price": 4.1256,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-16"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-17",
+    "price": 4.037,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-17"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-20",
+    "price": 4.1563,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-20"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-21",
+    "price": 4.1282,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-21"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-22",
+    "price": 4.1049,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-22"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-23",
+    "price": 4.1063,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-23"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-24",
+    "price": 4.0462,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-24"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-27",
+    "price": 4.0735,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-27"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-28",
+    "price": 4.1203,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-28"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-29",
+    "price": 4.1772,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-30",
+    "price": 4.2364,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-30"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-07-31",
+    "price": 4.2338,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-07-31"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-08-03",
+    "price": 4.2593,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-08-03"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-08-04",
+    "price": 4.2262,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-08-04"
+  }
+]

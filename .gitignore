@@ -15,3 +15,13 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 coverage
+
+# ---- 数据管道 ----
+# 注意：scripts/pipeline/cache/ 必须提交进仓库，不要加进忽略列表。
+# 它是增量抓取的基线：CI 每次只拉最近 N 天的增量，历史数据全部来自缓存。
+# 一旦忽略它，每次 CI 都会退化成从 COLD_START_DATE 全量回填，既慢又容易被限流。
+# 这里只忽略运行期的临时产物。
+__pycache__/
+*.py[cod]
+scripts/pipeline/**/*.tmp
+scripts/pipeline/.venv/
