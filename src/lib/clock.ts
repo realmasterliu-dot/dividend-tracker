@@ -97,12 +97,30 @@ export function formatDateShort(date: string): string {
   return dayjs(date).format('MM-DD');
 }
 
+/**
+ * 日期比较（「日」粒度）：a < b → -1，a === b → 0，a > b → 1。
+ *
+ * ★性能：ISO 'YYYY-MM-DD' 走字典序快路径 —— 该格式下字典序恒等于时间序，
+ * 可避免在快照重建、forward-fill 等热点路径上为每次比较构造两个 dayjs 对象。
+ * 非 ISO 输入回退 dayjs，保证语义与原实现完全一致。
+ */
+export function compareDates(a: string, b: string): number {
+  if (ISO_DATE_RE.test(a) && ISO_DATE_RE.test(b)) {
+    if (a < b) return -1;
+    return a > b ? 1 : 0;
+  }
+  const left = dayjs(a).startOf('day');
+  const right = dayjs(b).startOf('day');
+  if (left.isBefore(right)) return -1;
+  return left.isAfter(right) ? 1 : 0;
+}
+
 export function isBefore(a: string, b: string): boolean {
-  return dayjs(a).isBefore(dayjs(b), 'day');
+  return compareDates(a, b) < 0;
 }
 
 export function isSameOrBefore(a: string, b: string): boolean {
-  return dayjs(a).isSame(dayjs(b), 'day') || dayjs(a).isBefore(dayjs(b), 'day');
+  return compareDates(a, b) <= 0;
 }
 
 /** 简单唯一 id（本地演示用途） */

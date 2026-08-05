@@ -9,9 +9,9 @@ import {
   PriceSnapshot,
   Transaction,
 } from '@/types';
-import { todayISO } from '../clock';
-import { fxOn } from './fx';
-import { quantityOnDate } from './position';
+import { compareDates, todayISO } from '../clock';
+import { rateFromSnapshot } from './fx';
+import { buildQuantityEvents, QuantityEvent } from './position';
 import { twr, xirr, xirrCashflows, yocOfPositions } from './returns';
 
 /**
@@ -30,11 +30,44 @@ function collectAllDates(
   return [...set].sort();
 }
 
-function priceSeriesFor(prices: PriceSnapshot[], instrumentId: string): { date: string; price: number }[] {
-  return prices
-    .filter((p) => p.instrumentId === instrumentId)
-    .map((p) => ({ date: p.date, price: p.price }))
-    .sort((a, b) => a.date.localeCompare(b.date));
+interface PricePoint {
+  date: string;
+  price: number;
+}
+
+/** 行情按标的分组并按日期升序：一次遍历替代「逐标的全量 filter」的 O(标的 × 行情) */
+function groupPriceSeries(prices: PriceSnapshot[]): Map<string, PricePoint[]> {
+  const map = new Map<string, PricePoint[]>();
+  for (const p of prices) {
+    const point: PricePoint = { date: p.date, price: p.price };
+    const list = map.get(p.instrumentId);
+    if (list) list.push(point);
+    else map.set(p.instrumentId, [point]);
+  }
+  for (const list of map.values()) {
+    list.sort((a, b) => compareDates(a.date, b.date));
+  }
+  return map;
+}
+
+const EMPTY_EVENTS: readonly QuantityEvent[] = [];
+const EMPTY_SERIES: readonly PricePoint[] = [];
+
+/**
+ * 单支标的在快照重建中的游标。
+ *
+ * dates 升序推进时，事件指针与价格指针都只前进不回退，
+ * 因此每支标的的总迭代次数是 O(自身事件数 + 自身行情数)，
+ * 而非原来的 O(日期数 × 流水数) + O(日期数 × 行情数)。
+ */
+interface InstrumentCursor {
+  instrument: Instrument;
+  events: readonly QuantityEvent[];
+  eventIdx: number;
+  quantity: number;
+  series: readonly PricePoint[];
+  priceIdx: number;
+  lastPrice: number | undefined;
 }
 
 /** 生成组合快照序列（市值 / 累计投入 / 累计分红 三线） */
@@ -49,10 +82,22 @@ export function buildSnapshots(
   const confirmed = transactions.filter((t) => t.status === 'CONFIRMED');
   const dates = collectAllDates(transactions, prices, today);
 
-  const priceSeries = new Map<string, { date: string; price: number }[]>();
-  for (const instr of instruments) {
-    priceSeries.set(instr.id, priceSeriesFor(prices, instr.id));
-  }
+  // 预处理一次：持仓变动事件 + 行情序列，均按日期升序
+  const eventsByInstrument = buildQuantityEvents(confirmed);
+  const seriesByInstrument = groupPriceSeries(prices);
+  const cursors: InstrumentCursor[] = instruments.map((instrument) => ({
+    instrument,
+    events: eventsByInstrument.get(instrument.id) ?? EMPTY_EVENTS,
+    eventIdx: 0,
+    quantity: 0,
+    series: seriesByInstrument.get(instrument.id) ?? EMPTY_SERIES,
+    priceIdx: 0,
+    lastPrice: undefined,
+  }));
+
+  // 汇率 forward-fill 同样走指针：同一天所有标的共用一张快照 → 全程 O(汇率条数)
+  let fxIdx = 0;
+  let fxSnapshot: FxSnapshot | undefined;
 
   let invested = 0;
   let dividends = 0;
@@ -96,24 +141,40 @@ export function buildSnapshots(
       }
     }
 
-    // 当日市值（forward-fill 价格）
+    // 汇率指针推进到 <= date 的最近快照
+    while (fxIdx < fx.length && compareDates(fx[fxIdx].date, date) <= 0) {
+      fxSnapshot = fx[fxIdx];
+      fxIdx++;
+    }
+
+    // 当日市值（持仓与价格均由指针 forward-fill，不回头重扫）
     let marketValue = 0;
     let heldCount = 0;
     let priceFound = 0;
-    for (const instr of instruments) {
-      const qty = quantityOnDate(instr.id, confirmed, date);
-      if (qty <= 0) continue;
-      heldCount++;
-      const series = priceSeries.get(instr.id) ?? [];
-      let lastPrice: number | undefined;
-      for (const s of series) {
-        if (s.date <= date) lastPrice = s.price;
-        else break;
+    for (const cursor of cursors) {
+      while (
+        cursor.eventIdx < cursor.events.length &&
+        compareDates(cursor.events[cursor.eventIdx].date, date) <= 0
+      ) {
+        const event = cursor.events[cursor.eventIdx];
+        cursor.quantity = cursor.quantity * event.ratio + event.delta;
+        cursor.eventIdx++;
       }
-      if (lastPrice !== undefined) {
+      if (cursor.quantity <= 0) continue;
+      heldCount++;
+
+      // 空仓日跳过推进不影响正确性：下次读取前仍会补齐到当前 date
+      while (
+        cursor.priceIdx < cursor.series.length &&
+        compareDates(cursor.series[cursor.priceIdx].date, date) <= 0
+      ) {
+        cursor.lastPrice = cursor.series[cursor.priceIdx].price;
+        cursor.priceIdx++;
+      }
+      if (cursor.lastPrice !== undefined) {
         priceFound++;
-        const fxr = fxOn(fx, instr.currency, settings.baseCurrency, date);
-        marketValue += qty * lastPrice * fxr;
+        const fxr = rateFromSnapshot(fxSnapshot, fx, cursor.instrument.currency, settings.baseCurrency);
+        marketValue += cursor.quantity * cursor.lastPrice * fxr;
       }
     }
 

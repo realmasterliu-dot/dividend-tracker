@@ -49,8 +49,52 @@ export interface PortfolioDerived {
   backfillCount: number;
 }
 
+/**
+ * derivePortfolio 记忆化缓存。
+ *
+ * 约 10 个组件各自调用 usePortfolio()，每个 useMemo 都是隔离的，
+ * 同一次渲染里会把整条派生链路（快照重建 / FIFO / 税务 / 预测 / 指标）重复跑 8 次以上。
+ * 这里以 (state, settings) 的**引用**为键做模块级缓存：state 由 useReducer 提供、
+ * settings 由 SettingsContext 的 useMemo 提供，引用均稳定 → 命中率高，
+ * 变更时引用改变自动失效，无需手动清理。
+ *
+ * 用 WeakMap 承载，state/settings 被回收时缓存条目一并释放，不会驻留内存。
+ */
+interface PortfolioCacheEntry {
+  /** 派生结果依赖「今天」（税档 / 陈旧度 / TTM），跨日需重算 */
+  today: string;
+  value: PortfolioDerived;
+}
+
+let portfolioCache = new WeakMap<DataState, WeakMap<AppSettings, PortfolioCacheEntry>>();
+
 export function derivePortfolio(state: DataState, settings: AppSettings): PortfolioDerived {
   const today = todayISO();
+
+  let bySettings = portfolioCache.get(state);
+  if (!bySettings) {
+    bySettings = new WeakMap<AppSettings, PortfolioCacheEntry>();
+    portfolioCache.set(state, bySettings);
+  }
+
+  const cached = bySettings.get(settings);
+  if (cached && cached.today === today) return cached.value;
+
+  const value = computePortfolio(state, settings, today);
+  bySettings.set(settings, { today, value });
+  return value;
+}
+
+/**
+ * 丢弃记忆化结果：传 state 只失效该条目，不传则整体重置。
+ * 仅在「原地修改了 state/settings 对象」这类非不可变更新场景下需要（测试用）。
+ */
+export function clearPortfolioCache(state?: DataState): void {
+  if (state) portfolioCache.delete(state);
+  else portfolioCache = new WeakMap<DataState, WeakMap<AppSettings, PortfolioCacheEntry>>();
+}
+
+function computePortfolio(state: DataState, settings: AppSettings, today: string): PortfolioDerived {
   const lotsMap = buildTaxLots(state.transactions);
   const positions = derivePositionsFromLots(
     lotsMap,
