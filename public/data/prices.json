@@ -35923,7 +35923,7 @@
     "price": 338.19,
     "currency": "USD",
     "fxRate": 6.7663,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -35931,7 +35931,7 @@
     "price": 333.43,
     "currency": "USD",
     "fxRate": 6.7551,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -35939,7 +35939,7 @@
     "price": 308.91,
     "currency": "USD",
     "fxRate": 6.7513,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -35947,7 +35947,7 @@
     "price": 303.42,
     "currency": "USD",
     "fxRate": 6.7526,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -35955,7 +35955,7 @@
     "price": 309.38,
     "currency": "USD",
     "fxRate": 6.7535,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "Au99.99",
@@ -42904,15 +42904,15 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-08-05",
-    "price": 854.5,
+    "price": 902.9789,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "akshare·黄金ETF518880(代理)"
+    "source": "gold-api·XAU折算(代理)"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-08-05",
-    "price": 64092.0,
+    "price": 64136.0,
     "currency": "USD",
     "fxRate": 6.7535,
     "source": "gold-api·现价"
