@@ -102,14 +102,20 @@ jobs:
           npm ci
           npm run build
 
-      - name: 部署到 Cloudflare Pages (Direct Upload)
+      - name: 检查 CloudBase 凭证
+        id: cbcheck
         if: always() && steps.fetch.outcome != 'cancelled'
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
-          npm i -g wrangler
-          wrangler pages deploy dist --project-name dividend-tracker --branch main
+          if [ -n "${{ secrets.TENCENT_ENV_ID }}" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: 部署到 CloudBase（静态网站托管）
+        if: always() && steps.fetch.outcome != 'cancelled' && steps.cbcheck.outputs.ready == 'true'
+        uses: TencentCloudBase/cloudbase-action@v2
+        with:
+          secretId: ${{ secrets.TENCENT_SECRET_ID }}
+          secretKey: ${{ secrets.TENCENT_SECRET_KEY }}
+          envId: ${{ secrets.TENCENT_ENV_ID }}
+          staticSrcPath: dist
 
       - name: 汇总报告
         if: always()
