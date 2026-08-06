@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Currency, CustodyChannel, Instrument, Market, SecurityType, Transaction } from '@/types';
 import { uid } from '@/lib/clock';
 import { useData } from '@/store/DataContext';
+import { searchSymbols, SymbolSuggestion } from '@/data/symbols';
 
 const MARKETS: Market[] = ['A_SHARE', 'HK', 'US', 'FUND', 'CRYPTO', 'GOLD'];
 const CURRENCIES: Currency[] = ['CNY', 'USD', 'HKD'];
@@ -119,18 +120,72 @@ interface AddHoldingModalProps {
 const selectClass =
   'w-full rounded-md bg-[#0E1420] border border-line px-2.5 py-1.5 text-[13px] text-primary focus:outline-none focus:border-declared/60 transition-colors';
 
+/** 下拉关闭延时（ms）：让 onMouseDown 先于 onBlur 生效，避免点击候选项失效 */
+const SUGGEST_BLUR_DELAY_MS = 120;
+
 /** 新增持仓录入入口（模态）：录入标的 + 可选首笔买入 */
 export function AddHoldingModal({ open, onClose }: AddHoldingModalProps) {
   const { addInstrument, addTransaction } = useData();
   const [form, setForm] = useState<AddHoldingForm>(EMPTY_FORM);
   const [errors, setErrors] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<SymbolSuggestion[]>([]);
+  const [showSuggest, setShowSuggest] = useState(false);
+  /** onBlur 延时关闭下拉的定时器句柄（卸载时清理，避免内存泄漏） */
+  const blurTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (blurTimerRef.current !== null) clearTimeout(blurTimerRef.current);
+    };
+  }, []);
 
   const update = <K extends keyof AddHoldingForm>(key: K, value: AddHoldingForm[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
 
+  /** 关闭候选下拉并清空候选 */
+  const closeSuggest = () => {
+    setShowSuggest(false);
+    setSuggestions([]);
+  };
+
+  /**
+   * 输入代码 / 名称时刷新候选。
+   * 以 code 为主：code 非空时按 code 检索；code 为空则退化为按 name 检索；两者皆空清空候选。
+   */
+  const refreshSuggestions = (codeValue: string, nameValue: string) => {
+    const query = codeValue.trim() ? codeValue : nameValue;
+    if (!query.trim()) {
+      closeSuggest();
+      return;
+    }
+    setSuggestions(searchSymbols(query));
+    setShowSuggest(true);
+  };
+
+  /** 点击候选项：一键带出代码/名称/市场/币种/证券类型/托管渠道 */
+  const applySuggestion = (s: SymbolSuggestion) => {
+    setForm((prev) => ({
+      ...prev,
+      code: s.code,
+      name: s.name,
+      market: s.market,
+      currency: s.currency,
+      securityType: s.securityType,
+      custodyChannel: s.custodyChannel,
+    }));
+    closeSuggest();
+  };
+
+  /** 输入框失焦：延时关闭，留出时间让候选项的 onMouseDown 先执行 */
+  const handleSuggestBlur = () => {
+    if (blurTimerRef.current !== null) clearTimeout(blurTimerRef.current);
+    blurTimerRef.current = setTimeout(() => setShowSuggest(false), SUGGEST_BLUR_DELAY_MS);
+  };
+
   const reset = () => {
     setForm(EMPTY_FORM);
     setErrors([]);
+    closeSuggest();
   };
 
   const close = () => {
@@ -186,16 +241,58 @@ export function AddHoldingModal({ open, onClose }: AddHoldingModalProps) {
     >
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
-          <Input
-            label="代码 / ID / Symbol"
-            value={form.code}
-            onChange={(e) => update('code', e.target.value)}
-            placeholder="如 600519.SH"
-          />
+          <div className="relative">
+            <Input
+              label="代码 / ID / Symbol"
+              value={form.code}
+              autoComplete="off"
+              onChange={(e) => {
+                const value = e.target.value;
+                update('code', value);
+                refreshSuggestions(value, form.name);
+              }}
+              onFocus={() => {
+                if (suggestions.length > 0) setShowSuggest(true);
+              }}
+              onBlur={handleSuggestBlur}
+              placeholder="如 600519.SH"
+            />
+            {showSuggest && suggestions.length > 0 && (
+              <ul
+                className="absolute left-0 right-0 top-full z-30 mt-1 max-h-56 overflow-y-auto rounded-md border border-line bg-[#0E1420] shadow-lg shadow-black/40"
+                role="listbox"
+                aria-label="标的候选"
+              >
+                {suggestions.map((s) => (
+                  <li key={s.code} role="option" aria-selected={false}>
+                    <button
+                      type="button"
+                      // 用 onMouseDown 抢在 Input 的 onBlur 之前执行，避免下拉先关导致点击失效
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        applySuggestion(s);
+                      }}
+                      className="flex w-full items-center gap-2 px-2.5 py-2 text-left text-[12px] text-primary hover:bg-white/5 focus:bg-white/5 focus:outline-none transition-colors"
+                    >
+                      <span className="font-mono tabular-nums text-declared shrink-0">{s.code}</span>
+                      <span className="truncate">{s.name}</span>
+                      <span className="ml-auto shrink-0 text-[11px] text-disabled">{s.market}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <Input
             label="名称"
             value={form.name}
-            onChange={(e) => update('name', e.target.value)}
+            autoComplete="off"
+            onChange={(e) => {
+              const value = e.target.value;
+              update('name', value);
+              refreshSuggestions(form.code, value);
+            }}
+            onBlur={handleSuggestBlur}
             placeholder="如 贵州茅台"
           />
           <label className="block">
