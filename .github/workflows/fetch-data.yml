@@ -106,16 +106,17 @@ jobs:
         id: cbcheck
         if: always() && steps.fetch.outcome != 'cancelled'
         run: |
-          if [ -n "${{ secrets.TENCENT_ENV_ID }}" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
+          if [ -n "${{ secrets.TENCENT_ENV_ID }}" ] && [ -n "${{ secrets.TENCENT_API_KEY }}" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: 部署到 CloudBase（静态网站托管）
         if: always() && steps.fetch.outcome != 'cancelled' && steps.cbcheck.outputs.ready == 'true'
-        uses: TencentCloudBase/cloudbase-action@v2
-        with:
-          secretId: ${{ secrets.TENCENT_SECRET_ID }}
-          secretKey: ${{ secrets.TENCENT_SECRET_KEY }}
-          envId: ${{ secrets.TENCENT_ENV_ID }}
-          staticSrcPath: dist
+        env:
+          TENCENT_ENV_ID: ${{ secrets.TENCENT_ENV_ID }}
+          TENCENT_API_KEY: ${{ secrets.TENCENT_API_KEY }}
+        run: |
+          npm i -g @cloudbase/cli
+          tcb login --cloudbase-api-key "$TENCENT_API_KEY" -e "$TENCENT_ENV_ID"
+          tcb hosting deploy ./dist -e "$TENCENT_ENV_ID"
 
       - name: 汇总报告
         if: always()
