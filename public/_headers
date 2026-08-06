@@ -2,9 +2,11 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# 实时行情/分红/汇率数据：每日由 pipeline 更新，禁止浏览器/CDN 长期缓存
+# 实时行情/分红/汇率数据：每日由 pipeline 更新一次。
+# 一小时内直接命中浏览器缓存（首屏不再重拉 ~1MB），过期后一天内先用旧数据渲染、
+# 后台静默revalidate；需要立刻拿最新时由前端显式发 no-cache 请求（手动刷新路径）。
 /data/*
-  Cache-Control: no-cache
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
 # 应用外壳：新部署后立即生效
 /index.html

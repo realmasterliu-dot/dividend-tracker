@@ -246,6 +246,11 @@ export interface LoadMarketDataOptions {
   signal?: AbortSignal;
   /** 便于单测注入；默认使用全局 fetch */
   fetchImpl?: typeof fetch;
+  /**
+   * fetch 缓存策略，默认 'default'（遵循 _headers 的 max-age=3600）。
+   * 冷启动/自动刷新走缓存以保住首屏；用户手动「刷新数据」时传 'no-cache' 强制拉最新。
+   */
+  cache?: RequestCache;
 }
 
 async function fetchJson(fileName: string, options: LoadMarketDataOptions): Promise<unknown> {
@@ -253,7 +258,7 @@ async function fetchJson(fileName: string, options: LoadMarketDataOptions): Prom
   if (typeof fetchImpl !== 'function') throw new Error('当前运行环境不支持 fetch');
   const response = await fetchImpl(dataUrl(fileName), {
     signal: options.signal,
-    cache: 'no-cache',
+    cache: options.cache ?? 'default',
   });
   if (!response.ok) throw new Error(`${fileName} 请求失败（HTTP ${response.status}）`);
   return (await response.json()) as unknown;

@@ -27,7 +27,9 @@ import { seedTransactions } from './seed/transactions.seed';
  *   市场数据（prices / fx / dividends / sourceHealth）由 realData.loadMarketData() 负责。
  * - holdings.json 是「基线」：用户编辑后提交到仓库即可多设备同步；
  *   浏览器 localStorage 里的运行期编辑作为 overlay 叠加在基线之上（mergePersonalData）。
- * - 防御式解析：文件缺失 / 损坏 / 单条脏数据都不能白屏，一律降级到内置种子。
+ * - 防御式解析：单条脏数据只丢自己，不影响同切片其它行，更不影响其它切片。
+ * - ★空切片就是空：文件能读到时一律尊重用户意图（「清空个人数据」必须真的能清空），
+ *   只有文件缺失 / 网络失败 / JSON 损坏（catch 分支）才回退内置种子，保证全新部署不白屏。
  * - loadPersonalData 永不抛出，失败以 warnings + source:'seed-fallback' 如实上报。
  */
 
@@ -41,7 +43,7 @@ export interface PersonalSlices {
 }
 
 export interface PersonalDataBundle extends PersonalSlices {
-  /** 加载过程中的降级告警（缺文件 / 格式异常 / 切片回退种子） */
+  /** 加载过程中的降级告警（缺文件 / 网络失败 / JSON 损坏 → 回退种子） */
   warnings: string[];
   /** file = 来自 holdings.json；seed-fallback = 文件不可用，用内置种子兜底 */
   source: 'file' | 'seed-fallback';
@@ -291,35 +293,32 @@ export function normalizePlans(raw: unknown): InvestmentPlan[] {
   return out;
 }
 
-/** normalizePersonalDataDetailed 的返回：切片 + 逐片回退告警 */
+/** normalizePersonalDataDetailed 的返回：切片 + 解析告警 */
 export interface NormalizedPersonalData {
   slices: PersonalSlices;
-  /** 每个「缺失 / 解析后为空」的切片各一条回退告警 */
+  /** 解析告警。当前解析路径不产生告警（空切片是合法状态），保留字段以兼容调用方 */
   warnings: string[];
 }
 
 /**
- * holdings.json → 个人数据三切片（带回退告警）。
- * 任一切片解析后为空（文件缺该键 / 全是脏数据）→ 回退到对应内置种子，
- * 保证 demo 不被一次手滑编辑整段抹掉；同时如实记录一条 warning，
- * 避免「用户以为在看自己的数据，实际是演示种子」的静默误导。
+ * holdings.json → 个人数据三切片。
+ *
+ * ★空切片即空：文件既然读到了，就完全按文件内容还原。
+ * 早期实现会在切片为空时回退内置演示种子，导致用户「清空个人数据」后
+ * 每次刷新都被 demo 数据回填，永远回不到空白账本 —— 那是对用户意图的覆盖。
+ * 文件级不可用（404 / 网络失败 / JSON 损坏）的兜底放在 loadPersonalData 的 catch 分支。
  */
 export function normalizePersonalDataDetailed(raw: unknown): NormalizedPersonalData {
   const root = isRecord(raw) ? raw : {};
-  const warnings: string[] = [];
 
-  /** 切片为空 → 回退种子并记一条告警 */
-  const fallback = <T>(parsed: T[], seed: T[], key: string): T[] => {
-    if (parsed.length > 0) return parsed;
-    warnings.push(`${HOLDINGS_FILE} 中 ${key} 为空/缺失，已回退内置种子`);
-    return seed;
+  return {
+    slices: {
+      instruments: normalizeInstruments(root.instruments),
+      transactions: normalizeTransactions(root.transactions),
+      plans: normalizePlans(root.plans),
+    },
+    warnings: [],
   };
-
-  const instruments = fallback(normalizeInstruments(root.instruments), seedInstruments, 'instruments');
-  const transactions = fallback(normalizeTransactions(root.transactions), seedTransactions, 'transactions');
-  const plans = fallback(normalizePlans(root.plans), seedPlans, 'plans');
-
-  return { slices: { instruments, transactions, plans }, warnings };
 }
 
 /**
@@ -361,8 +360,8 @@ export function mergeImportedSlices(
 
 /**
  * 导入校验：原始 JSON 里至少要有一个非空的个人数据切片。
- * 必须看「归一化之前」的原始结构 —— normalizePersonalData 会用种子兜底，
- * 拿它的结果判空永远为真，起不到校验作用。
+ * 看「归一化之前」的原始结构：空白基线文件（三片皆空）不应被当作有效导入源，
+ * 否则一次误选文件就会把用户当前账本洗空。
  */
 export function hasPersonalSlices(raw: unknown): boolean {
   if (!isRecord(raw)) return false;
@@ -399,6 +398,11 @@ export interface LoadPersonalDataOptions {
   signal?: AbortSignal;
   /** 便于单测注入；默认使用全局 fetch */
   fetchImpl?: typeof fetch;
+  /**
+   * fetch 缓存策略，默认 'default'（遵循 _headers 的 max-age=3600）。
+   * 用户在设置页点「从服务器重新加载」时传 'no-cache'，确保拿到刚提交的基线。
+   */
+  cache?: RequestCache;
 }
 
 function describeError(reason: unknown): string {
@@ -419,7 +423,11 @@ function seedBundle(warnings: string[]): PersonalDataBundle {
 
 /**
  * 加载 public/data/holdings.json。
- * 404 / 网络异常 / JSON 损坏一律降级为内置种子并记录 warning —— 本函数不抛出。
+ *
+ * - 文件读取成功 → 完全按文件内容返回（空切片就是空，source:'file'，无告警）。
+ * - 404 / 网络异常 / JSON 损坏 → 降级为内置种子并记录 warning（全新部署不至于白屏）。
+ *
+ * 本函数不抛出。
  */
 export async function loadPersonalData(
   options: LoadPersonalDataOptions = {},
@@ -429,14 +437,14 @@ export async function loadPersonalData(
     if (typeof fetchImpl !== 'function') throw new Error('当前运行环境不支持 fetch');
     const response = await fetchImpl(dataUrl(HOLDINGS_FILE), {
       signal: options.signal,
-      cache: 'no-cache',
+      cache: options.cache ?? 'default',
     });
     if (!response.ok) {
       throw new Error(`${HOLDINGS_FILE} 请求失败（HTTP ${response.status}）`);
     }
     const raw = (await response.json()) as unknown;
     const { slices, warnings } = normalizePersonalDataDetailed(raw);
-    // 文件读到了但某片为空 → 仍是 source:'file'，但要把回退告警如实带出去
+    // ★文件读到了就以文件为准：三片皆空 = 用户清空后的空白基线，不是异常
     return {
       ...slices,
       warnings,

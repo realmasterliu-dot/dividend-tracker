@@ -45,6 +45,7 @@ from config import (  # noqa: E402
     DIVIDEND_CACHE_SCHEMA,
     FX_CACHE_FILE,
     INSTRUMENTS,
+    MAX_PRICE_HISTORY_DAYS,
     OUTPUT_DIR,
     PIPELINE_VERSION,
     PRICE_CACHE_DIR,
@@ -111,6 +112,40 @@ def write_json(path: Path, payload: Any) -> None:
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     temp_path.replace(path)
+
+
+# ==================================================================== 发布裁剪
+def price_history_cutoff(days: int = MAX_PRICE_HISTORY_DAYS) -> str:
+    """计算 prices.json 的发布起始日（含当日）。
+
+    Args:
+        days: 保留的历史天数。
+
+    Returns:
+        'YYYY-MM-DD' 格式的下界日期。
+    """
+    return (today() - timedelta(days=days)).strftime("%Y-%m-%d")
+
+
+def trim_price_history(
+    prices: Sequence[PriceSnapshot], days: int = MAX_PRICE_HISTORY_DAYS
+) -> list[PriceSnapshot]:
+    """把发布用的行情裁剪到最近 N 天。
+
+    前端只需要一年多的序列（迷你走势 / 资产曲线 / 陈旧度），全量历史会让首屏
+    白白下载约 1MB。缓存（cache/prices/*.json）不受影响，增量抓取的基准仍是全量。
+
+    PriceSnapshot.date 是零填充的 'YYYY-MM-DD'，字符串比较等价于日期比较。
+
+    Args:
+        prices: 全量行情。
+        days: 保留的历史天数。
+
+    Returns:
+        date >= cutoff 的行情列表（保持入参顺序）。
+    """
+    cutoff = price_history_cutoff(days)
+    return [snapshot for snapshot in prices if snapshot.date >= cutoff]
 
 
 # ======================================================== 分红缓存（带 schema 版本）
@@ -566,8 +601,21 @@ class Pipeline:
             self._warn(f"以下数据源已连续失败并进入熔断：{', '.join(degraded)}")
 
         # 输出五个契约文件
+        # ★prices 只发布最近 MAX_PRICE_HISTORY_DAYS 天：首屏体积直接砍掉大半，
+        #   缓存里的全量历史照旧保留，随时可以调大窗口重新发布。
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        write_json(self.output_dir / "prices.json", [s.to_dict() for s in prices])
+        published_prices = trim_price_history(prices)
+        dropped = len(prices) - len(published_prices)
+        if dropped > 0:
+            LOG.info(
+                "prices.json 裁剪：保留 %d 条（%s 起），归档 %d 条历史仅存于 cache",
+                len(published_prices),
+                price_history_cutoff(),
+                dropped,
+            )
+        write_json(
+            self.output_dir / "prices.json", [s.to_dict() for s in published_prices]
+        )
         write_json(
             self.output_dir / "dividends.json", [e.to_dict() for e in dividends]
         )
@@ -585,7 +633,8 @@ class Pipeline:
         )
         write_json(self.output_dir / "meta.json", meta.to_dict())
 
-        self._print_summary(prices, dividends, fx_snapshots, duration)
+        # 摘要按「实际写出的条数」报，避免与 prices.json 对不上
+        self._print_summary(published_prices, dividends, fx_snapshots, duration)
         if not prices and not dividends and not fx_snapshots:
             LOG.error("本轮没有产出任何数据")
             return 1

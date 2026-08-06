@@ -76,14 +76,17 @@ export type DataAction =
   | { type: 'END_PLAN'; payload: { id: string } }
   | { type: 'GENERATE_DCA_TX'; payload: { planId: string; date: string } }
   | { type: 'SET_LAST_UPDATED'; payload: string }
+  | { type: 'ADD_INSTRUMENT'; payload: Instrument }
+  | { type: 'UPSERT_INSTRUMENT'; payload: Instrument }
   | {
       type: 'INIT_PERSONAL_DATA';
       payload: { instruments: Instrument[]; transactions: Transaction[]; plans: InvestmentPlan[] };
     }
+  | { type: 'CLEAR_PERSONAL_DATA' }
   | { type: 'HYDRATE_MARKET_DATA'; payload: { bundle: MarketDataBundle; settings: AppSettings } }
   | { type: 'RESET_STATE' };
 
-function reducer(state: DataState, action: DataAction): DataState {
+export function reducer(state: DataState, action: DataAction): DataState {
   switch (action.type) {
     case 'ADD_TRANSACTION':
       return { ...state, transactions: [...state.transactions, action.payload] };
@@ -237,6 +240,22 @@ function reducer(state: DataState, action: DataAction): DataState {
     case 'SET_LAST_UPDATED':
       return { ...state, lastUpdated: action.payload };
 
+    case 'ADD_INSTRUMENT': {
+      // 同 id 已存在 → 原样返回，避免持仓表出现两行同标的（新增语义 ≠ 覆盖）
+      if (state.instruments.some((i) => i.id === action.payload.id)) return state;
+      return { ...state, instruments: [...state.instruments, action.payload] };
+    }
+
+    case 'UPSERT_INSTRUMENT': {
+      const exists = state.instruments.some((i) => i.id === action.payload.id);
+      return {
+        ...state,
+        instruments: exists
+          ? state.instruments.map((i) => (i.id === action.payload.id ? action.payload : i))
+          : [...state.instruments, action.payload],
+      };
+    }
+
     case 'INIT_PERSONAL_DATA':
       // 只覆盖个人数据三切片；notifications / dividends / prices / fx 不受影响
       return {
@@ -245,6 +264,11 @@ function reducer(state: DataState, action: DataAction): DataState {
         transactions: action.payload.transactions,
         plans: action.payload.plans,
       };
+
+    case 'CLEAR_PERSONAL_DATA':
+      // 只清个人数据三切片：市场数据（prices/fx/dividends/sourceHealth）保留，
+      // 避免清空后白屏还要重新等一遍 1MB 行情。
+      return { ...state, instruments: [], transactions: [], plans: [] };
 
     case 'HYDRATE_MARKET_DATA':
       return applyMarketData(state, action.payload.bundle, action.payload.settings);
@@ -356,7 +380,7 @@ export interface DataContextValue {
   dispatch: React.Dispatch<DataAction>;
   /** 真实数据加载状态，供数据新鲜度/告警 UI 使用 */
   hydration: HydrationState;
-  /** 手动重新拉取 public/data 管道数据 */
+  /** 手动重新拉取 public/data 管道数据（强制 no-cache，绕过 1 小时浏览器缓存） */
   reloadMarketData: () => void;
   /**
    * 重新拉取 public/data/holdings.json，用服务器基线覆盖个人数据三切片。
@@ -370,6 +394,13 @@ export interface DataContextValue {
    * 文件未包含的切片保留当前数据（不回退种子），返回相应提示文案。
    */
   importPersonalData: (jsonText: string) => string[];
+  /**
+   * 清空个人数据三切片（标的 / 流水 / 定投计划），市场数据与分红事实保留。
+   * 用于「我要从零开始记自己的账」——清空后 holdings.json 基线为空即可保持空白。
+   */
+  clearPersonalData: () => void;
+  addInstrument: (instrument: Instrument) => void;
+  upsertInstrument: (instrument: Instrument) => void;
   addTransaction: (tx: Transaction) => void;
   updateTransaction: (id: string, patch: Partial<Transaction>) => void;
   deleteTransaction: (id: string) => void;
@@ -426,10 +457,17 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(purgeLegacyStorage, []);
 
-  const hydrate = useCallback(async (signal?: AbortSignal): Promise<void> => {
+  /**
+   * 重新拉取市场数据并合入 state。
+   *
+   * @param signal 中断信号（卸载时取消）。
+   * @param cache fetch 缓存策略；默认走浏览器缓存（_headers: max-age=3600），
+   *              用户手动刷新时传 'no-cache' 强制回源。
+   */
+  const hydrate = useCallback(async (signal?: AbortSignal, cache?: RequestCache): Promise<void> => {
     setHydration((prev) => ({ ...prev, status: 'LOADING', error: null }));
     try {
-      const bundle = await loadMarketData({ signal });
+      const bundle = await loadMarketData({ signal, cache });
       if (signal?.aborted) return;
       dispatch({ type: 'HYDRATE_MARKET_DATA', payload: { bundle, settings: settingsRef.current } });
       setHydration({ status: 'READY', warnings: bundle.warnings, error: null });
@@ -444,15 +482,17 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * 启动流程：并行拉取「个人数据基线 + 市场数据」。
-   * 个人数据先落地再 hydrate 行情，保证 applyMarketData 的通知重算基于最终持仓。
+   * 个人数据先落地再合入行情，保证 applyMarketData 的通知重算基于最终持仓
+   * （所以这里不能直接复用 hydrate —— 它会在个人数据落地前就 dispatch 行情）。
+   * 冷启动用默认缓存策略：一小时内重复打开直接命中浏览器缓存，首屏不再等 ~1MB 下载。
    * 只在挂载时跑一次；reloadMarketData / resetState 走 hydrate（不重置个人数据）。
    */
   const boot = useCallback(async (signal?: AbortSignal): Promise<void> => {
     setHydration((prev) => ({ ...prev, status: 'LOADING', error: null }));
     try {
       const [personal, market] = await Promise.all([
-        loadPersonalData({ signal }),
-        loadMarketData({ signal }),
+        loadPersonalData({ signal, cache: 'default' }),
+        loadMarketData({ signal, cache: 'default' }),
       ]);
       if (signal?.aborted) return;
 
@@ -494,11 +534,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   const reloadMarketData = useCallback(() => {
     setBypassBootError(false);
-    void hydrate();
+    // ★手动刷新必须绕过 1 小时缓存，否则用户点了「刷新」却拿到同一份旧数据
+    void hydrate(undefined, 'no-cache');
   }, [hydrate]);
 
   const reloadPersonalData = useCallback(async (): Promise<PersonalDataBundle> => {
-    const bundle: PersonalDataBundle = await loadPersonalData();
+    // 同理：用户主动同步服务器基线 → 强制回源，避免刚提交的 holdings.json 被缓存挡住
+    const bundle: PersonalDataBundle = await loadPersonalData({ cache: 'no-cache' });
     // ★只有真的读到 holdings.json 才落地：seed-fallback 时若照样 dispatch，
     //   写穿透会把用户 localStorage 里的编辑替换成演示种子且不可撤销 ——
     //   「文件读不到」绝不能变成「清空用户数据」。此时只把 bundle 交回调用方报错。
@@ -546,6 +588,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         dispatch({ type: 'INIT_PERSONAL_DATA', payload: slices });
         return warnings;
       },
+      clearPersonalData: () => {
+        dispatch({ type: 'CLEAR_PERSONAL_DATA' });
+        // 行情/汇率不落盘，清空后重拉一次保证图表与市值仍有数据可算
+        void hydrate();
+      },
+      addInstrument: (instrument) => dispatch({ type: 'ADD_INSTRUMENT', payload: instrument }),
+      upsertInstrument: (instrument) => dispatch({ type: 'UPSERT_INSTRUMENT', payload: instrument }),
       addTransaction: (tx) => dispatch({ type: 'ADD_TRANSACTION', payload: tx }),
       updateTransaction: (id, patch) => dispatch({ type: 'UPDATE_TRANSACTION', payload: { id, patch } }),
       deleteTransaction: (id) => dispatch({ type: 'DELETE_TRANSACTION', payload: { id } }),

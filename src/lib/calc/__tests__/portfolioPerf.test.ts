@@ -66,11 +66,46 @@ const settings: AppSettings = {
   stalenessThresholdHours: 48,
 };
 
-/** 真实管道产物：5256 行情 / 917 汇率 / 7 标的 */
+/** 真实管道产物（prices.json 只发布最近约 1.5 年，见下方 perfPrices 说明） */
 const realPrices: PriceSnapshot[] = normalizePrices(readPipelineJson('prices.json'));
 const realFx: FxSnapshot[] = normalizeFx(readPipelineJson('fx.json'));
 const instruments: Instrument[] = seedInstruments;
 const transactions: Transaction[] = seedTransactions;
+
+/** 把 'YYYY-MM-DD' 的年份整体前移 n 年（日/月不变，纯字符串运算） */
+function shiftYears(date: string, years: number): string {
+  return `${Number(date.slice(0, 4)) - years}${date.slice(4)}`;
+}
+
+/**
+ * 压测用行情：把真实序列按年份平移复制出更长的历史。
+ *
+ * public/data/prices.json 现在只发布最近 540 天（首屏体积治理，见
+ * scripts/pipeline/config.py 的 MAX_PRICE_HISTORY_DAYS），单靠它已撑不起
+ * 原来的压测规模。性能护栏不应随「发布多少历史」这个产品决策而缩水，
+ * 因此在测试内把规模放大回 5000+ 行情 / 900+ 交易日。
+ *
+ * Args:
+ *   prices: 真实行情。
+ *   extraYears: 额外复制几份历史（每份整体前移 1 年）。
+ *
+ * Returns:
+ *   按 (日期, 标的) 升序排列的放大后行情。
+ */
+function amplifyHistory(prices: PriceSnapshot[], extraYears: number): PriceSnapshot[] {
+  const out: PriceSnapshot[] = [...prices];
+  for (let year = 1; year <= extraYears; year += 1) {
+    for (const snapshot of prices) {
+      out.push({ ...snapshot, date: shiftYears(snapshot.date, year) });
+    }
+  }
+  out.sort((a, b) =>
+    a.date === b.date ? a.instrumentId.localeCompare(b.instrumentId) : a.date.localeCompare(b.date),
+  );
+  return out;
+}
+
+const perfPrices: PriceSnapshot[] = amplifyHistory(realPrices, 2);
 
 /** 快照序列覆盖到的最后一天（避免依赖系统当天，保证用例稳定） */
 const TODAY = '2026-08-05';
@@ -229,16 +264,16 @@ function refBuildSnapshots(
 // ============================================================
 
 describe('buildSnapshots · 真实数据规模性能回归', () => {
-  it('真实管道数据已就位（5000+ 行情 / 900+ 汇率 / 7 标的）', () => {
-    expect(realPrices.length).toBeGreaterThan(5000);
+  it('压测行情已就位（5000+ 行情 / 900+ 汇率 / 7 标的）', () => {
+    expect(perfPrices.length).toBeGreaterThan(5000);
     expect(realFx.length).toBeGreaterThan(900);
     expect(instruments).toHaveLength(7);
   });
 
   it(`真实数据规模下耗时 < ${PERF_BUDGET_MS}ms（优化前约 4300ms）`, () => {
-    const snapshots = buildSnapshots(transactions, instruments, realPrices, realFx, settings, TODAY);
+    const snapshots = buildSnapshots(transactions, instruments, perfPrices, realFx, settings, TODAY);
     const elapsed = fastestRunMs(() => {
-      buildSnapshots(transactions, instruments, realPrices, realFx, settings, TODAY);
+      buildSnapshots(transactions, instruments, perfPrices, realFx, settings, TODAY);
     });
 
     // eslint-disable-next-line no-console
@@ -254,7 +289,7 @@ describe('buildSnapshots · 真实数据规模性能回归', () => {
     // 同一批标的重复一份（id 相同 → 事件/行情序列共享，纯粹放大标的维度）
     const doubled = [...instruments, ...instruments];
     const elapsed = fastestRunMs(() => {
-      buildSnapshots(transactions, doubled, realPrices, realFx, settings, TODAY);
+      buildSnapshots(transactions, doubled, perfPrices, realFx, settings, TODAY);
     });
     expect(elapsed).toBeLessThan(PERF_BUDGET_MS * 2);
   });
@@ -341,8 +376,8 @@ describe('buildSnapshots · 语义等价（与朴素参考实现逐字段比对�
       },
     ];
 
-    const actual = buildSnapshots(txs, [instrument], realPrices, realFx, settings, TODAY);
-    const expected = refBuildSnapshots(txs, [instrument], realPrices, realFx, settings, TODAY);
+    const actual = buildSnapshots(txs, [instrument], perfPrices, realFx, settings, TODAY);
+    const expected = refBuildSnapshots(txs, [instrument], perfPrices, realFx, settings, TODAY);
     expect(actual).toEqual(expected);
 
     // 空仓区间市值必须为 0，重新建仓后恢复正数（forward-fill 未把旧价格算进空仓期）

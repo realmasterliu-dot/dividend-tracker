@@ -134,8 +134,8 @@ const localPlan: InvestmentPlan = {
 
 // ============ 1. 逐切片降级的独立性 ============
 
-describe('normalizePersonalData · 逐切片降级互不牵连（QA 边界）', () => {
-  it('instruments 整片脏（全缺 market）→ 只有 instruments 回退种子，其余两片仍用文件内容', () => {
+describe('normalizePersonalData · 逐切片独立，缺片不牵连其它片且绝不回填种子（QA 边界）', () => {
+  it('instruments 整片脏（全缺 market）→ instruments 为空数组，其余两片仍用文件内容', () => {
     const out = normalizePersonalData({
       instruments: [
         { ...rawInstrument, market: undefined },
@@ -145,14 +145,14 @@ describe('normalizePersonalData · 逐切片降级互不牵连（QA 边界）', 
       plans: [rawPlan],
     });
 
-    expect(out.instruments).toEqual(seedInstruments); // 该片整体降级
+    expect(out.instruments).toEqual([]); // ★缺片即空，不再静默回退种子
     expect(out.transactions).toHaveLength(1); // 未被牵连
     expect(out.transactions[0].id).toBe('tx-test-1');
     expect(out.plans).toHaveLength(1);
     expect(out.plans[0].id).toBe('plan-test');
   });
 
-  it('两片同时降级（plans 缺键 + transactions 全脏）→ 各自回退种子，instruments 保持文件内容', () => {
+  it('两片同时缺（plans 缺键 + transactions 全脏）→ 两片皆空，instruments 保持文件内容', () => {
     const out = normalizePersonalData({
       instruments: [rawInstrument],
       transactions: [{ ...rawTransaction, type: 'NOT_A_TYPE' }, null, 'garbage'],
@@ -161,8 +161,8 @@ describe('normalizePersonalData · 逐切片降级互不牵连（QA 边界）', 
 
     expect(out.instruments).toHaveLength(1);
     expect(out.instruments[0].id).toBe('TEST.SZ');
-    expect(out.transactions).toEqual(seedTransactions);
-    expect(out.plans).toEqual(seedPlans);
+    expect(out.transactions).toEqual([]);
+    expect(out.plans).toEqual([]);
   });
 });
 
@@ -194,35 +194,30 @@ describe('mergePersonalData · 混合 overlay 逐片各判各的（QA 边界）'
 // ============ 3. loadPersonalData：文件可读但内容缺片 ============
 
 describe('loadPersonalData · 文件成功读取但切片缺失（QA 边界）', () => {
-  it('缺 plans 键 + transactions 为空数组 → 两片回退种子，source 仍为 file 且各带一条回退 warning', async () => {
+  it('缺 plans 键 + transactions 为空数组 → 两片为空，source 仍为 file 且无兜底告警', async () => {
     const bundle = await loadPersonalData({
       fetchImpl: mkFetch({
         'holdings.json': { version: 1, instruments: [rawInstrument], transactions: [] },
       }),
     });
 
-    expect(bundle.source).toBe('file'); // 文件本身没问题，只是内容缺片
+    expect(bundle.source).toBe('file'); // 文件本身没问题，缺片是用户清空意图
     expect(bundle.instruments).toHaveLength(1);
     expect(bundle.instruments[0].id).toBe('TEST.SZ');
-    expect(bundle.transactions).toEqual(seedTransactions);
-    expect(bundle.plans).toEqual(seedPlans);
-
-    // ★静默回退是误导：回退的两片必须各有一条 warning，instruments 正常则不报
-    expect(bundle.warnings).toHaveLength(2);
-    expect(bundle.warnings.some((w) => w.includes('transactions') && w.includes('回退内置种子'))).toBe(true);
-    expect(bundle.warnings.some((w) => w.includes('plans') && w.includes('回退内置种子'))).toBe(true);
-    expect(bundle.warnings.some((w) => w.includes('instruments'))).toBe(false);
+    expect(bundle.transactions).toEqual([]); // ★清空即空，不回填演示种子
+    expect(bundle.plans).toEqual([]);
+    // ★清空不该报「回退种子」，否则用户会误以为自己账本是 demo 数据
+    expect(bundle.warnings).toEqual([]);
   });
 
-  it('文件是合法 JSON 但顶层不是对象（[]）→ 三片全部回退种子 + 三条 warning，仍报 source:file', async () => {
+  it('文件是合法 JSON 但顶层不是对象（[]）→ 三片皆空 + source:file + 零告警', async () => {
     const bundle = await loadPersonalData({ fetchImpl: mkFetch({ 'holdings.json': [] }) });
 
     expect(bundle.source).toBe('file');
-    expect(bundle.instruments).toEqual(seedInstruments);
-    expect(bundle.transactions).toEqual(seedTransactions);
-    expect(bundle.plans).toEqual(seedPlans);
-    expect(bundle.warnings).toHaveLength(3);
-    expect(bundle.warnings.every((w) => w.includes('已回退内置种子'))).toBe(true);
+    expect(bundle.instruments).toEqual([]);
+    expect(bundle.transactions).toEqual([]);
+    expect(bundle.plans).toEqual([]);
+    expect(bundle.warnings).toEqual([]);
   });
 
   it('generatedAt 透传：文件带则原样带出，缺失/非字符串则为 undefined', async () => {
@@ -254,9 +249,9 @@ describe('loadPersonalData · 文件成功读取但切片缺失（QA 边界）',
   });
 });
 
-// ============ 3b. normalizePersonalDataDetailed：逐片回退告警 ============
+// ============ 3b. normalizePersonalDataDetailed：空切片即空，绝不静默回退种子 ============
 
-describe('normalizePersonalDataDetailed · 回退种子必须留痕（QA P3-1）', () => {
+describe('normalizePersonalDataDetailed · 空切片即空，绝不静默回退种子（QA P3-1）', () => {
   const fullFile = {
     version: 1,
     instruments: [rawInstrument],
@@ -272,23 +267,23 @@ describe('normalizePersonalDataDetailed · 回退种子必须留痕（QA P3-1）
     expect(slices.plans.map((p) => p.id)).toEqual(['plan-test']);
   });
 
-  it('单片全脏 → 只有该片回退且只报一条 warning，文案点名切片', () => {
+  it('单片全脏 → 该片为空数组且无 warning（清空即空，不回退种子）', () => {
     const { slices, warnings } = normalizePersonalDataDetailed({
       ...fullFile,
       instruments: [{ id: '' }, 'x', null],
     });
-    expect(slices.instruments).toEqual(seedInstruments);
+    expect(slices.instruments).toEqual([]);
     expect(slices.transactions).toHaveLength(1); // 未被牵连
-    expect(warnings).toEqual(['holdings.json 中 instruments 为空/缺失，已回退内置种子']);
+    expect(warnings).toEqual([]);
   });
 
-  it('整个文件非对象 / 空对象 → 三条 warning，顺序为 instruments → transactions → plans', () => {
+  it('整个文件非对象 / 空对象 → 三片皆空 + 零 warning', () => {
     for (const raw of [null, undefined, 'garbage', {}]) {
-      const { warnings } = normalizePersonalDataDetailed(raw);
-      expect(warnings).toHaveLength(3);
-      expect(warnings[0]).toContain('instruments');
-      expect(warnings[1]).toContain('transactions');
-      expect(warnings[2]).toContain('plans');
+      const { slices, warnings } = normalizePersonalDataDetailed(raw);
+      expect(slices.instruments).toEqual([]);
+      expect(slices.transactions).toEqual([]);
+      expect(slices.plans).toEqual([]);
+      expect(warnings).toEqual([]);
     }
   });
 
@@ -452,9 +447,10 @@ describe('hasPersonalSlices · 导入校验边界（QA 边界）', () => {
     const raw = { version: 1, instruments: [rawInstrument] };
     expect(hasPersonalSlices(raw)).toBe(true);
 
-    // 冷启动基线语义（normalizePersonalData）仍是回退种子 —— 这是给 holdings.json 用的
+    // 冷启动基线语义（normalizePersonalData）：文件缺片即空，不回退种子（holdings.json 是用户账本）
     const asBaseline = normalizePersonalData(raw);
-    expect(asBaseline.transactions).toEqual(seedTransactions);
+    expect(asBaseline.transactions).toEqual([]);
+    expect(asBaseline.plans).toEqual([]);
 
     // 导入语义（DataContext.importPersonalData 实际调用的）→ 保留当前数据，不丢流水
     const current: PersonalSlices = {
@@ -476,25 +472,22 @@ describe('public/data/holdings.json 基线体检（QA 数据回归）', () => {
     readFileSync(fileURLToPath(new URL('../../../public/data/holdings.json', import.meta.url)), 'utf-8'),
   ) as unknown;
 
-  it('可通过导入校验，且归一化零丢行（任何脏行都会在此暴露）', () => {
-    expect(hasPersonalSlices(raw)).toBe(true);
-
-    const file = raw as Record<string, unknown[]>;
-    const out = normalizePersonalData(raw);
-    expect(out.instruments).toHaveLength(file.instruments.length);
-    expect(out.transactions).toHaveLength(file.transactions.length);
-    expect(out.plans).toHaveLength(file.plans.length);
-    // 未触发任何切片的种子兜底（兜底会原样返回 seed 数组引用）
-    expect(out.instruments).not.toBe(seedInstruments);
-    expect(out.transactions).not.toBe(seedTransactions);
-    expect(out.plans).not.toBe(seedPlans);
+  it('空白基线：归一化得到三空切片 + 零告警（证明「清空个人数据」能真正清空，不会静默回填种子）', () => {
+    const { slices, warnings } = normalizePersonalDataDetailed(raw);
+    expect(slices.instruments).toEqual([]);
+    expect(slices.transactions).toEqual([]);
+    expect(slices.plans).toEqual([]);
+    expect(warnings).toEqual([]);
   });
 
-  it('流水与定投计划的 instrumentId 均可解析到 instruments（无孤儿引用）', () => {
-    const out = normalizePersonalData(raw);
-    const ids = new Set(out.instruments.map((i) => i.id));
-    expect(out.transactions.filter((t) => !ids.has(t.instrumentId)).map((t) => t.id)).toEqual([]);
-    expect(out.plans.filter((p) => !ids.has(p.instrumentId)).map((p) => p.id)).toEqual([]);
+  it('空白基线 hasPersonalSlices 为 false（不会被误当作有效导入源把当前账本洗空）', () => {
+    expect(hasPersonalSlices(raw)).toBe(false);
+  });
+
+  it('带 version 与 generatedAt 元信息（导出回环产物，可被比对新旧基线）', () => {
+    const file = raw as Record<string, unknown>;
+    expect(file.version).toBe(1);
+    expect(typeof file.generatedAt).toBe('string');
   });
 });
 
@@ -509,7 +502,7 @@ describe('public/data/holdings.json 基线体检（QA 数据回归）', () => {
  * - downloadHoldings 时间戳的「字典序 == 时间序」契约（boot 比对新旧基线的前提）
  */
 
-describe('normalizePersonalDataDetailed · 缺片告警计数精确性（QA 二轮）', () => {
+describe('normalizePersonalDataDetailed · 缺片即空，告警计数恒为 0（QA 二轮）', () => {
   const fullFile = {
     version: 1,
     instruments: [rawInstrument],
@@ -517,7 +510,7 @@ describe('normalizePersonalDataDetailed · 缺片告警计数精确性（QA 二�
     plans: [rawPlan],
   };
 
-  it('只缺 plans 一个切片 → warnings 恰好 1 条且点名 plans，另两片仍取文件内容', () => {
+  it('只缺 plans 一个切片 → warnings 恒为 0 条，plans 为空数组，另两片仍取文件内容', () => {
     const { slices, warnings } = normalizePersonalDataDetailed({
       version: 1,
       instruments: [rawInstrument],
@@ -525,9 +518,8 @@ describe('normalizePersonalDataDetailed · 缺片告警计数精确性（QA 二�
       // plans 键整体缺失
     });
 
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0]).toBe('holdings.json 中 plans 为空/缺失，已回退内置种子');
-    expect(slices.plans).toEqual(seedPlans);
+    expect(warnings).toEqual([]);
+    expect(slices.plans).toEqual([]);
     // ★没被牵连：另两片既不回退种子也不产生告警
     expect(slices.instruments.map((i) => i.id)).toEqual(['TEST.SZ']);
     expect(slices.transactions.map((t) => t.id)).toEqual(['tx-test-1']);
@@ -763,11 +755,12 @@ describe('告警 token 契约 · R1 过滤器不被文案改动静默架空', ()
   const pickPersonal = (warnings: string[]): string[] =>
     warnings.filter((w) => w.includes('holdings.json'));
 
-  it('三片全回退的 3 条告警都带 token → 能被 R1 过滤器一条不漏地捞出', () => {
+  it('完全空白文件 → 0 条个人告警（清空即空，不静默回退种子），R1 过滤器对空输入返回空', () => {
     const { warnings } = normalizePersonalDataDetailed({});
 
-    expect(warnings).toHaveLength(3);
-    expect(pickPersonal(warnings)).toEqual(warnings);
+    expect(warnings).toEqual([]);
+    // R1 过滤器对「无个人告警」场景返回空数组（对应 UI 不渲染个人告警块）
+    expect(pickPersonal(warnings)).toEqual([]);
   });
 
   it('文件不可用（404 → seed-fallback）的告警同样带 token', async () => {
@@ -791,15 +784,16 @@ describe('告警 token 契约 · R1 过滤器不被文案改动静默架空', ()
     expect(pickPersonal(marketWarnings)).toEqual([]);
   });
 
-  it('混合告警只挑出个人侧；无个人告警时为空数组（对应 UI 不渲染该块）', async () => {
+  it('空白 holdings.json（仅 version）→ 无个人侧告警，R1 过滤器返回空（UI 不渲染该块）', async () => {
     const personal = await loadPersonalData({
       fetchImpl: mkFetch({ 'holdings.json': { version: 1 } }),
     });
     const mixed = [...personal.warnings, '行情数据为空，持仓市值将无法计算'];
 
-    expect(personal.warnings.length).toBeGreaterThan(0);
-    expect(pickPersonal(mixed)).toEqual(personal.warnings);
-    expect(pickPersonal([])).toEqual([]); // personalWarnings.length > 0 为假 → 整块不渲染
+    expect(personal.source).toBe('file');
+    expect(personal.warnings).toEqual([]);
+    expect(pickPersonal(mixed)).toEqual([]); // 空白基线无个人告警，行情告警不得串入个人卡片
+    expect(pickPersonal([])).toEqual([]);
   });
 
   it('boot() 的「服务器有更新」文案也必须带 token（源码级契约检查）', () => {

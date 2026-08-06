@@ -147,6 +147,13 @@ INSTRUMENT_BY_ID: Final[dict[str, InstrumentConfig]] = {i.id: i for i in INSTRUM
 COLD_START_DATE: Final[str] = os.environ.get("PIPELINE_COLD_START", "2023-01-01")
 # 日常增量窗口：7 天足以覆盖春节等长假造成的缺口
 DEFAULT_LOOKBACK_DAYS: Final[int] = int(os.environ.get("PIPELINE_LOOKBACK_DAYS", "7"))
+# 写入 public/data/prices.json 的历史长度上限（天）。
+# 前端只用近一年多的序列画 30 日迷你走势 / 资产曲线 / 陈旧度判定，
+# 但全量历史会让首屏白白下载 ~1MB。约 1.5 年在「够画图」与「够小」之间取平衡。
+# ★只裁剪对外发布的 prices.json，cache/prices/*.json 仍保留全量历史（增量抓取的基准）。
+MAX_PRICE_HISTORY_DAYS: Final[int] = int(
+    os.environ.get("PIPELINE_MAX_PRICE_DAYS", "540")
+)
 
 # ---------------------------------------------------------------- 弹性策略
 DEFAULT_TIMEOUT_S: Final[float] = float(os.environ.get("PIPELINE_TIMEOUT", "20"))

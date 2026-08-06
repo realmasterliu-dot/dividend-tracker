@@ -354,7 +354,7 @@ describe('loadMarketData（Promise.allSettled 单文件降级）', () => {
     expect(bundle.lastUpdated).toBe('2026-08-04T00:00:00Z');
   });
 
-  it('请求带上 no-cache，避免浏览器缓存盖住当日管道产物', async () => {
+  it('默认请求带 default 缓存（遵循 _headers 的 max-age=3600，首屏可命中浏览器缓存）', async () => {
     const seen: RequestInit[] = [];
     const spy = (async (input: unknown, init?: RequestInit) => {
       seen.push(init ?? {});
@@ -363,6 +363,19 @@ describe('loadMarketData（Promise.allSettled 单文件降级）', () => {
     }) as unknown as typeof fetch;
 
     await loadMarketData({ fetchImpl: spy });
+    expect(seen).toHaveLength(5);
+    expect(seen.every((i) => i.cache === 'default')).toBe(true);
+  });
+
+  it('显式传入 no-cache（手动刷新路径）→ 全部请求绕过浏览器缓存强制回源', async () => {
+    const seen: RequestInit[] = [];
+    const spy = (async (input: unknown, init?: RequestInit) => {
+      seen.push(init ?? {});
+      const name = String(input).split('/').pop() ?? '';
+      return { ok: true, status: 200, json: async () => PIPELINE_FILES[name] ?? null } as unknown as Response;
+    }) as unknown as typeof fetch;
+
+    await loadMarketData({ fetchImpl: spy, cache: 'no-cache' });
     expect(seen).toHaveLength(5);
     expect(seen.every((i) => i.cache === 'no-cache')).toBe(true);
   });

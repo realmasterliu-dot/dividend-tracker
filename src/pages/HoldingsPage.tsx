@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 import { HoldingsTable } from '@/components/holdings/HoldingsTable';
+import { AddHoldingModal } from '@/components/holdings/AddHoldingModal';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 
 /** 持仓表页（14 列密集表格） */
 export function HoldingsPage() {
   const [hint] = useState(true);
+  const [addOpen, setAddOpen] = useState(false);
 
   return (
     <div className="p-4 space-y-3">
@@ -18,6 +22,9 @@ export function HoldingsPage() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button variant="primary" size="sm" onClick={() => setAddOpen(true)}>
+            <Plus size={13} /> 新增持仓
+          </Button>
           <Badge variant="gray">行高 32-36px</Badge>
           <Link to="/transactions" className="text-[12px] text-declared hover:underline">录入流水 →</Link>
         </div>
@@ -32,6 +39,8 @@ export function HoldingsPage() {
       <Card bodyClassName="p-0">
         <HoldingsTable />
       </Card>
+
+      <AddHoldingModal open={addOpen} onClose={() => setAddOpen(false)} />
     </div>
   );
 }

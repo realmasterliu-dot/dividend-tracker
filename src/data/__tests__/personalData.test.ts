@@ -18,7 +18,7 @@ import { seedTransactions } from '../seed/transactions.seed';
 
 /**
  * 个人数据接入层（src/data/personalData.ts）
- * - normalizePersonalData：逐切片防御式解析，整片为空回退种子
+ * - normalizePersonalData：逐切片防御式解析，整片为空即空（清空意图受尊重，不回退种子）
  * - loadPersonalData：holdings.json 不可用一律降级种子，不抛出
  * - mergePersonalData：localStorage overlay 叠加在基线之上
  * - downloadHoldings：导出文本可回环解析
@@ -204,7 +204,7 @@ describe('normalizePlans（防御式解析）', () => {
   });
 });
 
-describe('normalizePersonalData（切片全空 → 回退种子）', () => {
+describe('normalizePersonalData（切片全空 = 尊重用户清空意图）', () => {
   it('三切片齐备时按文件内容映射，不掺入种子', () => {
     const out = normalizePersonalData(HOLDINGS_FILE);
     expect(out.instruments).toHaveLength(1);
@@ -213,29 +213,29 @@ describe('normalizePersonalData（切片全空 → 回退种子）', () => {
     expect(out.instruments[0].id).toBe('TEST.SZ');
   });
 
-  it('单个切片解析后为空 → 该切片回退对应种子，其它切片不受影响', () => {
+  it('单个切片缺失/为空 → 该切片为空数组，不回退种子，其它切片不受影响', () => {
     const out = normalizePersonalData({ ...HOLDINGS_FILE, plans: [] });
-    expect(out.plans.length).toBeGreaterThan(0);
-    expect(out.plans).toEqual(seedPlans);
+    expect(out.plans).toEqual([]); // ★清空后就是空，绝不回填演示种子
     expect(out.instruments).toHaveLength(1); // 未受牵连
+    expect(out.transactions).toHaveLength(1);
   });
 
-  it('切片全是脏数据（解析后为空）同样回退种子', () => {
+  it('切片全是脏数据（解析后为空）→ 空数组，不回退种子', () => {
     const out = normalizePersonalData({
       instruments: [{ id: '' }, 'x', null],
       transactions: HOLDINGS_FILE.transactions,
       plans: HOLDINGS_FILE.plans,
     });
-    expect(out.instruments.length).toBeGreaterThan(0);
-    expect(out.instruments).toEqual(seedInstruments);
+    expect(out.instruments).toEqual([]);
+    expect(out.transactions).toHaveLength(1); // 未受牵连
   });
 
-  it('整个文件损坏 / 非对象 → 三切片全部回退种子', () => {
+  it('整个文件损坏 / 非对象 → 三切片皆空（空切片即空，文件缺失才走 seed-fallback）', () => {
     for (const raw of [null, undefined, 'garbage', [1, 2], {}]) {
       const out = normalizePersonalData(raw);
-      expect(out.instruments).toEqual(seedInstruments);
-      expect(out.transactions).toEqual(seedTransactions);
-      expect(out.plans).toEqual(seedPlans);
+      expect(out.instruments).toEqual([]);
+      expect(out.transactions).toEqual([]);
+      expect(out.plans).toEqual([]);
     }
   });
 });
@@ -302,7 +302,7 @@ describe('loadPersonalData（永不抛出，失败降级种子）', () => {
     expect(bundle.warnings.some((w) => w.includes('Unexpected token'))).toBe(true);
   });
 
-  it('请求 /data/holdings.json 且带 no-cache', async () => {
+  it('默认请求 /data/holdings.json 带 default 缓存（遵循 _headers 的 max-age=3600）', async () => {
     const seen: { url: string; init: RequestInit }[] = [];
     const spy = (async (input: unknown, init?: RequestInit) => {
       seen.push({ url: String(input), init: init ?? {} });
@@ -310,6 +310,19 @@ describe('loadPersonalData（永不抛出，失败降级种子）', () => {
     }) as unknown as typeof fetch;
 
     await loadPersonalData({ fetchImpl: spy });
+    expect(seen).toHaveLength(1);
+    expect(seen[0].url).toBe('/data/holdings.json');
+    expect(seen[0].init.cache).toBe('default');
+  });
+
+  it('显式传入 no-cache（手动「从服务器重新加载」）→ 强制回源', async () => {
+    const seen: { url: string; init: RequestInit }[] = [];
+    const spy = (async (input: unknown, init?: RequestInit) => {
+      seen.push({ url: String(input), init: init ?? {} });
+      return { ok: true, status: 200, json: async () => HOLDINGS_FILE } as unknown as Response;
+    }) as unknown as typeof fetch;
+
+    await loadPersonalData({ fetchImpl: spy, cache: 'no-cache' });
     expect(seen).toHaveLength(1);
     expect(seen[0].url).toBe('/data/holdings.json');
     expect(seen[0].init.cache).toBe('no-cache');

@@ -10,8 +10,15 @@ import { Modal } from '@/components/ui/Modal';
 
 /** 数据导出 CSV/JSON + 个人数据 holdings.json 维护 + 年度被动收入目标 + 重置 */
 export function DataSettings() {
-  const { state, hydration, resetState, exportPersonalData, importPersonalData, reloadPersonalData } =
-    useData();
+  const {
+    state,
+    hydration,
+    resetState,
+    exportPersonalData,
+    importPersonalData,
+    reloadPersonalData,
+    clearPersonalData,
+  } = useData();
   const { settings, update } = useSettings();
   const { ttmDividendTotal } = usePortfolio();
   const [resetOpen, setResetOpen] = useState(false);
@@ -41,8 +48,8 @@ export function DataSettings() {
       const bundle = await reloadPersonalData();
       if (bundle.source === 'file') {
         const counts = `${bundle.instruments.length} 标的 / ${bundle.transactions.length} 流水 / ${bundle.plans.length} 计划`;
-        // ★文件读到了 ≠ 内容完整：某片为空会被回退成演示种子，
-        //   只报「已加载 N 标的」会让用户把 demo 数据当成自己的账本。
+        // ★文件读到了 = 内容原样还原：空切片就是空（清空后仍是空白，不回填演示种子）。
+        //   个人数据告警只来自「文件缺失/损坏」的 seed-fallback 分支，正常文件无告警。
         const suffix = bundle.warnings.length > 0 ? `；注意：${bundle.warnings.join('；')}` : '';
         setHoldingsHint({ tone: 'ok', text: `已从服务器重新加载 holdings.json（${counts}）${suffix}` });
       } else {
@@ -60,6 +67,13 @@ export function DataSettings() {
   const handleExport = () => {
     exportPersonalData();
     setHoldingsHint({ tone: 'ok', text: '已下载 holdings.json，替换 public/data/holdings.json 后提交即可' });
+  };
+
+  const handleClear = () => {
+    // ★彻底清空个人数据三切片（标的/流水/定投计划），市场数据与分红事实保留。
+    // 清空后 holdings.json 基线即为空，刷新不再被演示种子回填 —— 真正的空白账本。
+    clearPersonalData();
+    setHoldingsHint({ tone: 'ok', text: '已清空个人数据，重新录入后即可导出 holdings.json 提交同步' });
   };
 
   const exportCsv = () => {
@@ -160,6 +174,9 @@ export function DataSettings() {
           >
             从服务器重新加载
           </button>
+          <Button variant="danger" size="sm" onClick={handleClear}>
+            清空个人数据
+          </Button>
           <input
             ref={fileInputRef}
             type="file"
