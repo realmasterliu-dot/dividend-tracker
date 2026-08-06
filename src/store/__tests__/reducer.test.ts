@@ -183,4 +183,37 @@ describe('AddHoldingModal · buildInitialBuy', () => {
     expect(tx.fxRate).toBe(7.25);
     expect(tx.instrumentId).toBe('AAPL');
   });
+
+  // ---------- QA 补充：构造器边界（原用例只覆盖了 happy path） ----------
+
+  it('汇率留空 → 回落为 1，绝不产生 NaN（NaN 会顺着 costPerShare 污染整条收益链）', () => {
+    const tx = buildInitialBuy({ ...form, buyFxRate: '' }, '600519.SH');
+    expect(tx.fxRate).toBe(1);
+    expect(Number.isNaN(tx.fxRate)).toBe(false);
+    expect(Number.isNaN(tx.amount)).toBe(false);
+  });
+
+  it('备注为纯空白 → 不挂 note 字段（避免导出的 holdings.json 里塞满空串）', () => {
+    const tx = buildInitialBuy({ ...form, buyNote: '   ' }, '600519.SH');
+    expect(tx.note).toBeUndefined();
+    expect('note' in tx).toBe(false);
+  });
+
+  it('备注前后空格被 trim', () => {
+    const tx = buildInitialBuy({ ...form, buyNote: '  港股通建仓  ' }, '00700.HK');
+    expect(tx.note).toBe('港股通建仓');
+  });
+
+  it('小数数量（基金份额）不被取整，amount 仍等于 数量 × 价格', () => {
+    const tx = buildInitialBuy({ ...form, buyQuantity: '123.456', buyPrice: '1.2345' }, '110011');
+    expect(tx.quantity).toBe(123.456);
+    expect(tx.price).toBe(1.2345);
+    expect(tx.amount).toBeCloseTo(123.456 * 1.2345, 10);
+  });
+
+  it('每次调用生成互不相同的流水 id（连续录入两笔不会互相覆盖）', () => {
+    const a = buildInitialBuy(form, '600519.SH');
+    const b = buildInitialBuy(form, '600519.SH');
+    expect(a.id).not.toBe(b.id);
+  });
 });

@@ -148,6 +148,7 @@ export function AddHoldingModal({ open, onClose }: AddHoldingModalProps) {
       if (!form.buyDate) errs.push('首笔买入日期必填');
       if (parsePositiveNumber(form.buyQuantity) === null) errs.push('首笔买入数量必须为正数');
       if (parsePositiveNumber(form.buyPrice) === null) errs.push('首笔买入价格必须为正数');
+      if (form.buyFxRate.trim() && parsePositiveNumber(form.buyFxRate) === null) errs.push('汇率必须为正数');
     }
     return errs;
   };
@@ -326,6 +327,7 @@ export function AddHoldingModal({ open, onClose }: AddHoldingModalProps) {
             <Input
               label="汇率（→本位币，默认 1）"
               type="number"
+              min="0"
               value={form.buyFxRate}
               onChange={(e) => update('buyFxRate', e.target.value)}
               placeholder="1"
