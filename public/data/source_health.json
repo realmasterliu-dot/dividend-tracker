@@ -1,53 +1,58 @@
 {
   "akshare.fund_etf_hist_em": {
-    "lastSuccess": "2026-08-05T18:13:35Z",
-    "consecutiveFailures": 3,
-    "status": "RED"
+    "lastSuccess": "2026-08-07T03:28:30Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
   },
   "akshare.fund_fh_em": {
-    "lastSuccess": "2026-08-06T08:02:19Z",
+    "lastSuccess": "2026-08-07T03:29:26Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.fund_open_fund_info_em": {
-    "lastSuccess": "2026-08-06T08:01:12Z",
+    "lastSuccess": "2026-08-07T03:28:25Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_fhps_detail_em": {
-    "lastSuccess": "2026-08-06T08:01:17Z",
+    "lastSuccess": "2026-08-07T03:28:34Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_dividend_payout_em": {
-    "lastSuccess": "2026-08-06T08:01:17Z",
+    "lastSuccess": "2026-08-07T03:28:34Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_hist": {
     "lastSuccess": "2026-08-05T04:12:56Z",
-    "consecutiveFailures": 4,
+    "consecutiveFailures": 5,
     "status": "RED"
   },
   "akshare.stock_us_daily": {
-    "lastSuccess": "2026-08-06T08:01:11Z",
+    "lastSuccess": "2026-08-07T03:28:24Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_us_hist": {
     "lastSuccess": "2026-08-05T04:12:56Z",
-    "consecutiveFailures": 4,
+    "consecutiveFailures": 5,
     "status": "RED"
   },
   "akshare.stock_zh_a_hist": {
     "lastSuccess": "2026-08-05T04:12:56Z",
-    "consecutiveFailures": 4,
+    "consecutiveFailures": 5,
     "status": "RED"
   },
   "binance.klines": {
     "lastSuccess": "",
-    "consecutiveFailures": 6,
+    "consecutiveFailures": 7,
     "status": "RED"
+  },
+  "coinbase.spot": {
+    "lastSuccess": "2026-08-07T03:28:29Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
   },
   "frankfurter.dev.latest": {
     "lastSuccess": "",
@@ -55,14 +60,14 @@
     "status": "YELLOW"
   },
   "frankfurter.dev.range": {
-    "lastSuccess": "2026-08-06T03:55:58Z",
-    "consecutiveFailures": 1,
-    "status": "YELLOW"
+    "lastSuccess": "2026-08-07T03:28:19Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
   },
   "gold-api.crypto": {
     "lastSuccess": "2026-08-06T08:01:13Z",
-    "consecutiveFailures": 0,
-    "status": "GREEN"
+    "consecutiveFailures": 1,
+    "status": "YELLOW"
   },
   "gold-api.xau": {
     "lastSuccess": "2026-08-06T08:01:13Z",
@@ -70,7 +75,7 @@
     "status": "GREEN"
   },
   "nasdaq.api.dividends": {
-    "lastSuccess": "2026-08-06T08:01:24Z",
+    "lastSuccess": "2026-08-07T03:28:36Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
