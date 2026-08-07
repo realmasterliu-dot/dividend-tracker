@@ -6946,7 +6946,23 @@
   {
     "instrumentId": "000001.SZ",
     "date": "2026-08-05",
-    "price": 11.23,
+    "price": 11.25,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-06",
+    "price": 11.27,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-07",
+    "price": 11.19,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"

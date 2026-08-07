@@ -2882,7 +2882,23 @@
   {
     "instrumentId": "000001.SZ",
     "date": "2026-08-05",
-    "price": 11.23,
+    "price": 11.25,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-06",
+    "price": 11.27,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-07",
+    "price": 11.19,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -11941,7 +11957,23 @@
   {
     "instrumentId": "600519.SH",
     "date": "2026-08-05",
-    "price": 1308.29,
+    "price": 1306.45,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "600519.SH",
+    "date": "2026-08-06",
+    "price": 1308.55,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "600519.SH",
+    "date": "2026-08-07",
+    "price": 1309.22,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -14915,6 +14947,14 @@
     "source": "akshare·新浪美股"
   },
   {
+    "instrumentId": "AAPL",
+    "date": "2026-08-07",
+    "price": 313.33,
+    "currency": "USD",
+    "fxRate": 6.7476,
+    "source": "akshare·新浪美股"
+  },
+  {
     "instrumentId": "Au99.99",
     "date": "2025-02-13",
     "price": 657.0,
@@ -17813,7 +17853,7 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-08-07",
-    "price": 943.0181,
+    "price": 942.2371,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "gold-api·XAU折算(代理)"
@@ -17837,7 +17877,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-08-07",
-    "price": 64965.0,
+    "price": 64876.0,
     "currency": "USD",
     "fxRate": 6.7476,
     "source": "gold-api·现价"
