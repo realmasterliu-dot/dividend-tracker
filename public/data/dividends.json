@@ -3585,7 +3585,7 @@
   {
     "id": "div-caec8d1b2266",
     "instrumentId": "AAPL",
-    "status": "DECLARED",
+    "status": "EX_DIVIDEND",
     "payDateEstimated": false,
     "perShareAmount": 0.27,
     "currency": "USD",
