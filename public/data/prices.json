@@ -1,14 +1,6 @@
 [
   {
     "instrumentId": "000001.SZ",
-    "date": "2025-02-17",
-    "price": 10.82,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·东财A股"
-  },
-  {
-    "instrumentId": "000001.SZ",
     "date": "2025-02-18",
     "price": 10.85,
     "currency": "CNY",
@@ -2889,14 +2881,6 @@
   },
   {
     "instrumentId": "00700.HK",
-    "date": "2025-02-17",
-    "price": 483.8,
-    "currency": "HKD",
-    "fxRate": 0.933548,
-    "source": "akshare·东财港股"
-  },
-  {
-    "instrumentId": "00700.HK",
     "date": "2025-02-18",
     "price": 493.7,
     "currency": "HKD",
@@ -5774,15 +5758,6 @@
     "currency": "HKD",
     "fxRate": 0.860629,
     "source": "akshare·东财港股"
-  },
-  {
-    "instrumentId": "110011",
-    "date": "2025-02-17",
-    "price": 5.2307,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·天天基金净值",
-    "navDate": "2025-02-17"
   },
   {
     "instrumentId": "110011",
@@ -9041,14 +9016,6 @@
     "fxRate": 1.0,
     "source": "akshare·天天基金净值",
     "navDate": "2026-08-11"
-  },
-  {
-    "instrumentId": "600519.SH",
-    "date": "2025-02-17",
-    "price": 1392.04,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·东财A股"
   },
   {
     "instrumentId": "600519.SH",
@@ -14899,12 +14866,12 @@
     "source": "akshare·新浪美股"
   },
   {
-    "instrumentId": "Au99.99",
-    "date": "2025-02-17",
-    "price": 649.4,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·黄金ETF518880(代理)"
+    "instrumentId": "AAPL",
+    "date": "2026-08-11",
+    "price": 304.91,
+    "currency": "USD",
+    "fxRate": 6.7453,
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "Au99.99",
@@ -17819,6 +17786,14 @@
     "source": "gold-api·XAU折算(代理)"
   },
   {
+    "instrumentId": "Au99.99",
+    "date": "2026-08-12",
+    "price": 947.9666,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "gold-api·XAU折算(代理)"
+  },
+  {
     "instrumentId": "BTC",
     "date": "2026-08-05",
     "price": 64661.0,
@@ -17870,6 +17845,14 @@
     "instrumentId": "BTC",
     "date": "2026-08-11",
     "price": 63583.0,
+    "currency": "USD",
+    "fxRate": 6.7453,
+    "source": "gold-api·现价"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-08-12",
+    "price": 63507.0,
     "currency": "USD",
     "fxRate": 6.7453,
     "source": "gold-api·现价"
