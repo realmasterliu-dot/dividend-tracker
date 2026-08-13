@@ -9002,6 +9002,15 @@
     "navDate": "2026-08-12"
   },
   {
+    "instrumentId": "110011",
+    "date": "2026-08-13",
+    "price": 4.1961,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-08-13"
+  },
+  {
     "instrumentId": "600519.SH",
     "date": "2025-02-19",
     "price": 1411.42,
@@ -17764,10 +17773,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-08-13",
-    "price": 904.2,
+    "price": 944.6515,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "akshare·黄金ETF518880(代理)"
+    "source": "gold-api·XAU折算(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -17836,9 +17845,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-08-13",
-    "price": 63557.0,
+    "price": 63406.0,
     "currency": "USD",
-    "fxRate": 6.7432,
+    "fxRate": 6.743,
     "source": "gold-api·现价"
   }
 ]
