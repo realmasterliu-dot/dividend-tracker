@@ -633,6 +633,26 @@
     "isEstimate": false
   },
   {
+    "id": "div-7bbffdc5226a",
+    "instrumentId": "000001.SZ",
+    "status": "DECLARED",
+    "payDateEstimated": true,
+    "perShareAmount": 0.249,
+    "currency": "CNY",
+    "quantityAtRecord": 0,
+    "grossAmount": 0,
+    "taxRateApplied": 0,
+    "taxWithheld": 0,
+    "contingentTax": 0,
+    "netAmount": 0,
+    "taxBracket": "NONE",
+    "dividendForm": "CASH",
+    "manual": false,
+    "sourceKey": "em:fhps:000001:2026-06-30",
+    "announceDate": "2026-08-15",
+    "isEstimate": false
+  },
+  {
     "id": "div-57dd21ca9e02",
     "instrumentId": "00700.HK",
     "status": "PAID",
