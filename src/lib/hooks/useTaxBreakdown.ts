@@ -6,6 +6,7 @@ import { buildTaxLots } from '@/lib/calc/position';
 import { bracketForDays, bracketLabel, enrichAllDividends, rateForBracket } from '@/lib/calc/tax';
 import { weightedRateByHolding } from '@/lib/calc/taxLot';
 import { daysBetween, todayISO } from '@/lib/clock';
+import { accountingDividendEvents } from '@/lib/transactionDividend';
 
 export interface DividendTaxRow {
   dividend: DividendEvent;
@@ -34,7 +35,7 @@ export function useTaxBreakdown(instrumentId: string): TaxBreakdown {
     const today = todayISO();
     const lotsMap = buildTaxLots(state.transactions);
     const lots = lotsMap.get(instrumentId) ?? [];
-    const enriched = enrichAllDividends(state.dividends, {
+    const enriched = enrichAllDividends(accountingDividendEvents(state.dividends), {
       instruments: state.instruments,
       lotsMap,
       settings,

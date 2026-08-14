@@ -18,7 +18,7 @@ export function AppearanceSettings() {
           { value: 'INTL', label: '国际习惯（绿涨红跌）' },
           { value: 'COLORBLIND', label: '色盲友好（蓝涨橙跌）' },
         ]}
-        hint="同一张持仓表里 A股红涨、美股绿涨会让人精神分裂 —— 全局统一"
+        hint="全站统一使用同一套颜色，跨市场查看时更容易理解。"
       />
       <Select
         label="显示币种（与本位币解耦，可随时切换）"

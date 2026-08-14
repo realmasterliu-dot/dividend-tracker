@@ -1,0 +1,19 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "dividendtracker-d9fhiinz12b42e41",
+  "functionRoot": "cloudbase/functions",
+  "functions": [
+    {
+      "name": "dividend-register",
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "timeout": 10,
+      "memorySize": 256,
+      "description": "邀请码校验与用户名账号创建",
+      "envVariables": {
+        "DIVIDEND_ENV_ID": "dividendtracker-d9fhiinz12b42e41",
+        "DIVIDEND_INVITE_SHA256": "1b2425bab9a8b052619b92ce93275380ccc95e3ffb51bb9664db7f108c1e9f9c"
+      }
+    }
+  ]
+}
