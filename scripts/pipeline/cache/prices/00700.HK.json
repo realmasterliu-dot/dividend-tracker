@@ -7030,5 +7030,53 @@
     "currency": "HKD",
     "fxRate": 1.0,
     "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-08-07",
+    "price": 478.8,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-08-10",
+    "price": 481.4,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-08-11",
+    "price": 470.8,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-08-12",
+    "price": 461.6,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-08-13",
+    "price": 441.0,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-08-14",
+    "price": 440.0,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
   }
 ]
