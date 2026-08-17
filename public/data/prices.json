@@ -17809,6 +17809,14 @@
     "source": "gold-api·XAU折算(代理)"
   },
   {
+    "instrumentId": "Au99.99",
+    "date": "2026-08-17",
+    "price": 953.7317,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "gold-api·XAU折算(代理)"
+  },
+  {
     "instrumentId": "BTC",
     "date": "2026-08-05",
     "price": 64661.0,
@@ -17902,6 +17910,14 @@
     "price": 62750.0,
     "currency": "USD",
     "fxRate": 6.7413,
+    "source": "gold-api·现价"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-08-17",
+    "price": 63268.0,
+    "currency": "USD",
+    "fxRate": 6.748651,
     "source": "gold-api·现价"
   }
 ]
