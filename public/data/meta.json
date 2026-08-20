@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T22:39:06Z",
+  "generatedAt": "2026-08-20T08:59:10Z",
   "pipelineVersion": "1.0.0",
   "instrumentCount": 7,
   "warnings": [
@@ -8,7 +8,7 @@
     "[00700.HK] 行情抓取失败，沿用缓存 885 条：akshare.stock_hk_hist(ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
     "以下数据源已连续失败并进入熔断：akshare.fund_etf_hist_em, akshare.stock_hk_hist, akshare.stock_us_hist, akshare.stock_zh_a_hist, binance.klines, frankfurter.dev.latest"
   ],
-  "durationSeconds": 60.96,
+  "durationSeconds": 77.89,
   "categories": [
     "prices",
     "dividends",
