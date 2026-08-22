@@ -11,17 +11,44 @@ export function rateKey(from: Currency, to: Currency): string {
   return `${from}${to}`;
 }
 
+function directOrInverseRate(
+  rates: FxSnapshot['rates'] | undefined,
+  from: Currency,
+  to: Currency,
+): number | undefined {
+  if (from === to) return 1;
+  const direct = rates?.[rateKey(from, to)];
+  if (typeof direct === 'number' && direct > 0) return direct;
+  const inverse = rates?.[rateKey(to, from)];
+  if (typeof inverse === 'number' && inverse > 0) return 1 / inverse;
+  return undefined;
+}
+
+/**
+ * Resolves a rate from one snapshot. If no direct pair exists, derive a cross
+ * rate through another supported currency (normally CNY in the bundled data).
+ */
+function resolvedSnapshotRate(
+  snapshot: FxSnapshot | undefined,
+  from: Currency,
+  to: Currency,
+): number | undefined {
+  const direct = directOrInverseRate(snapshot?.rates, from, to);
+  if (direct !== undefined) return direct;
+  const currencies: Currency[] = ['CNY', 'USD', 'HKD'];
+  for (const pivot of currencies) {
+    if (pivot === from || pivot === to) continue;
+    const first = directOrInverseRate(snapshot?.rates, from, pivot);
+    const second = directOrInverseRate(snapshot?.rates, pivot, to);
+    if (first !== undefined && second !== undefined) return first * second;
+  }
+  return undefined;
+}
+
 export function latestFx(fx: FxSnapshot[], from: Currency, to: Currency): number {
   if (from === to) return 1;
-  const key = rateKey(from, to);
   const snap = fx[fx.length - 1];
-  const rate = snap?.rates?.[key];
-  if (typeof rate === 'number' && rate > 0) return rate;
-  // 反向汇率兜底（如只存了 CNYUSD，需要 USDCNY）
-  const invKey = rateKey(to, from);
-  const inv = snap?.rates?.[invKey];
-  if (typeof inv === 'number' && inv > 0) return 1 / inv;
-  return 1;
+  return resolvedSnapshotRate(snap, from, to) ?? 1;
 }
 
 /**
@@ -59,10 +86,8 @@ export function rateFromSnapshot(
   to: Currency,
 ): number {
   if (from === to) return 1;
-  const rate = snapshot?.rates?.[rateKey(from, to)];
-  if (typeof rate === 'number' && rate > 0) return rate;
-  const inv = snapshot?.rates?.[rateKey(to, from)];
-  if (typeof inv === 'number' && inv > 0) return 1 / inv;
+  const rate = resolvedSnapshotRate(snapshot, from, to);
+  if (rate !== undefined) return rate;
   return latestFx(fx, from, to);
 }
 

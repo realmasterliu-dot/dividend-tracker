@@ -101,6 +101,17 @@ describe('entitlementDate（权益归属基准日：登记日 > 除息日 > 派�
     expect(entitlementDate(d)).toBe('2026-05-20');
   });
 
+  it('港股和美股优先用除息日作为权益边界', () => {
+    const d = mkPipelineDiv({
+      id: 'hk-boundary',
+      recordDate: '2026-05-20',
+      exDate: '2026-05-15',
+    });
+    expect(entitlementDate(d, 'HK')).toBe('2026-05-15');
+    expect(entitlementDate(d, 'US')).toBe('2026-05-15');
+    expect(entitlementDate(d, 'A_SHARE')).toBe('2026-05-20');
+  });
+
   it('缺股权登记日时回退到除息日', () => {
     const d = mkPipelineDiv({ id: 'b', recordDate: undefined, exDate: '2026-05-21', payDate: '2026-06-30' });
     expect(entitlementDate(d)).toBe('2026-05-21');
@@ -266,6 +277,65 @@ describe('resolveQuantityAtRecord · 路径三：建仓前的历史派息', () =
 // ============================================================
 
 describe('enrichDividend · 推导数量驱动 gross / tax / net 重算', () => {
+  it('港股除息日至登记日之间买入不享有该次分红', () => {
+    const instrument = mkInstrument({
+      id: '00700.HK',
+      market: 'HK',
+      currency: 'HKD',
+      custodyChannel: 'HK_LOCAL_BROKER',
+    });
+    const txs = [mkTx({
+      id: 'late-buy',
+      instrumentId: instrument.id,
+      date: '2026-05-18',
+      quantity: 100,
+      currency: 'HKD',
+    })];
+    const event = mkPipelineDiv({
+      id: 'hk-dividend',
+      instrumentId: instrument.id,
+      currency: 'HKD',
+      exDate: '2026-05-15',
+      recordDate: '2026-05-20',
+    });
+    const enriched = enrichDividend(event, mkCtx(txs, { instruments: [instrument] }));
+    expect(enriched.quantityAtRecord).toBe(0);
+    expect(enriched.grossAmount).toBe(0);
+  });
+
+  it('A股旧批次卖出后再买入不会把新批次税档套到旧分红', () => {
+    const txs = [
+      mkTx({ id: 'old-buy', date: '2026-01-01', quantity: 1000 }),
+      mkTx({ id: 'old-sell', type: 'SELL', date: '2026-06-01', quantity: -1000 }),
+      mkTx({ id: 'new-buy', date: '2026-07-01', quantity: 1000 }),
+    ];
+    const enriched = enrichDividend(
+      mkPipelineDiv({ id: 'old-dividend', recordDate: '2026-05-20' }),
+      mkCtx(txs),
+    );
+    expect(enriched.quantityAtRecord).toBe(1000);
+    expect(enriched.contingentTax).toBe(0);
+  });
+
+  it('A股事件自带登记数量时，卖旧再买新也不会把新批次套入旧分红税档', () => {
+    const txs = [
+      mkTx({ id: 'old-buy', date: '2026-01-01', quantity: 1000 }),
+      mkTx({ id: 'old-sell', type: 'SELL', date: '2026-06-01', quantity: -1000 }),
+      mkTx({ id: 'new-buy', date: '2026-07-01', quantity: 1000 }),
+    ];
+    const enriched = enrichDividend(
+      mkPipelineDiv({
+        id: 'declared-old-dividend',
+        recordDate: '2026-05-20',
+        quantityAtRecord: 1000,
+      }),
+      mkCtx(txs),
+    );
+    expect(enriched.quantityAtRecord).toBe(1000);
+    expect(enriched.taxRateApplied).toBe(0);
+    expect(enriched.contingentTax).toBe(0);
+  });
+
   it('管道占位 0 → 按流水推导后重算 gross，并回填三态税（A股 10% 档）', () => {
     const txs = [mkTx({ id: 'buy', date: '2026-01-01', quantity: 1000 })];
     const enriched = enrichDividend(mkPipelineDiv({ id: 'x', perShareAmount: 0.5 }), mkCtx(txs));
@@ -383,6 +453,7 @@ describe('enrichDividend · 推导数量驱动 gross / tax / net 重算', () => 
     // gross 重算为 500 → 偏差 (475-500)/500 = -5%
     expect(enriched.grossAmount).toBeCloseTo(500, 6);
     expect(enriched.deviationPct).toBeCloseTo(-0.05, 6);
+    expect(enriched.netAmount).toBe(475);
   });
 
   it('建仓前派息即使被回填也不产生除零偏差率（gross 为 0）', () => {

@@ -10,9 +10,10 @@ import {
   Transaction,
 } from '@/types';
 import { compareDates, todayISO } from '../clock';
+import { accountingDividendEvents } from '../transactionDividend';
 import { rateFromSnapshot } from './fx';
 import { buildQuantityEvents, QuantityEvent } from './position';
-import { twr, xirr, xirrCashflows, yocOfPositions } from './returns';
+import { realizedIncomeCashflows, twr, xirr, xirrCashflows, yocOfPositions } from './returns';
 
 /**
  * PortfolioEngine：组合快照序列 + 汇总指标
@@ -121,9 +122,6 @@ export function buildSnapshots(
         case 'SELL':
           invested -= (tx.amount - (tx.fee ?? 0)) * fxr;
           break;
-        case 'DIVIDEND_REINVEST':
-          invested += tx.amount * fxr;
-          break;
         case 'DIVIDEND_CASH':
           dividends += tx.amount * fxr;
           break;
@@ -226,9 +224,9 @@ export function computePortfolioMetrics(
     .filter((p) => p.instrument.dividendEligible)
     .reduce((s, p) => s + p.marketValue, 0);
 
-  const flows = xirrCashflows(transactions, totalMarketValue, today);
+  const flows = xirrCashflows(transactions, dividends, totalMarketValue, today);
   const rate = xirr(flows);
-  const twrRate = twr(snapshots);
+  const twrRate = twr(snapshots, realizedIncomeCashflows(transactions, dividends));
   const yocRate = yocOfPositions(positions);
 
   return {
@@ -252,11 +250,12 @@ export function enrichPositionsWithDividends(
     .slice(0, 10);
 
   const ttmByInstrument = new Map<string, number>();
-  for (const d of dividends) {
+  for (const d of accountingDividendEvents(dividends)) {
     if (d.status !== 'PAID' && d.status !== 'RECONCILED') continue;
     const payDate = d.payDate ?? d.exDate ?? d.recordDate;
     if (!payDate || payDate < start12m) continue;
-    ttmByInstrument.set(d.instrumentId, (ttmByInstrument.get(d.instrumentId) ?? 0) + d.netAmount);
+    const amount = d.actualReceived ?? d.netAmount;
+    ttmByInstrument.set(d.instrumentId, (ttmByInstrument.get(d.instrumentId) ?? 0) + amount);
   }
 
   const totalMarketValue = positions.reduce((s, p) => s + p.marketValue, 0);

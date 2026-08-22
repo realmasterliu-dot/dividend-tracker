@@ -124,7 +124,13 @@ describe('derivePortfolio 集成（引擎全链路）', () => {
     //   买入日必须相对今天构造，否则用例会随时间推移跨档失效。
     const state = mkState({
       transactions: [mkTx({ id: 'buy1', date: addDays(TODAY, -200) })],
-      dividends: [mkDiv({ id: 'd1', status: 'PAID', payDate: addDays(TODAY, -30) })],
+      dividends: [mkDiv({
+        id: 'd1',
+        status: 'PAID',
+        recordDate: addDays(TODAY, -40),
+        exDate: addDays(TODAY, -39),
+        payDate: addDays(TODAY, -30),
+      })],
     });
     const d = derivePortfolio(state, settings);
     const paid = d.enrichedDividends.find((x) => x.id === 'd1')!;
@@ -137,7 +143,13 @@ describe('derivePortfolio 集成（引擎全链路）', () => {
   it('A股或有税负：持股满 1 年后归零（相对今天构造，不随时间失效）', () => {
     const state = mkState({
       transactions: [mkTx({ id: 'buy1', date: addDays(TODAY, -400) })],
-      dividends: [mkDiv({ id: 'd1', status: 'PAID', payDate: addDays(TODAY, -30) })],
+      dividends: [mkDiv({
+        id: 'd1',
+        status: 'PAID',
+        recordDate: addDays(TODAY, -40),
+        exDate: addDays(TODAY, -39),
+        payDate: addDays(TODAY, -30),
+      })],
     });
     const d = derivePortfolio(state, settings);
     const paid = d.enrichedDividends.find((x) => x.id === 'd1')!;
