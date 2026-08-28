@@ -7046,5 +7046,45 @@
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-24",
+    "price": 11.56,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-25",
+    "price": 11.59,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-26",
+    "price": 11.73,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-27",
+    "price": 11.59,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "000001.SZ",
+    "date": "2026-08-28",
+    "price": 11.65,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
   }
 ]
