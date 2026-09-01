@@ -14866,6 +14866,14 @@
     "source": "akshare·新浪美股"
   },
   {
+    "instrumentId": "AAPL",
+    "date": "2026-08-31",
+    "price": 316.85,
+    "currency": "USD",
+    "fxRate": 6.7197,
+    "source": "akshare·新浪美股"
+  },
+  {
     "instrumentId": "Au99.99",
     "date": "2025-03-10",
     "price": 654.4,
@@ -17826,6 +17834,14 @@
     "source": "gold-api·XAU折算(代理)"
   },
   {
+    "instrumentId": "Au99.99",
+    "date": "2026-09-01",
+    "price": 960.5721,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "gold-api·XAU折算(代理)"
+  },
+  {
     "instrumentId": "BTC",
     "date": "2026-08-05",
     "price": 64661.0,
@@ -18037,6 +18053,14 @@
     "instrumentId": "BTC",
     "date": "2026-08-31",
     "price": 79041.0,
+    "currency": "USD",
+    "fxRate": 6.7197,
+    "source": "gold-api·现价"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-09-01",
+    "price": 78529.0,
     "currency": "USD",
     "fxRate": 6.7197,
     "source": "gold-api·现价"
