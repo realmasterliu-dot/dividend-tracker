@@ -17797,10 +17797,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-09-03",
-    "price": 967.9823,
+    "price": 910.5,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18037,9 +18037,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-09-03",
-    "price": 78331.0,
+    "price": 80946.0,
     "currency": "USD",
-    "fxRate": 6.7215,
+    "fxRate": 6.736468,
     "source": "gold-api·现价"
   }
 ]

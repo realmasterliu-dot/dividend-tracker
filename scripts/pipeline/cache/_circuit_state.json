@@ -1,27 +1,27 @@
 {
   "akshare.fund_etf_hist_em": {
-    "consecutiveFailures": 2,
-    "lastSuccess": "2026-09-02T17:09:57Z",
+    "consecutiveFailures": 0,
+    "lastSuccess": "2026-09-03T17:03:11Z",
     "openUntil": 0.0
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:52:36Z",
+    "lastSuccess": "2026-09-03T17:04:04Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:51:05Z",
+    "lastSuccess": "2026-09-03T17:03:10Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:51:13Z",
+    "lastSuccess": "2026-09-03T17:03:15Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:51:13Z",
+    "lastSuccess": "2026-09-03T17:03:15Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
@@ -31,7 +31,7 @@
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:51:03Z",
+    "lastSuccess": "2026-09-03T17:03:09Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
@@ -55,18 +55,18 @@
     "openUntil": 0.0
   },
   "frankfurter.dev.latest": {
-    "consecutiveFailures": 4,
+    "consecutiveFailures": 5,
     "lastSuccess": "",
-    "openUntil": 1786982860.0151565
+    "openUntil": 1788476587.4369984
   },
   "frankfurter.dev.range": {
-    "consecutiveFailures": 0,
+    "consecutiveFailures": 1,
     "lastSuccess": "2026-09-03T12:50:58Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:51:09Z",
+    "lastSuccess": "2026-09-03T17:03:10Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
@@ -76,12 +76,12 @@
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-03T12:51:16Z",
+    "lastSuccess": "2026-09-03T17:03:18Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-08-17T10:07:40Z",
+    "lastSuccess": "2026-09-03T17:03:07Z",
     "openUntil": 0.0
   }
 }
