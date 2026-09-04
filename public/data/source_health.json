@@ -1,26 +1,26 @@
 {
   "akshare.fund_etf_hist_em": {
     "lastSuccess": "2026-09-03T17:03:11Z",
-    "consecutiveFailures": 2,
-    "status": "YELLOW"
+    "consecutiveFailures": 3,
+    "status": "RED"
   },
   "akshare.fund_fh_em": {
-    "lastSuccess": "2026-09-04T12:47:05Z",
+    "lastSuccess": "2026-09-04T16:53:13Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.fund_open_fund_info_em": {
-    "lastSuccess": "2026-09-04T12:45:29Z",
+    "lastSuccess": "2026-09-04T16:52:07Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_fhps_detail_em": {
-    "lastSuccess": "2026-09-04T12:45:38Z",
+    "lastSuccess": "2026-09-04T16:52:14Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_dividend_payout_em": {
-    "lastSuccess": "2026-09-04T12:45:39Z",
+    "lastSuccess": "2026-09-04T16:52:15Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -30,14 +30,14 @@
     "status": "RED"
   },
   "akshare.stock_us_daily": {
-    "lastSuccess": "2026-09-04T00:02:34Z",
+    "lastSuccess": "2026-09-04T16:52:05Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_us_hist": {
     "lastSuccess": "2026-09-04T12:45:06Z",
-    "consecutiveFailures": 0,
-    "status": "GREEN"
+    "consecutiveFailures": 1,
+    "status": "YELLOW"
   },
   "akshare.stock_zh_a_hist": {
     "lastSuccess": "2026-08-30T00:17:21Z",
@@ -60,22 +60,22 @@
     "status": "RED"
   },
   "frankfurter.dev.range": {
-    "lastSuccess": "2026-09-04T12:45:00Z",
+    "lastSuccess": "2026-09-04T16:52:01Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "gold-api.crypto": {
-    "lastSuccess": "2026-09-04T12:45:33Z",
+    "lastSuccess": "2026-09-04T16:52:07Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "gold-api.xau": {
-    "lastSuccess": "2026-09-04T12:45:34Z",
+    "lastSuccess": "2026-09-04T16:52:10Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "nasdaq.api.dividends": {
-    "lastSuccess": "2026-09-04T12:45:42Z",
+    "lastSuccess": "2026-09-04T16:52:16Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
