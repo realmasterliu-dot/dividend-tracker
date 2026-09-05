@@ -4,10 +4,20 @@ import { Card } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
+import { useData } from '@/store/DataContext';
 
 /** W-8BEN 状态 + 本位币 + 汇率中性模式（PRD §5.9） */
 export function TaxSettings() {
   const { settings, update } = useSettings();
+  const { state } = useData();
+  const baseCurrencyLocked =
+    state.transactions.length > 0 ||
+    state.dividends.some(
+      (event) =>
+        event.manual ||
+        event.actualReceived !== undefined ||
+        event.taxWithheldOverride !== undefined,
+    );
 
   return (
     <Card title="税务与币种口径" bodyClassName="p-4 space-y-4">
@@ -34,12 +44,17 @@ export function TaxSettings() {
         <Select
           label="记账本位币（⚠ 选定后难改，影响历史成本口径）"
           value={settings.baseCurrency}
+          disabled={baseCurrencyLocked}
           onChange={(e) => update({ baseCurrency: e.target.value as 'CNY' | 'USD' })}
           options={[
             { value: 'CNY', label: '人民币 CNY' },
             { value: 'USD', label: '美元 USD' },
           ]}
-          hint="改为 USD 后，全部历史成本换算口径将变化"
+          hint={
+            baseCurrencyLocked
+              ? '账本已有流水或实际分红，为保护历史成本口径，本位币已锁定'
+              : '请在开始记账前选定；产生流水后将锁定'
+          }
         />
       </div>
       <label className="flex items-center justify-between cursor-pointer pt-2 border-t border-line-soft">

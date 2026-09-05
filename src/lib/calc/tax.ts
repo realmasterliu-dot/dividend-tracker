@@ -4,6 +4,7 @@ import {
   DividendEvent,
   FxSnapshot,
   Instrument,
+  Market,
   TaxBracket,
   TaxLot,
   TaxResult,
@@ -12,6 +13,7 @@ import {
 import { fxOn } from './fx';
 import { quantityOnDate } from './position';
 import { holdingDays, weightedRateByHolding } from './taxLot';
+import { addDays } from '../clock';
 
 /**
  * ★ TaxEngine —— 三态税务引擎（architecture.md 类图 + PRD §3.2.2/§5.3.3）
@@ -184,8 +186,16 @@ export interface EnrichContext {
   transactions?: Transaction[];
 }
 
-/** 权益归属基准日：股权登记日 > 除息日 > 派息日 */
-export function entitlementDate(dividend: DividendEvent): string | undefined {
+/**
+ * Entitlement reference: US/HK trade ex-entitlement on the ex-date, while the
+ * bundled A-share/fund feeds use record-date close. Callers without market keep
+ * the legacy record-date-first behavior for imported records.
+ */
+export function entitlementDate(
+  dividend: DividendEvent,
+  market?: Market,
+): string | undefined {
+  if ((market === 'US' || market === 'HK') && dividend.exDate) return dividend.exDate;
   return dividend.recordDate ?? dividend.exDate ?? dividend.payDate;
 }
 
@@ -201,13 +211,19 @@ export function entitlementDate(dividend: DividendEvent): string | undefined {
 export function resolveQuantityAtRecord(
   dividend: DividendEvent,
   transactions?: Transaction[],
+  market?: Market,
 ): number {
   const declared = dividend.quantityAtRecord;
   if (Number.isFinite(declared) && declared > 0) return declared;
   if (!transactions || transactions.length === 0) return 0;
-  const refDate = entitlementDate(dividend);
+  const refDate = entitlementDate(dividend, market);
   if (!refDate) return 0;
-  return Math.max(0, quantityOnDate(dividend.instrumentId, transactions, refDate));
+  // A trade made on an HK/US ex-date no longer earns that dividend. Snapshot
+  // the close immediately before ex-date so ex-date buys/sells are treated correctly.
+  const positionDate = (market === 'US' || market === 'HK') && refDate === dividend.exDate
+    ? addDays(refDate, -1)
+    : refDate;
+  return Math.max(0, quantityOnDate(dividend.instrumentId, transactions, positionDate));
 }
 
 /** 分红事件补全：计算 gross/tax/contingent/net 等推导字段（推导不存储） */
@@ -218,15 +234,37 @@ export function enrichDividend(dividend: DividendEvent, ctx: EnrichContext): Div
   const lots = ctx.lotsMap.get(dividend.instrumentId) ?? [];
   const refDate = dividend.payDate ?? dividend.exDate ?? dividend.recordDate ?? ctx.today;
   const fxRate = fxOn(ctx.fx, dividend.currency, ctx.settings.baseCurrency, refDate);
-  const quantityAtRecord = resolveQuantityAtRecord(dividend, ctx.transactions);
+  const quantityAtRecord = resolveQuantityAtRecord(dividend, ctx.transactions, instrument.market);
   const grossAmount = dividend.perShareAmount * quantityAtRecord * fxRate;
 
-  const tax = computeTax(instrument, lots, ctx.settings, ctx.today, fxRate, grossAmount);
+  const entitlement = entitlementDate(dividend, instrument.market);
+  const shouldMatchEntitledLots =
+    instrument.market === 'A_SHARE' &&
+    Boolean(entitlement) &&
+    quantityAtRecord > 0;
+  const taxLots = shouldMatchEntitledLots
+    ? lots.filter((lot) => lot.originalBuyDate <= entitlement!)
+    : lots;
+  // A-share contingent tax applies only to dividend-entitled lots that still
+  // remain. Later re-buys must not inherit an old dividend's tax bracket.
+  const remainingEntitledQuantity = taxLots.reduce((sum, lot) => sum + lot.quantity, 0);
+  const taxableGross = shouldMatchEntitledLots
+    ? grossAmount * Math.min(1, remainingEntitledQuantity / quantityAtRecord)
+    : grossAmount;
+  const tax = computeTax(instrument, taxLots, ctx.settings, ctx.today, fxRate, taxableGross);
 
   const taxWithheld = dividend.taxWithheldOverride ?? tax.taxWithheld;
   const contingentTax = tax.contingentTax;
-  const netAmount = Math.max(0, grossAmount - taxWithheld - contingentTax);
   const actualReceived = dividend.actualReceived;
+  const estimatedNetAmount = Math.max(0, grossAmount - taxWithheld - contingentTax);
+  // RECONCILED 表示用户已经用券商实际到账完成校准；手工事件同样以录入事实为准。
+  // actualReceived 与 grossAmount 都是本位币口径，不能再次套用估算税率扣减。
+  const hasActualReceived =
+    typeof actualReceived === 'number' &&
+    Number.isFinite(actualReceived) &&
+    actualReceived >= 0 &&
+    (dividend.status === 'RECONCILED' || dividend.manual);
+  const netAmount = hasActualReceived ? actualReceived : estimatedNetAmount;
   const deviationPct =
     actualReceived !== undefined && grossAmount > 0 ? (actualReceived - grossAmount) / grossAmount : undefined;
 

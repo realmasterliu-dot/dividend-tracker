@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Download, RotateCcw } from 'lucide-react';
+import { Download, FileUp, Trash2 } from 'lucide-react';
 import { useData } from '@/store/DataContext';
 import { useSettings } from '@/store/SettingsContext';
 import { usePortfolio } from '@/lib/hooks/usePortfolio';
@@ -8,220 +8,146 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 
-/** 数据导出 CSV/JSON + 个人数据 holdings.json 维护 + 年度被动收入目标 + 重置 */
+function download(name: string, content: string, type = 'application/octet-stream') {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = name;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+/** 收入目标、可迁移备份和清空操作；不再引导用户把真实持仓提交到公开仓库。 */
 export function DataSettings() {
-  const {
-    state,
-    hydration,
-    resetState,
-    exportPersonalData,
-    importPersonalData,
-    reloadPersonalData,
-    clearPersonalData,
-  } = useData();
+  const { state, resetState, exportPersonalData, importPersonalData } = useData();
   const { settings, update } = useSettings();
   const { ttmDividendTotal } = usePortfolio();
-  const [resetOpen, setResetOpen] = useState(false);
-  const [holdingsHint, setHoldingsHint] = useState<{ tone: 'ok' | 'err'; text: string } | null>(null);
+  const [clearOpen, setClearOpen] = useState(false);
+  const [message, setMessage] = useState<{ tone: 'ok' | 'err'; text: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = ''; // 允许连续选同一个文件重试
-    if (!file) return;
-    try {
-      const text = await file.text();
-      const warnings = importPersonalData(text);
-      // 缺片不算失败：另两片按「保留当前数据」处理，只做如实告知
-      const suffix = warnings.length > 0 ? `（${warnings.join('；')}）` : '';
-      setHoldingsHint({ tone: 'ok', text: `已导入 ${file.name}，记得导出后提交回仓库${suffix}` });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      // eslint-disable-next-line no-console
-      console.warn('[DataSettings] 个人数据导入失败：', error);
-      setHoldingsHint({ tone: 'err', text: `导入失败：${message}` });
-    }
-  };
-
-  const handleReload = async () => {
-    try {
-      const bundle = await reloadPersonalData();
-      if (bundle.source === 'file') {
-        const counts = `${bundle.instruments.length} 标的 / ${bundle.transactions.length} 流水 / ${bundle.plans.length} 计划`;
-        // ★文件读到了 = 内容原样还原：空切片就是空（清空后仍是空白，不回填演示种子）。
-        //   个人数据告警只来自「文件缺失/损坏」的 seed-fallback 分支，正常文件无告警。
-        const suffix = bundle.warnings.length > 0 ? `；注意：${bundle.warnings.join('；')}` : '';
-        setHoldingsHint({ tone: 'ok', text: `已从服务器重新加载 holdings.json（${counts}）${suffix}` });
-      } else {
-        // ★降级信号必须显性化：回退种子时报「成功」等于骗用户
-        const reason = bundle.warnings[0] ?? '未知原因';
-        setHoldingsHint({ tone: 'err', text: `holdings.json 读取失败，已回退内置种子：${reason}` });
-      }
-    } catch (error) {
-      // loadPersonalData 承诺不抛出，此处仅作兜底
-      const message = error instanceof Error ? error.message : String(error);
-      setHoldingsHint({ tone: 'err', text: `重新加载失败：${message}` });
-    }
-  };
-
-  const handleExport = () => {
-    exportPersonalData();
-    setHoldingsHint({ tone: 'ok', text: '已下载 holdings.json，替换 public/data/holdings.json 后提交即可' });
-  };
-
-  const handleClear = () => {
-    // ★彻底清空个人数据三切片（标的/流水/定投计划），市场数据与分红事实保留。
-    // 清空后 holdings.json 基线即为空，刷新不再被演示种子回填 —— 真正的空白账本。
-    clearPersonalData();
-    setHoldingsHint({ tone: 'ok', text: '已清空个人数据，重新录入后即可导出 holdings.json 提交同步' });
-  };
-
-  const exportCsv = () => {
-    const rows = [
-      ['日期', '类型', '标的', '数量', '价格', '金额', '币种', '状态'],
-      ...state.transactions.map((t) => [
-        t.date,
-        t.type,
-        t.instrumentId,
-        String(t.quantity),
-        String(t.price),
-        String(t.amount),
-        t.currency,
-        t.status,
-      ]),
-    ];
-    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
-    download('transactions.csv', '\uFEFF' + csv);
-  };
-
-  const exportJson = () => {
-    download('dividend-tracker-data.json', JSON.stringify(state, null, 2));
-  };
-
-  const download = (name: string, content: string) => {
-    const blob = new Blob([content], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
 
   const target = settings.annualIncomeTarget;
   const progress = target && target > 0 ? Math.min(1, ttmDividendTotal / target) : 0;
 
-  // ★启动时写入的个人数据告警（切片回退种子 / 文件加载失败 / 服务器有更新）此前无人消费，
-  //   用户完全看不到降级信号。只挑 holdings.json 相关的进本卡片，行情类告警不掺和。
-  const personalWarnings = hydration.warnings.filter((w) => w.includes('holdings.json'));
+  const importBackup = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    try {
+      const warnings = importPersonalData(await file.text());
+      setMessage({
+        tone: 'ok',
+        text: warnings.length > 0 ? `已导入；${warnings.join('；')}` : '账本备份已导入',
+      });
+    } catch (cause) {
+      setMessage({ tone: 'err', text: `导入失败：${cause instanceof Error ? cause.message : String(cause)}` });
+    }
+  };
+
+  const exportCsv = () => {
+    const rows = [
+      ['日期', '类型', '标的', '数量', '价格', '金额', '币种', '状态', '备注'],
+      ...state.transactions.map((transaction) => [
+        transaction.date,
+        transaction.type,
+        transaction.instrumentId,
+        String(transaction.quantity),
+        String(transaction.price),
+        String(transaction.amount),
+        transaction.currency,
+        transaction.status,
+        transaction.note ?? '',
+      ]),
+    ];
+    const csv = rows
+      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+    download('dividend-ledger.csv', `\uFEFF${csv}`, 'text/csv;charset=utf-8');
+  };
 
   return (
-    <Card title="数据与目标" bodyClassName="p-4 space-y-4">
+    <Card title="目标与数据" bodyClassName="space-y-5 p-4">
       <div>
-        <div className="text-[13px] text-primary font-medium mb-2">年度被动收入目标（进度只计已到账）</div>
+        <label className="mb-2 block text-[13px] font-medium text-primary">年度分红目标</label>
         <div className="flex items-center gap-3">
           <Input
             type="number"
+            min="0"
             value={target ?? ''}
             placeholder="不设目标"
-            onChange={(e) => update({ annualIncomeTarget: e.target.value ? Number(e.target.value) : undefined })}
+            onChange={(event) =>
+              update({ annualIncomeTarget: event.target.value ? Number(event.target.value) : undefined })
+            }
           />
-          <span className="text-[12px] text-secondary">当前 {Math.round(progress * 100)}%</span>
+          <span className="w-14 shrink-0 text-right text-[12px] text-secondary">{Math.round(progress * 100)}%</span>
         </div>
-        <div className="mt-2 h-1.5 rounded-full bg-card-hover overflow-hidden">
-          <div className="h-full bg-gold" style={{ width: `${progress * 100}%` }} />
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-card-hover">
+          <div className="h-full bg-gold transition-[width]" style={{ width: `${progress * 100}%` }} />
         </div>
-        <div className="text-[11px] text-disabled mt-1">预测值不计入进度，只有已到账才算数</div>
+        <p className="mt-1.5 text-[11px] text-disabled">只按近 12 个月已确认分红计算。</p>
       </div>
 
-      <div className="pt-3 border-t border-line-soft">
-        <div className="text-[13px] text-primary font-medium mb-2">数据导出（本地）</div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={exportCsv}>
-            <Download size={13} /> 导出 CSV
-          </Button>
-          <Button variant="outline" size="sm" onClick={exportJson}>
-            <Download size={13} /> 导出 JSON
-          </Button>
-        </div>
-        <div className="text-[11px] text-disabled mt-1.5">
-          个人数据保存在浏览器 localStorage（key: dt:state:v2 / dt:settings:v1）；
-          行情·汇率·分红事件每次启动从 public/data 数据管道重新加载，不占用本地配额。导出 JSON 可作备份
-        </div>
-      </div>
-
-      <div className="pt-3 border-t border-line-soft">
-        <div className="text-[13px] text-primary font-medium mb-2">个人数据（holdings.json）</div>
+      <div className="border-t border-line-soft pt-4">
+        <p className="mb-2 text-[13px] font-medium text-primary">备份与迁移</p>
         <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={handleExport}
-            className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
-          >
-            导出个人数据
-          </button>
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
-          >
-            从文件导入
-          </button>
-          <button
-            type="button"
-            onClick={() => void handleReload()}
-            className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
-          >
-            从服务器重新加载
-          </button>
-          <Button variant="danger" size="sm" onClick={handleClear}>
-            清空个人数据
+          <Button variant="outline" onClick={exportPersonalData}>
+            <Download size={15} /> 导出账本备份
           </Button>
+          <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+            <FileUp size={15} /> 导入账本备份
+          </Button>
+          <Button variant="ghost" onClick={exportCsv}>导出 CSV</Button>
           <input
             ref={fileInputRef}
-            type="file"
-            accept="application/json"
             className="hidden"
-            onChange={(e) => void handleImportFile(e)}
+            type="file"
+            accept="application/json,.json"
+            onChange={(event) => void importBackup(event)}
           />
         </div>
-        {holdingsHint && (
-          <div className={`text-[11px] mt-1.5 ${holdingsHint.tone === 'err' ? 'text-danger' : 'text-secondary'}`}>
-            {holdingsHint.text}
-          </div>
+        <p className="mt-2 text-[11px] leading-5 text-disabled">
+          备份包含标的、流水、定投、手工分红与校准、通知状态和设置；不包含可重新获取的行情与汇率。请勿公开分享。
+        </p>
+        {message && (
+          <p role="status" className={`mt-2 text-[12px] ${message.tone === 'err' ? 'text-danger' : 'text-healthy'}`}>
+            {message.text}
+          </p>
         )}
-        {personalWarnings.length > 0 && (
-          <div className="text-[11px] text-warning mt-1.5 space-y-0.5">
-            {personalWarnings.map((w) => (
-              <div key={w}>启动提示：{w}</div>
-            ))}
-          </div>
-        )}
-        <div className="text-[11px] text-disabled mt-1.5">
-          标的·流水·定投计划基线存于 public/data/holdings.json；编辑后提交仓库，
-          在本机点「从服务器重新加载」即可同步。回访时本地编辑优先于服务器基线
-        </div>
       </div>
 
-      <div className="pt-3 border-t border-line-soft">
-        <Button variant="danger" size="sm" onClick={() => setResetOpen(true)}>
-          <RotateCcw size={13} /> 清空并重置为演示数据
+      <div className="flex items-center justify-between gap-4 border-t border-line-soft pt-4">
+        <div>
+          <p className="text-[13px] font-medium text-primary">清空账本</p>
+          <p className="mt-0.5 text-[11px] text-secondary">删除全部个人记录，行情数据不受影响。</p>
+        </div>
+        <Button variant="danger" onClick={() => setClearOpen(true)}>
+          <Trash2 size={15} /> 清空
         </Button>
       </div>
 
       <Modal
-        open={resetOpen}
-        title="确认重置"
-        onClose={() => setResetOpen(false)}
+        open={clearOpen}
+        title="确认清空账本？"
+        onClose={() => setClearOpen(false)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setResetOpen(false)}>取消</Button>
-            <Button variant="danger" onClick={() => { resetState(); setResetOpen(false); }}>确认重置</Button>
+            <Button variant="ghost" onClick={() => setClearOpen(false)}>取消</Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                resetState();
+                setClearOpen(false);
+                setMessage({ tone: 'ok', text: '账本已清空' });
+              }}
+            >
+              确认清空
+            </Button>
           </>
         }
       >
-        <p className="text-[12px] text-secondary">
-          将清空本地全部数据并恢复六类资产演示种子。此操作不可撤销，建议先导出 JSON 备份。
+        <p className="text-[13px] leading-6 text-secondary">
+          标的、流水、分红订正和定投计划都会被删除；已登录时也会同步到云端。建议先导出备份。
         </p>
       </Modal>
     </Card>
