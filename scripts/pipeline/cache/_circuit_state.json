@@ -6,22 +6,22 @@
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:11:24Z",
+    "lastSuccess": "2026-09-06T16:16:36Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:03Z",
+    "lastSuccess": "2026-09-06T16:15:36Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:11Z",
+    "lastSuccess": "2026-09-06T16:15:39Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:12Z",
+    "lastSuccess": "2026-09-06T16:15:39Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
@@ -31,7 +31,7 @@
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:03Z",
+    "lastSuccess": "2026-09-06T16:15:35Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
@@ -40,9 +40,9 @@
     "openUntil": 1788718200.4146924
   },
   "akshare.stock_zh_a_hist": {
-    "consecutiveFailures": 2,
+    "consecutiveFailures": 3,
     "lastSuccess": "2026-09-05T23:52:19Z",
-    "openUntil": 0.0
+    "openUntil": 1788732932.0666358
   },
   "binance.klines": {
     "consecutiveFailures": 68,
@@ -61,22 +61,22 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:09:57Z",
+    "lastSuccess": "2026-09-06T16:15:31Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:07Z",
+    "lastSuccess": "2026-09-06T16:15:36Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:08Z",
+    "lastSuccess": "2026-09-06T16:15:36Z",
     "openUntil": 0.0
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-09-06T12:10:13Z",
+    "lastSuccess": "2026-09-06T16:15:41Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
