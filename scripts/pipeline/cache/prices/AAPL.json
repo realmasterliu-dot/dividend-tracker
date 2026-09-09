@@ -7357,7 +7357,7 @@
     "price": 324.96,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -7365,7 +7365,7 @@
     "price": 328.21,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -7373,7 +7373,7 @@
     "price": 319.97,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -7381,6 +7381,6 @@
     "price": 316.22,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   }
 ]
