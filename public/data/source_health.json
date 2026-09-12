@@ -1,26 +1,26 @@
 {
   "akshare.fund_etf_hist_em": {
     "lastSuccess": "2026-09-12T00:14:58Z",
-    "consecutiveFailures": 1,
+    "consecutiveFailures": 2,
     "status": "YELLOW"
   },
   "akshare.fund_fh_em": {
-    "lastSuccess": "2026-09-12T12:13:26Z",
+    "lastSuccess": "2026-09-12T16:19:38Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.fund_open_fund_info_em": {
-    "lastSuccess": "2026-09-12T12:11:47Z",
+    "lastSuccess": "2026-09-12T16:18:27Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_fhps_detail_em": {
-    "lastSuccess": "2026-09-12T12:11:55Z",
+    "lastSuccess": "2026-09-12T16:18:34Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_dividend_payout_em": {
-    "lastSuccess": "2026-09-12T12:11:56Z",
+    "lastSuccess": "2026-09-12T16:18:34Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -30,7 +30,7 @@
     "status": "RED"
   },
   "akshare.stock_us_daily": {
-    "lastSuccess": "2026-09-12T12:11:46Z",
+    "lastSuccess": "2026-09-12T16:18:26Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -50,7 +50,7 @@
     "status": "RED"
   },
   "coinbase.spot": {
-    "lastSuccess": "2026-09-10T12:56:48Z",
+    "lastSuccess": "2026-09-12T16:18:28Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -60,22 +60,22 @@
     "status": "RED"
   },
   "frankfurter.dev.range": {
-    "lastSuccess": "2026-09-12T12:11:41Z",
+    "lastSuccess": "2026-09-12T16:18:25Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "gold-api.crypto": {
     "lastSuccess": "2026-09-12T12:11:50Z",
-    "consecutiveFailures": 0,
-    "status": "GREEN"
+    "consecutiveFailures": 1,
+    "status": "YELLOW"
   },
   "gold-api.xau": {
-    "lastSuccess": "2026-09-12T12:11:52Z",
+    "lastSuccess": "2026-09-12T16:18:30Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "nasdaq.api.dividends": {
-    "lastSuccess": "2026-09-12T12:11:57Z",
+    "lastSuccess": "2026-09-12T16:18:37Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
