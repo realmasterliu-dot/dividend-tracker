@@ -13,9 +13,10 @@ import { MarketBadge } from '@/components/holdings/MarketBadge';
 import { yearOf } from '@/lib/clock';
 import { KlineChart, KlinePoint } from '@/components/charts/KlineChart';
 import { DividendBarChart, DividendBarDatum } from '@/components/charts/DividendBarChart';
-import { TaxBreakdownCard } from './TaxBreakdownCard';
+import { TaxBreakdownCard, hongKongCustodyLabel } from './TaxBreakdownCard';
 import { TaxLotTable } from './TaxLotTable';
 import { DividendHistoryTable } from './DividendHistoryTable';
+import { accountingDividendEvents } from '@/lib/transactionDividend';
 
 /** 标的详情容器：K线 + 分红柱 + 税务拆解 + TaxLot + 分红历史（PRD §8.4.4） */
 export function InstrumentDetail() {
@@ -29,6 +30,10 @@ export function InstrumentDetail() {
 
   const instrument = state.instruments.find((i) => i.id === id);
   const currency = settings.displayCurrency;
+  const instrumentDividends = useMemo(
+    () => accountingDividendEvents(state.dividends).filter((dividend) => dividend.instrumentId === id),
+    [state.dividends, id],
+  );
 
   const klineData = useMemo<KlinePoint[]>(() => {
     const series = state.prices
@@ -55,9 +60,8 @@ export function InstrumentDetail() {
   );
 
   const barData = useMemo<DividendBarDatum[]>(() => {
-    const map = new Map<number, DividendBarDatum>();
     const yearMap = new Map<number, DividendBarDatum>();
-    const enriched = state.dividends.filter((d) => d.instrumentId === id);
+    const enriched = instrumentDividends;
     const years = [...new Set(enriched.map((d) => yearOf(d.payDate ?? d.exDate ?? d.recordDate ?? '2026-01-01')))].sort(
       (a, b) => a - b,
     );
@@ -74,14 +78,14 @@ export function InstrumentDetail() {
       else entry.predicted += d.netAmount;
     }
     return [...yearMap.values()];
-  }, [state.dividends, id]);
+  }, [instrumentDividends]);
 
   if (!instrument) {
     return (
       <div className="p-6">
         <EmptyState
-          title="未找到该标的"
-          description="无效的标的 ID，将跳转回持仓页"
+          title="找不到这个标的"
+          description="它可能已被删除，或当前链接已经失效。"
           action={
             <Button onClick={() => navigate('/holdings')}>返回持仓</Button>
           }
@@ -91,7 +95,7 @@ export function InstrumentDetail() {
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4 p-3 sm:p-4">
       <button
         onClick={() => navigate('/holdings')}
         className="flex items-center gap-1 text-[12px] text-secondary hover:text-primary"
@@ -107,7 +111,11 @@ export function InstrumentDetail() {
         <Badge variant={instrument.dividendEligible ? 'gold' : 'gray'}>
           {instrument.dividendEligible ? '可分红' : '不分红'}
         </Badge>
-        {instrument.market === 'HK' && <Badge variant="cyan">香港本地券商 · 股息税 0%</Badge>}
+        {instrument.market === 'HK' && (
+          <Badge variant={instrument.custodyChannel === 'HK_LOCAL_BROKER' ? 'cyan' : 'orange'}>
+            {hongKongCustodyLabel(instrument.custodyChannel)}
+          </Badge>
+        )}
         {instrument.market === 'US' && (
           <Badge variant="orange">{settings.w8benFilled ? 'W-8BEN 已填 10%' : 'W-8BEN 未填 30% 保守'}</Badge>
         )}
@@ -149,7 +157,7 @@ export function InstrumentDetail() {
         <TaxLotTable lots={lots} />
       </div>
 
-      <DividendHistoryTable dividends={state.dividends.filter((d) => d.instrumentId === instrument.id)} />
+      <DividendHistoryTable dividends={instrumentDividends} />
     </div>
   );
 }

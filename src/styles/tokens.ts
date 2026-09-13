@@ -65,7 +65,7 @@ export const COLOR_SCHEMES = {
 } as const;
 
 export const FONT = {
-  mono: '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+  mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
   sans: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif',
 } as const;
 

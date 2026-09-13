@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Transaction } from '@/types';
+import { CheckCircle2, XCircle } from 'lucide-react';
+import type { Transaction } from '@/types';
 import { useData } from '@/store/DataContext';
 import { useMoneyFmt } from '@/lib/hooks/useMoneyFmt';
-import { useSettings } from '@/store/SettingsContext';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -10,63 +10,73 @@ import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 import { pendingTransactions } from '@/store/selectors';
 
-/** 待确认队列：PENDING 半透明行 + 批量确认/作废（PRD §3.2.8） */
+/** 定投草稿必须逐笔填写真实成交份额，永不把 0 份或估算值直接确认进持仓。 */
 export function PendingQueue() {
   const { state, confirmPending, voidPending } = useData();
-  const { settings } = useSettings();
   const { fmt } = useMoneyFmt();
-
   const pending = pendingTransactions(state);
   const [confirmFor, setConfirmFor] = useState<string | null>(null);
   const [actualQty, setActualQty] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   if (pending.length === 0) return null;
 
-  const instrumentById = new Map(state.instruments.map((i) => [i.id, i]));
+  const instrumentById = new Map(state.instruments.map((instrument) => [instrument.id, instrument]));
+  const selected = pending.find((transaction) => transaction.id === confirmFor) ?? null;
 
-  const confirmAll = () => {
-    for (const t of pending) confirmPending(t.id);
+  const openConfirm = (transaction: Transaction) => {
+    setConfirmFor(transaction.id);
+    setActualQty(transaction.quantity > 0 ? String(transaction.quantity) : '');
+    setError(null);
   };
-  const voidAll = () => voidPending(pending.map((t) => t.id));
 
-  const confirmOne = (t: Transaction) => {
-    if (confirmFor === t.id) {
-      confirmPending(t.id, Number(actualQty) || t.quantity);
-      setConfirmFor(null);
+  const confirmOne = () => {
+    if (!selected) return;
+    const quantity = Number(actualQty);
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+      setError('请输入大于 0 的实际成交份额');
+      return;
     }
+    confirmPending(selected.id, quantity);
+    setConfirmFor(null);
+    setActualQty('');
+    setError(null);
   };
 
   return (
     <Card
-      title="待确认队列"
-      subtitle={`${pending.length} 笔 PENDING 流水不计入总资产`}
-      bodyClassName="p-3"
-      action={
-        <div className="flex gap-2">
-          <Button size="sm" variant="gold" onClick={confirmAll}>一键全部确认</Button>
-          <Button size="sm" variant="danger" onClick={voidAll}>全部作废</Button>
-        </div>
-      }
+      title="待补全的定投"
+      subtitle={`${pending.length} 笔尚未计入持仓，请按成交记录逐笔补全`}
+      bodyClassName="p-3 sm:p-4"
     >
-      <ul className="divide-y divide-line-soft">
-        {pending.map((t) => {
-          const inst = instrumentById.get(t.instrumentId);
-          const confirmAmount = t.amount * t.fxRate;
+      <ul className="space-y-2">
+        {pending.map((transaction) => {
+          const instrument = instrumentById.get(transaction.instrumentId);
+          const amount = transaction.amount * transaction.fxRate;
           return (
-            <li key={t.id} className="py-2 opacity-70 border border-dashed border-prediction rounded-md px-2 my-1 bg-prediction/5">
-              <div className="flex flex-wrap items-center gap-2 text-[12px]">
-                <Badge variant="orange">PENDING</Badge>
-                <span className="font-mono text-primary">{t.date}</span>
-                <span className="text-primary">{inst?.symbol ?? t.instrumentId}</span>
-                <span className="text-secondary">定投 · 份额待净值回填</span>
-                <span className="num text-gold ml-auto">{fmt(confirmAmount, 0)}</span>
-                <span className="text-[11px] text-secondary">若确认将增加 {fmt(confirmAmount, 0)}</span>
-                <div className="flex gap-1.5">
-                  <Button size="sm" variant="outline" onClick={() => { setConfirmFor(t.id); setActualQty(String(t.quantity || '')); }}>
-                    确认
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => voidPending([t.id])}>作废</Button>
+            <li
+              key={transaction.id}
+              className="rounded-xl border border-dashed border-prediction/60 bg-prediction/5 p-3"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-mono text-[13px] font-medium text-primary">
+                      {instrument?.symbol ?? transaction.instrumentId}
+                    </span>
+                    <Badge variant="orange">待补全</Badge>
+                  </div>
+                  <p className="mt-1 text-[11px] text-secondary">{transaction.date} · 计划投入 {fmt(amount, 0)}</p>
                 </div>
+                <span className="num shrink-0 text-[16px] font-semibold text-gold">{fmt(amount, 0)}</span>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-line-soft pt-3 sm:flex sm:justify-end">
+                <Button variant="ghost" onClick={() => voidPending([transaction.id])}>
+                  <XCircle size={15} /> 作废
+                </Button>
+                <Button variant="gold" onClick={() => openConfirm(transaction)}>
+                  <CheckCircle2 size={15} /> 填写成交
+                </Button>
               </div>
             </li>
           );
@@ -74,25 +84,39 @@ export function PendingQueue() {
       </ul>
 
       <Modal
-        open={confirmFor !== null}
-        title="确认定投成交份额"
-        onClose={() => setConfirmFor(null)}
+        open={selected !== null}
+        title="填写实际成交份额"
+        onClose={() => {
+          setConfirmFor(null);
+          setError(null);
+        }}
         footer={
           <>
             <Button variant="ghost" onClick={() => setConfirmFor(null)}>取消</Button>
-            <Button variant="gold" onClick={() => { const t = pending.find((x) => x.id === confirmFor); if (t) confirmOne(t); }}>
-              确认并入持仓
-            </Button>
+            <Button variant="gold" onClick={confirmOne}>确认计入持仓</Button>
           </>
         }
       >
-        <Input
-          label="实际成交份额"
-          type="number"
-          value={actualQty}
-          onChange={(e) => setActualQty(e.target.value)}
-          hint="净值 T+1 公布后回填；与实际不符可逐笔修改"
-        />
+        <div className="space-y-3">
+          <div className="rounded-xl bg-card-hover px-3 py-2.5 text-[12px] text-secondary">
+            计划金额 {selected ? fmt(selected.amount * selected.fxRate, 0) : '—'}。成交价格会按“金额 ÷ 实际份额”自动计算。
+          </div>
+          <Input
+            label="实际成交份额"
+            type="number"
+            inputMode="decimal"
+            min="0"
+            step="any"
+            autoFocus
+            value={actualQty}
+            onChange={(event) => {
+              setActualQty(event.target.value);
+              setError(null);
+            }}
+            hint="以券商或基金平台的成交结果为准"
+          />
+          {error && <p role="alert" className="text-[12px] text-danger">{error}</p>}
+        </div>
       </Modal>
     </Card>
   );

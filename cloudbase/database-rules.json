@@ -1,0 +1,6 @@
+{
+  "read": "doc._openid == auth.openid || doc._openid == auth.uid",
+  "create": "auth != null && (request.data.ownerUid == auth.openid || request.data.ownerUid == auth.uid) && request.data.ledgerKey == 'primary' && request.data.revision == 1",
+  "update": "(doc._openid == auth.openid || doc._openid == auth.uid) && (doc.ownerUid == auth.openid || doc.ownerUid == auth.uid) && (request.data.ownerUid == undefined || request.data.ownerUid == doc.ownerUid)",
+  "delete": "(doc._openid == auth.openid || doc._openid == auth.uid) && (doc.ownerUid == auth.openid || doc.ownerUid == auth.uid)"
+}

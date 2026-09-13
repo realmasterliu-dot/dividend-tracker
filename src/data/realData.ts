@@ -229,7 +229,7 @@ export function normalizeMeta(raw: unknown): PipelineMeta | null {
 
 // ============ 加载 ============
 
-/** public/ 在 Vite 中映射到站点根；BASE_URL 兼容子路径部署（如 GitHub Pages） */
+/** public/ 在 Vite 中映射到站点根；CloudBase 静态托管部署在根路径。 */
 export function dataUrl(fileName: string): string {
   let base = '/';
   try {
@@ -247,21 +247,50 @@ export interface LoadMarketDataOptions {
   /** 便于单测注入；默认使用全局 fetch */
   fetchImpl?: typeof fetch;
   /**
-   * fetch 缓存策略，默认 'default'（遵循 _headers 的 max-age=3600）。
+   * fetch 缓存策略，默认 'default'（遵循 CloudBase 控制台缓存规则）。
    * 冷启动/自动刷新走缓存以保住首屏；用户手动「刷新数据」时传 'no-cache' 强制拉最新。
    */
   cache?: RequestCache;
+  /** 单个静态数据请求的最长等待时间；默认 8 秒。 */
+  timeoutMs?: number;
 }
 
 async function fetchJson(fileName: string, options: LoadMarketDataOptions): Promise<unknown> {
   const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   if (typeof fetchImpl !== 'function') throw new Error('当前运行环境不支持 fetch');
-  const response = await fetchImpl(dataUrl(fileName), {
-    signal: options.signal,
+  const controller = new AbortController();
+  const timeoutMs = options.timeoutMs ?? 8_000;
+  const abortFromParent = () => controller.abort(options.signal?.reason);
+  if (options.signal?.aborted) abortFromParent();
+  else options.signal?.addEventListener('abort', abortFromParent, { once: true });
+
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const request = fetchImpl(dataUrl(fileName), {
+    signal: controller.signal,
     cache: options.cache ?? 'default',
   });
-  if (!response.ok) throw new Error(`${fileName} 请求失败（HTTP ${response.status}）`);
-  return (await response.json()) as unknown;
+  const aborted = new Promise<never>((_, reject) => {
+    controller.signal.addEventListener(
+      'abort',
+      () => reject(controller.signal.reason ?? new DOMException('请求已取消', 'AbortError')),
+      { once: true },
+    );
+  });
+  const timedOut = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error(`${fileName} 请求超时（${Math.ceil(timeoutMs / 1000)} 秒）`));
+      controller.abort();
+    }, timeoutMs);
+  });
+
+  try {
+    const response = await Promise.race([request, aborted, timedOut]);
+    if (!response.ok) throw new Error(`${fileName} 请求失败（HTTP ${response.status}）`);
+    return (await response.json()) as unknown;
+  } finally {
+    if (timeoutId !== undefined) clearTimeout(timeoutId);
+    options.signal?.removeEventListener('abort', abortFromParent);
+  }
 }
 
 /**
@@ -343,9 +372,15 @@ export function mergeDividends(
     return previous ? carryUserEdits(d, previous) : d;
   });
 
-  // 用户手工录入且管道未覆盖的事件不能丢
-  const manualOnly = existing.filter((d) => d.manual && !incomingIds.has(d.id));
-  return [...merged, ...manualOnly];
+  // 手工事件，以及已经校准过实际到账/税款的管道事件，都是用户账本事实。
+  // 即使当前管道尚未加载、临时失败或不再发布该历史事件，也不能在恢复云账本/
+  // 完整备份时把这些订正静默丢掉。
+  const durableOnly = existing.filter(
+    (d) =>
+      !incomingIds.has(d.id) &&
+      (d.manual || d.actualReceived !== undefined || d.taxWithheldOverride !== undefined),
+  );
+  return [...merged, ...durableOnly];
 }
 
 /** 重置演示数据时清除用户手工订正，回到管道原始事实 */

@@ -1,60 +1,63 @@
-# 个人分红 / 股息追踪系统 · Dividend Tracker
+# 股息账本 · Dividend Tracker
 
-纯前端 SPA：覆盖 A股 / 港股 / 美股 / 国内公募基金 / 加密货币 / 黄金 六类资产的个人分红追踪系统。
-回答三个核心问题：**持有资产能带来多少真金白银的分红？什么时候到账？到手还剩多少？**
+一个为个人投资者设计的股息与持仓账本。日常只需“记一笔”，应用会从流水自动推导持仓、成本、收益、税务批次与未来分红。
 
-## 快速开始
+## 产品原则
+
+- 首页只回答：现在有多少资产、近一年收到多少分红、下一笔何时到账。
+- 第一笔买入会同时建立标的和持仓，不存在“保存后看不到”的半成品状态。
+- 买入、卖出、现金分红是主流程；手续费、送转、拆股等低频记录收在“更多”中。
+- 手机端使用固定底部导航和卡片列表，主要操作区域不小于 44px。
+- 真实个人账本只保存在本机或登录用户自己的 CloudBase 文档中，不提交到公开静态文件。
+
+## 本地开发
+
+需要 Node.js 22 与 pnpm 11：
 
 ```bash
-npm install
-npm run dev       # 本地开发 http://localhost:5173
-npm run typecheck # 零 TypeScript 错误
-npm run build     # 产出 dist/（静态托管，HashRouter 零配置）
-npm run preview   # 本地预览构建产物
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm test
+pnpm build
 ```
+
+## CloudBase 配置
+
+复制 `.env.example` 为 `.env.local`，只填写可公开的前端配置：
+
+```bash
+VITE_CLOUDBASE_ENV_ID=your-env-id
+VITE_CLOUDBASE_REGION=ap-shanghai
+VITE_CLOUDBASE_COLLECTION=user_ledgers
+```
+
+部署管理员 API Key 只能放在本机凭据或 GitHub Secrets，绝不能放进 `VITE_*`、源码或前端构建产物。
+
+CloudBase 环境需要：
+
+1. 开启静态网站托管。
+2. 开启用户名/邮箱/手机号 + 密码登录，并为使用者建立账号。
+3. 建立 `user_ledgers` 集合。
+4. 将集合设为“仅创建者可读写”，或应用 `cloudbase/database-rules.json` 中的跨 Web / 小程序安全规则。
+5. 把正式域名加入 CloudBase 安全来源。
+
+生产构建后可部署：
+
+```bash
+pnpm build
+tcb hosting deploy ./dist -e YOUR_ENV_ID
+```
+
+## 数据分层
+
+- `localStorage`：离线与未登录状态的个人账本。
+- CloudBase `user_ledgers`：登录后的个人账本，一名用户一个 `ledgerKey=primary` 文档。
+- `public/data/*.json`：公开行情、汇率、分红事实与数据源状态；这里不得出现真实个人持仓。
+- Python + GitHub Actions：定时刷新公开市场数据，并在测试和构建通过后部署静态站。
 
 ## 技术栈
 
-React 18 · Vite 5 · TypeScript 5 · Tailwind CSS 3 · ECharts 5 · react-router-dom (HashRouter) · dayjs · Context + useReducer
+React 18 · Vite 5 · TypeScript · Tailwind CSS · CloudBase Web SDK · Vitest。ECharts 只在详情类懒加载页面使用，不进入首页关键路径。
 
-## 核心特性
-
-| 模块 | 说明 |
-|---|---|
-| 六类资产统一模型 | 单一 `Instrument` + `market` 判别联合，税务/格式化按市场分派 |
-| 持仓 = 流水推导 | `PositionEngine` 纯函数：流水 → FIFO TaxLot → Position，推导不存储 |
-| ★ A股三态税务 | 已到账（税前）/ 或有税负 / 已实际扣税；`再持有 N 天税负归零` |
-| 诚实预测 | 恒为区间 + 置信度 + 稳定性评分，禁止单一数字 |
-| 交易所风格 UI | 深色 #0A0E14、等宽数字、tabular-nums、14 列密集持仓表 |
-| 涨跌色三档 | `data-scheme="cn|intl|colorblind"` 全局统一切换 |
-
-## 目录结构
-
-```
-src/
-├── types/          # 全部 TS 接口（唯一来源）
-├── styles/         # design token（唯一来源）+ 主题注入
-├── data/seed/      # 六类资产演示种子数据
-├── store/          # DataContext / SettingsContext / 持久化
-├── lib/calc/       # 纯函数计算引擎（position/taxLot/tax/returns/prediction/fx/portfolio）
-├── lib/hooks/      # 组合级派生 hooks
-├── components/     # ui / layout / charts / dashboard / holdings / calendar / detail / transactions / dca / notifications / settings
-└── pages/          # 9 条路由页面
-```
-
-## 数据管道（占位）
-
-本阶段为纯前端交付。真实数据管道（Python 抓取 + GitHub Actions 定时 + Cloudflare Pages Functions 代理写入）规划见：
-
-- `.github/workflows/README.md` — 每日 6/7/16/21 时抓取 workflow 规划（PRD §5.5.1）
-- `scripts/pipeline/README.md` — Python 抓取 / 回填 / 汇率 forward-fill 规划（PRD §3.2.7）
-
-## 演示时钟说明
-
-种子数据与所有计算使用统一演示时钟 `2026-08-04`（见 `src/lib/clock.ts`），保证日历、税务、预测、90 天热力图首次打开即可完整演示。接入真实管道后切换到真实系统时钟即可。
-
-## 未来扩展
-
-1. 数据管道：Python 爬虫 → Actions 每日跑 → 提交 JSON → Pages 重建
-2. 部署：Cloudflare Pages（HashRouter 零配置）+ Cloudflare Access 访问口令
-3. 推送：Telegram / 飞书 / 企业微信 Webhook（设置页已预留配置项）
+核心计算全部保持为纯函数，位置在 `src/lib/calc/`；11 类交易的字段归一化与验证在 `src/lib/transactionDraft.ts`，由完整类型矩阵测试保护。

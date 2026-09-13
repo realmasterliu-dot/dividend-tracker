@@ -8,6 +8,7 @@ import {
   Transaction,
 } from '@/types';
 import { daysBetween, todayISO } from '../clock';
+import { accountingDividendEvents } from '../transactionDividend';
 
 /**
  * ReturnEngine（architecture.md 类图）
@@ -48,9 +49,88 @@ export function xirr(cashflows: Cashflow[], guess = 0.1): number {
   return rate;
 }
 
-/** 交易流水 → XIRR 现金流（本位币口径；含今日市值作为最终流入） */
+function linkedDividendEventId(transaction: Transaction): string | undefined {
+  const value = transaction.meta?.dividendEventId;
+  return typeof value === 'string' && value ? value : undefined;
+}
+
+function dividendEventDate(event: DividendEvent): string | undefined {
+  return event.payDate ?? event.exDate ?? event.recordDate;
+}
+
+/**
+ * 已实现的收益现金流（本位币）。
+ *
+ * 分红事件是金额事实的唯一权威来源：管道 PAID 事件和用户
+ * RECONCILED 事件都会进入收益。现金分红交易只用来补足尚未关联事件的
+ * 旧数据，避免一笔到账同时被 transaction 和 DividendEvent 计两次。
+ *
+ * 红利再投是组合内部再投资：既不是外部入金，也不是离开组合的
+ * 现金流。它的回报已体现在新增份额的市值中，因此这里不再记一笔收入。
+ */
+export function realizedIncomeCashflows(
+  transactions: Transaction[],
+  dividends: DividendEvent[],
+): Cashflow[] {
+  const confirmed = transactions.filter((transaction) => transaction.status === 'CONFIRMED');
+  const reinvestedEventIds = new Set(
+    confirmed
+      .filter((transaction) => transaction.type === 'DIVIDEND_REINVEST')
+      .map(linkedDividendEventId)
+      .filter((id): id is string => id !== undefined),
+  );
+
+  const flows: Cashflow[] = [];
+  const accountedCashEventIds = new Set<string>();
+
+  for (const event of accountingDividendEvents(dividends)) {
+    if (event.status !== 'PAID' && event.status !== 'RECONCILED') continue;
+    if (event.dividendForm === 'SCRIP' || reinvestedEventIds.has(event.id)) continue;
+
+    const date = dividendEventDate(event);
+    if (!date) continue;
+
+    // netAmount 是税后本位币口径；校准事件再优先采用实际到账。
+    const amount =
+      typeof event.actualReceived === 'number' && Number.isFinite(event.actualReceived)
+        ? event.actualReceived
+        : event.netAmount;
+    if (Number.isFinite(amount) && Math.abs(amount) > 1e-9) {
+      flows.push({ date, amount });
+    }
+    // 即使金额为 0，事件仍然是这笔到账的权威事实，
+    // 不应回退到关联交易金额。
+    accountedCashEventIds.add(event.id);
+  }
+
+  for (const transaction of confirmed) {
+    const amount = transaction.amount * transaction.fxRate;
+    switch (transaction.type) {
+      case 'DIVIDEND_CASH': {
+        const eventId = linkedDividendEventId(transaction);
+        if (!eventId || !accountedCashEventIds.has(eventId)) {
+          flows.push({ date: transaction.date, amount });
+        }
+        break;
+      }
+      case 'INCOME':
+        flows.push({ date: transaction.date, amount });
+        break;
+      case 'TAX_WITHHELD':
+        flows.push({ date: transaction.date, amount: -amount });
+        break;
+      default:
+        break;
+    }
+  }
+
+  return flows.sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/** 外部资金 + 已实现收益 → XIRR 现金流（含今日市值作为最终流入） */
 export function xirrCashflows(
   transactions: Transaction[],
+  dividends: DividendEvent[],
   marketValue: number,
   today: string,
 ): Cashflow[] {
@@ -65,38 +145,43 @@ export function xirrCashflows(
       case 'SELL':
         flows.push({ date: tx.date, amount: (tx.amount - (tx.fee ?? 0)) * fx });
         break;
-      case 'DIVIDEND_CASH':
-        flows.push({ date: tx.date, amount: tx.amount * fx });
-        break;
-      case 'DIVIDEND_REINVEST':
-        break;
       case 'FEE':
-        flows.push({ date: tx.date, amount: -tx.amount * fx });
-        break;
-      case 'INCOME':
-        flows.push({ date: tx.date, amount: tx.amount * fx });
-        break;
-      case 'TAX_WITHHELD':
         flows.push({ date: tx.date, amount: -tx.amount * fx });
         break;
       default:
         break;
     }
   }
+  flows.push(...realizedIncomeCashflows(transactions, dividends));
   flows.push({ date: today, amount: marketValue });
-  return flows;
+  return flows.sort((a, b) => a.date.localeCompare(b.date));
 }
 
-/** TWR：日链式，仅外部资金流（累计投入变化）作为 flow */
-export function twr(snapshots: PortfolioSnapshot[]): number {
+/**
+ * TWR：日链式。invested 的变化是外部资金流，现金分红等已实现
+ * 收益需加回期末市值，否则除息后的价格下降会被误认为亏损。
+ */
+export function twr(
+  snapshots: PortfolioSnapshot[],
+  realizedIncome: Cashflow[] = [],
+): number {
   let product = 1;
   let prev: PortfolioSnapshot | undefined;
+  const income = [...realizedIncome].sort((a, b) => a.date.localeCompare(b.date));
+  let incomeIdx = 0;
   for (const snap of snapshots) {
     if (prev) {
+      // 跳过首个快照之前（含当日）的收益；它已经包含在期初价值中。
+      while (incomeIdx < income.length && income[incomeIdx].date <= prev.date) incomeIdx++;
+      let periodIncome = 0;
+      while (incomeIdx < income.length && income[incomeIdx].date <= snap.date) {
+        periodIncome += income[incomeIdx].amount;
+        incomeIdx++;
+      }
       const flow = snap.invested - prev.invested;
       const base = prev.marketValue;
       if (base > 1e-9) {
-        const dailyReturn = (snap.marketValue - flow - base) / base;
+        const dailyReturn = (snap.marketValue + periodIncome - flow - base) / base;
         product *= 1 + dailyReturn;
       }
     }
@@ -133,9 +218,9 @@ export function breakdown(
   if (settings.fxNeutralMode) fx = 0;
 
   // 分红回报：已到账分红净额（本位币）
-  for (const d of dividends) {
+  for (const d of accountingDividendEvents(dividends)) {
     if (d.status === 'PAID' || d.status === 'RECONCILED') {
-      dividend += d.netAmount;
+      dividend += d.actualReceived ?? d.netAmount;
     }
   }
 
