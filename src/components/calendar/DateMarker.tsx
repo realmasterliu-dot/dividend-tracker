@@ -24,8 +24,13 @@ export function DateMarker({ shape, status, size = 'sm' }: { shape: MarkerShape;
   return (
     <span
       title={shape === 'RECORD' ? '股权登记日 ●' : shape === 'EX' ? '除权除息日 ◆' : '派息到账日 ▲'}
+      role="img"
+      aria-label={shape === 'RECORD' ? '股权登记日' : shape === 'EX' ? '除权除息日' : '派息到账日'}
       className={clsx('inline-block shrink-0', sizeClass, shapeClass, color)}
-      style={shape === 'PAY' ? { clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' } : undefined}
+      style={{
+        backgroundColor: 'currentColor',
+        ...(shape === 'PAY' ? { clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' } : {}),
+      }}
     />
   );
 }

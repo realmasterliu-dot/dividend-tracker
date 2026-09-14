@@ -1,73 +1,76 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Bell, ChevronRight, Database, Repeat2 } from 'lucide-react';
 import { useData } from '@/store/DataContext';
-import { useSettings } from '@/store/SettingsContext';
-import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { Input } from '@/components/ui/Input';
 import { AppearanceSettings } from './AppearanceSettings';
+import { CloudAccountSettings } from './CloudAccountSettings';
 import { TaxSettings } from './TaxSettings';
 import { DataSettings } from './DataSettings';
 
-/** 设置页容器（四项开放问题默认值可改 + 数据源健康面板） */
 export function SettingsPage() {
   const { state } = useData();
-  const { settings, update } = useSettings();
-  const [tg, setTg] = useState(settings.notificationChannels.telegram ?? '');
-  const [fs, setFs] = useState(settings.notificationChannels.feishu ?? '');
-  const [wc, setWc] = useState(settings.notificationChannels.wecom ?? '');
+  const unread = state.notifications.filter((item) => !item.read).length;
 
   return (
-    <div className="p-4 space-y-4 max-w-3xl">
+    <div className="mx-auto w-full max-w-3xl space-y-4 p-4 sm:p-5 lg:p-8">
       <div>
-        <h2 className="text-[18px] font-bold text-primary">设置</h2>
-        <p className="text-[12px] text-secondary mt-0.5">
-          开放问题默认化：本位币 CNY · W-8BEN 未填(30%保守) · 涨跌色中国习惯 · 黄金实物金条
-        </p>
+        <h1 className="text-[20px] font-semibold text-primary">更多</h1>
+        <p className="mt-1 text-[12px] text-secondary">账号、提醒和常用偏好。</p>
       </div>
 
+      <div className="grid grid-cols-2 gap-3">
+        <Link
+          to="/notifications"
+          className="panel flex min-h-[76px] items-center gap-3 p-3.5 hover:border-gold/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gold/10 text-gold"><Bell size={17} /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[13px] font-medium text-primary">提醒</span>
+            <span className="mt-0.5 block text-[10px] text-secondary">{unread > 0 ? `${unread} 条未读` : '暂无未读'}</span>
+          </span>
+          <ChevronRight size={15} className="text-disabled" />
+        </Link>
+        <Link
+          to="/dca"
+          className="panel flex min-h-[76px] items-center gap-3 p-3.5 hover:border-gold/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-declared/10 text-declared"><Repeat2 size={17} /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[13px] font-medium text-primary">定投</span>
+            <span className="mt-0.5 block text-[10px] text-secondary">{state.plans.length} 个计划</span>
+          </span>
+          <ChevronRight size={15} className="text-disabled" />
+        </Link>
+      </div>
+
+      <CloudAccountSettings />
       <AppearanceSettings />
       <TaxSettings />
-
-      <Card title="通知渠道" subtitle="本阶段仅站内通知中心；Webhook 留配置项，无真实推送" bodyClassName="p-4 space-y-3">
-        <Input label="Telegram Bot Token / Chat ID" value={tg} onChange={(e) => { setTg(e.target.value); update({ notificationChannels: { ...settings.notificationChannels, telegram: e.target.value } }); }} placeholder="可选" />
-        <Input label="飞书 Webhook URL" value={fs} onChange={(e) => { setFs(e.target.value); update({ notificationChannels: { ...settings.notificationChannels, feishu: e.target.value } }); }} placeholder="可选" />
-        <Input label="企业微信 Webhook URL" value={wc} onChange={(e) => { setWc(e.target.value); update({ notificationChannels: { ...settings.notificationChannels, wecom: e.target.value } }); }} placeholder="可选" />
-        <div className="text-[11px] text-disabled">密钥应存 GitHub Secrets / Cloudflare 环境变量，不入代码库（PRD §10.4）</div>
-      </Card>
-
-      <Card title="数据源健康度（P3 面板）" bodyClassName="p-0">
-        <div className="overflow-x-auto">
-          <table className="tbl">
-            <thead>
-              <tr>
-                <th>数据源</th>
-                <th>最近成功</th>
-                <th className="text-right">连续失败</th>
-                <th>状态</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(state.sourceHealth).map(([name, h]) => (
-                <tr key={name}>
-                  <td className="text-primary">{name}</td>
-                  <td className="font-mono text-secondary">{h.lastSuccess.slice(0, 16).replace('T', ' ')}</td>
-                  <td className="num">{h.consecutiveFailures}</td>
-                  <td>
-                    <Badge variant={h.status === 'GREEN' ? 'green' : h.status === 'YELLOW' ? 'orange' : 'red'}>
-                      {h.status === 'GREEN' ? '🟢 正常' : h.status === 'YELLOW' ? '🟡 降级' : '🔴 异常'}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="p-3 text-[11px] text-disabled border-t border-line-soft">
-          同花顺·港股分红连续失败 3 天 → 健康灯转红（演示降级链：yfinance 备源 + 手动录入兜底）
-        </div>
-      </Card>
-
       <DataSettings />
+
+      <details className="panel group overflow-hidden">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center gap-2 px-4 text-[12px] text-secondary hover:text-primary">
+          <Database size={15} /> 行情数据状态
+          <ChevronRight size={14} className="ml-auto transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="border-t border-line px-4 py-3">
+          {Object.keys(state.sourceHealth).length === 0 ? (
+            <p className="text-[11px] text-disabled">暂未取得数据源状态，账本记录仍可正常使用。</p>
+          ) : (
+            <div className="space-y-2">
+              {Object.entries(state.sourceHealth).map(([name, health]) => (
+                <div key={name} className="flex items-center justify-between gap-3 text-[11px]">
+                  <span className="truncate text-secondary">{name}</span>
+                  <Badge variant={health.status === 'GREEN' ? 'green' : health.status === 'YELLOW' ? 'orange' : 'red'}>
+                    {health.status === 'GREEN' ? '正常' : health.status === 'YELLOW' ? '降级' : '异常'}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </details>
     </div>
   );
 }

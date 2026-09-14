@@ -9,6 +9,21 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import type { CustodyChannel } from '@/types';
+
+export function hongKongCustodyLabel(custodyChannel: CustodyChannel): string {
+  if (custodyChannel === 'HK_STOCK_CONNECT') return '港股通持有 · 按 20% 预扣估算';
+  if (custodyChannel === 'HK_LOCAL_BROKER') return '香港本地券商持有 · 股息税 0%';
+  return '托管渠道未匹配 · 税额以券商实际扣缴为准';
+}
+
+export function validateTaxOverrideAmount(raw: string): { value?: number; error?: string } {
+  if (raw.trim() === '') return { error: '请输入实际扣税金额' };
+  const value = Number(raw);
+  if (!Number.isFinite(value)) return { error: '请输入有效金额' };
+  if (value < 0) return { error: '实际扣税金额不能小于 0' };
+  return { value };
+}
 
 /** ★ 税务拆解卡片：三态（到账/或有/已扣）+ 再持有 N 天归零 + 免责声明 + 手动覆盖（PRD §3.2.2） */
 export function TaxBreakdownCard({ instrumentId }: { instrumentId: string }) {
@@ -21,6 +36,7 @@ export function TaxBreakdownCard({ instrumentId }: { instrumentId: string }) {
 
   const [overrideFor, setOverrideFor] = useState<string | null>(null);
   const [overrideValue, setOverrideValue] = useState('');
+  const [overrideError, setOverrideError] = useState<string | null>(null);
 
   if (!instrument) return null;
 
@@ -30,13 +46,23 @@ export function TaxBreakdownCard({ instrumentId }: { instrumentId: string }) {
   const openOverride = (id: string, current: number) => {
     setOverrideFor(id);
     setOverrideValue(String(current));
+    setOverrideError(null);
+  };
+
+  const closeOverride = () => {
+    setOverrideFor(null);
+    setOverrideError(null);
   };
 
   const submitOverride = () => {
-    if (overrideFor) {
-      overrideTaxWithheld(overrideFor, Number(overrideValue) || 0);
-      setOverrideFor(null);
+    if (!overrideFor) return;
+    const result = validateTaxOverrideAmount(overrideValue);
+    if (result.error !== undefined || result.value === undefined) {
+      setOverrideError(result.error ?? '请输入有效金额');
+      return;
     }
+    overrideTaxWithheld(overrideFor, result.value);
+    closeOverride();
   };
 
   return (
@@ -50,7 +76,7 @@ export function TaxBreakdownCard({ instrumentId }: { instrumentId: string }) {
               ? '美股 W-8BEN 已填（10%）'
               : '美股 W-8BEN 未填（30% 保守估算）'
             : instrument.market === 'HK'
-              ? '香港本地券商持有，股息税 0%'
+              ? hongKongCustodyLabel(instrument.custodyChannel)
               : instrument.market === 'FUND'
                 ? '国内公募基金：个人暂不征收'
                 : '不计算税务'
@@ -129,21 +155,36 @@ export function TaxBreakdownCard({ instrumentId }: { instrumentId: string }) {
       <Modal
         open={overrideFor !== null}
         title="手动覆盖实际扣税"
-        onClose={() => setOverrideFor(null)}
+        onClose={closeOverride}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setOverrideFor(null)}>取消</Button>
+            <Button variant="ghost" onClick={closeOverride}>取消</Button>
             <Button variant="primary" onClick={submitOverride}>保存</Button>
           </>
         }
       >
-        <Input
-          label="实际扣税金额（本位币）"
-          type="number"
-          value={overrideValue}
-          onChange={(e) => setOverrideValue(e.target.value)}
-          hint="用于与券商流水对账；覆盖后三态拆分按实际值显示"
-        />
+        <div className="space-y-2">
+          <Input
+            label="实际扣税金额（本位币）"
+            type="number"
+            min="0"
+            step="0.01"
+            inputMode="decimal"
+            value={overrideValue}
+            aria-invalid={overrideError !== null}
+            aria-describedby={overrideError ? 'tax-override-error' : undefined}
+            onChange={(e) => {
+              setOverrideValue(e.target.value);
+              setOverrideError(null);
+            }}
+            hint="用于与券商流水对账；覆盖后按实际扣税显示"
+          />
+          {overrideError && (
+            <p id="tax-override-error" role="alert" className="text-[12px] text-danger">
+              {overrideError}
+            </p>
+          )}
+        </div>
       </Modal>
     </Card>
   );

@@ -11,9 +11,6 @@ const TransactionsPage = lazy(() => import('@/pages/TransactionsPage').then((m) 
 const DcaPage = lazy(() => import('@/pages/DcaPage').then((m) => ({ default: m.DcaPage })));
 const NotificationsPage = lazy(() => import('@/pages/NotificationsPage').then((m) => ({ default: m.NotificationsPage })));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage').then((m) => ({ default: m.SettingsPage })));
-const SubmissionStatusPage = lazy(() =>
-  import('@/pages/SubmissionStatusPage').then((m) => ({ default: m.SubmissionStatusPage })),
-);
 
 function PageFallback() {
   return (
@@ -30,21 +27,46 @@ function PageFallback() {
  */
 export function AppRoutes() {
   return (
-    <Suspense fallback={<PageFallback />}>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/holdings" element={<HoldingsPage />} />
-          <Route path="/instruments/:id" element={<InstrumentPage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/dca" element={<DcaPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-        </Route>
-        <Route path="/submission-status" element={<SubmissionStatusPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route
+          path="/"
+          element={<Suspense fallback={<PageFallback />}><DashboardPage /></Suspense>}
+        />
+        <Route
+          path="/holdings"
+          element={<Suspense fallback={<PageFallback />}><HoldingsPage /></Suspense>}
+        />
+        <Route
+          path="/ledger"
+          element={<Navigate to="/holdings" replace />}
+        />
+        <Route
+          path="/instruments/:id"
+          element={<Suspense fallback={<PageFallback />}><InstrumentPage /></Suspense>}
+        />
+        <Route
+          path="/calendar"
+          element={<Suspense fallback={<PageFallback />}><CalendarPage /></Suspense>}
+        />
+        <Route
+          path="/transactions"
+          element={<Suspense fallback={<PageFallback />}><TransactionsPage /></Suspense>}
+        />
+        <Route
+          path="/dca"
+          element={<Suspense fallback={<PageFallback />}><DcaPage /></Suspense>}
+        />
+        <Route
+          path="/notifications"
+          element={<Suspense fallback={<PageFallback />}><NotificationsPage /></Suspense>}
+        />
+        <Route
+          path="/settings"
+          element={<Suspense fallback={<PageFallback />}><SettingsPage /></Suspense>}
+        />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }

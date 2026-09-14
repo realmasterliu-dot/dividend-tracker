@@ -1,0 +1,7 @@
+packages:
+  - '.'
+  - 'cloudbase/functions/*'
+
+allowBuilds:
+  core-js-pure: false
+  esbuild: true
