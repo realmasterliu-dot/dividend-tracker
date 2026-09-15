@@ -1,26 +1,26 @@
 {
   "akshare.fund_etf_hist_em": {
-    "lastSuccess": "2026-09-14T18:37:31Z",
-    "consecutiveFailures": 2,
-    "status": "YELLOW"
+    "lastSuccess": "2026-09-15T17:40:08Z",
+    "consecutiveFailures": 0,
+    "status": "GREEN"
   },
   "akshare.fund_fh_em": {
-    "lastSuccess": "2026-09-15T13:37:46Z",
+    "lastSuccess": "2026-09-15T17:41:12Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.fund_open_fund_info_em": {
-    "lastSuccess": "2026-09-15T13:36:22Z",
+    "lastSuccess": "2026-09-15T17:40:07Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_fhps_detail_em": {
-    "lastSuccess": "2026-09-15T13:36:32Z",
+    "lastSuccess": "2026-09-15T17:40:12Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_dividend_payout_em": {
-    "lastSuccess": "2026-09-15T13:36:33Z",
+    "lastSuccess": "2026-09-15T17:40:13Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -30,7 +30,7 @@
     "status": "RED"
   },
   "akshare.stock_us_daily": {
-    "lastSuccess": "2026-09-15T13:36:21Z",
+    "lastSuccess": "2026-09-15T17:40:05Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -41,8 +41,8 @@
   },
   "akshare.stock_zh_a_hist": {
     "lastSuccess": "2026-09-15T00:35:33Z",
-    "consecutiveFailures": 2,
-    "status": "YELLOW"
+    "consecutiveFailures": 3,
+    "status": "RED"
   },
   "binance.klines": {
     "lastSuccess": "",
@@ -60,12 +60,12 @@
     "status": "RED"
   },
   "frankfurter.dev.range": {
-    "lastSuccess": "2026-09-15T13:36:14Z",
+    "lastSuccess": "2026-09-15T17:40:02Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "gold-api.crypto": {
-    "lastSuccess": "2026-09-15T13:36:26Z",
+    "lastSuccess": "2026-09-15T17:40:08Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -75,7 +75,7 @@
     "status": "GREEN"
   },
   "nasdaq.api.dividends": {
-    "lastSuccess": "2026-09-15T13:36:35Z",
+    "lastSuccess": "2026-09-15T17:40:16Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
