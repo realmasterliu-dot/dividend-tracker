@@ -17,29 +17,44 @@ import {
   Notification,
   Transaction,
 } from '@/types';
-import { buildPersonalState } from '@/data';
 import {
-  downloadHoldings,
+  downloadLedgerBackup,
   hasPersonalSlices,
-  isNewerIso,
   loadPersonalData,
   mergeImportedSlices,
-  mergePersonalData,
+  parseLedgerBackup,
   PersonalDataBundle,
 } from '@/data/personalData';
-import { applyMarketData, loadMarketData, MarketDataBundle, stripUserEdits } from '@/data/realData';
+import {
+  applyMarketData,
+  loadMarketData,
+  MarketDataBundle,
+  mergeDividends,
+  stripUserEdits,
+} from '@/data/realData';
 import { uid } from '@/lib/clock';
 import { useSettings } from './SettingsContext';
+import { useAuth } from './AuthContext';
 import { useLocalStorage } from './useLocalStorage';
+import type { CloudLedgerSnapshot, LedgerPayload } from '@/data/cloud/types';
+import { CloudSyncJournal } from '@/data/cloud/journal';
+import {
+  canonicalizeLedgerPayload,
+  decideHydration,
+  ledgerFingerprint,
+  mergeLedgerPayloads,
+  mergeLedgerPayloadsThreeWay,
+  type SyncOutboxEntry,
+} from '@/data/cloud/sync';
+import { fxOn } from '@/lib/calc/fx';
 
 /**
  * DataStore（architecture.md §5.2）
  * useReducer + 自动持久化；所有业务变更经 actions，乐观更新 + 级联重算。
  *
  * 数据分层：
- * - 个人数据基线（instruments/transactions/plans）→ public/data/holdings.json，用户手工维护、
- *   提交后多设备同步；localStorage 里的运行期编辑作为 overlay 叠加其上（mergePersonalData）。
- * - 个人数据运行期（notifications/分红手工订正 + 上述 overlay）→ 持久化到 localStorage
+ * - 个人数据只保存在本机；登录 CloudBase 后同步到当前用户的私有账本。
+ * - public/data/holdings.json 仅作为显式导入/导出兼容格式，启动时绝不自动读取。
  * - 市场数据（prices/fx/dividends/sourceHealth）→ 每次启动从 public/data 真实管道重新加载，
  *   既避免旧缓存覆盖真实行情，也避免 5MB 配额被上万条行情撑爆。
  */
@@ -47,12 +62,41 @@ import { useLocalStorage } from './useLocalStorage';
 /** ★v2：真实数据接入，schema 与持久化范围均变更，旧版 v1 种子缓存直接作废 */
 const STORAGE_KEY = 'dt:state:v2';
 const LEGACY_STORAGE_KEYS = ['dt:state:v1'];
-/** 上一次「已接受」的服务器基线元信息，用于提示服务器有更新版 holdings.json */
-const BASELINE_META_KEY = 'dt:baseline:v1';
+const LAST_CLOUD_USER_KEY = 'dt:cloud-user:v1';
 
-/** 服务器基线元信息（目前只记 generatedAt） */
-export interface BaselineMeta {
-  generatedAt?: string;
+/**
+ * Anonymous records are a separate ledger head, not a stale copy of the owner's
+ * cloud ledger. Preserve all distinct records on login; when an unlikely ID
+ * collision occurs, the established owner ledger wins.
+ */
+export function mergeAnonymousLedgerForLogin(
+  ownerLedger: LedgerPayload,
+  anonymousLedger: LedgerPayload,
+): LedgerPayload {
+  const ownerHasData =
+    ownerLedger.instruments.length > 0 ||
+    ownerLedger.transactions.length > 0 ||
+    ownerLedger.plans.length > 0 ||
+    ownerLedger.dividends.length > 0;
+  if (!ownerHasData) return canonicalizeLedgerPayload(anonymousLedger);
+  return mergeLedgerPayloads(ownerLedger, anonymousLedger, {
+    localRevision: 1,
+    remoteRevision: 0,
+    prefer: 'local',
+  }).payload;
+}
+
+function isCloudSyncConflict(cause: unknown): boolean {
+  return (
+    typeof cause === 'object' &&
+    cause !== null &&
+    ((cause as { code?: unknown }).code === 'SYNC_CONFLICT' ||
+      (cause as { name?: unknown }).name === 'CloudSyncConflictError')
+  );
+}
+
+function cloudErrorMessage(cause: unknown): string {
+  return cause instanceof Error ? cause.message : String(cause);
 }
 
 /** 持久化载荷：剔除体积最大且每次都会重新拉取的行情/汇率 */
@@ -74,7 +118,7 @@ export type DataAction =
   | { type: 'PAUSE_PLAN'; payload: { id: string } }
   | { type: 'RESUME_PLAN'; payload: { id: string } }
   | { type: 'END_PLAN'; payload: { id: string } }
-  | { type: 'GENERATE_DCA_TX'; payload: { planId: string; date: string } }
+  | { type: 'GENERATE_DCA_TX'; payload: { planId: string; date: string; fxRate: number } }
   | { type: 'SET_LAST_UPDATED'; payload: string }
   | { type: 'ADD_INSTRUMENT'; payload: Instrument }
   | { type: 'UPSERT_INSTRUMENT'; payload: Instrument }
@@ -82,41 +126,79 @@ export type DataAction =
       type: 'INIT_PERSONAL_DATA';
       payload: { instruments: Instrument[]; transactions: Transaction[]; plans: InvestmentPlan[] };
     }
+  | { type: 'REPLACE_LEDGER'; payload: LedgerPayload }
+  | { type: 'IMPORT_LEDGER'; payload: LedgerPayload }
+  | { type: 'CLEAR_CLOUD_LEDGER' }
   | { type: 'CLEAR_PERSONAL_DATA' }
   | { type: 'HYDRATE_MARKET_DATA'; payload: { bundle: MarketDataBundle; settings: AppSettings } }
   | { type: 'RESET_STATE' };
+
+function detachCashReceipt(
+  dividends: DividendEvent[],
+  linkedDividendId: unknown,
+): DividendEvent[] {
+  if (typeof linkedDividendId !== 'string') return dividends;
+  return dividends.flatMap((dividend) => {
+    if (dividend.id !== linkedDividendId) return [dividend];
+    if (dividend.manual) return [];
+    const restored = { ...dividend };
+    delete restored.actualReceived;
+    delete restored.deviationPct;
+    restored.netAmount = Math.max(
+      0,
+      restored.grossAmount - restored.taxWithheld - restored.contingentTax,
+    );
+    if (restored.status === 'RECONCILED') restored.status = 'PAID';
+    return [restored];
+  });
+}
 
 export function reducer(state: DataState, action: DataAction): DataState {
   switch (action.type) {
     case 'ADD_TRANSACTION':
       return { ...state, transactions: [...state.transactions, action.payload] };
 
-    case 'UPDATE_TRANSACTION':
+    case 'UPDATE_TRANSACTION': {
+      const previous = state.transactions.find((item) => item.id === action.payload.id);
+      const next = previous ? { ...previous, ...action.payload.patch } : null;
+      const previousDividendId = previous?.meta?.dividendEventId;
+      const nextDividendId = next?.meta?.dividendEventId;
       return {
         ...state,
         transactions: state.transactions.map((t) =>
           t.id === action.payload.id ? { ...t, ...action.payload.patch } : t,
         ),
+        dividends:
+          previousDividendId !== nextDividendId
+            ? detachCashReceipt(state.dividends, previousDividendId)
+            : state.dividends,
       };
+    }
 
-    case 'DELETE_TRANSACTION':
+    case 'DELETE_TRANSACTION': {
+      const transaction = state.transactions.find((item) => item.id === action.payload.id);
+      const linkedDividendId = transaction?.meta?.dividendEventId;
       return {
         ...state,
         transactions: state.transactions.filter((t) => t.id !== action.payload.id),
+        dividends: detachCashReceipt(state.dividends, linkedDividendId),
       };
+    }
 
     case 'CONFIRM_PENDING': {
       return {
         ...state,
         transactions: state.transactions.map((t) => {
           if (t.id !== action.payload.id) return t;
-          const base: Transaction = { ...t, status: 'CONFIRMED' };
           if (action.payload.actualQuantity !== undefined) {
             const qty = action.payload.actualQuantity;
+            if (!Number.isFinite(qty) || qty <= 0) return t;
+            const base: Transaction = { ...t, status: 'CONFIRMED' };
             const price = qty > 0 ? t.amount / qty : t.price;
             return { ...base, quantity: qty, price, meta: { ...t.meta, actualQuantity: qty } };
           }
-          return base;
+          // 没有真实成交份额时保持待确认，防止 0 份交易污染持仓和收益。
+          return t;
         }),
       };
     }
@@ -229,7 +311,10 @@ export function reducer(state: DataState, action: DataAction): DataState {
         price: 0,
         amount: plan.amount,
         currency: instrument.currency,
-        fxRate: 1,
+        fxRate:
+          Number.isFinite(action.payload.fxRate) && action.payload.fxRate > 0
+            ? action.payload.fxRate
+            : 1,
         note: '定投自动排期生成，净值回填份额后确认',
         source: 'DCA',
         meta: { planId: plan.id },
@@ -265,19 +350,57 @@ export function reducer(state: DataState, action: DataAction): DataState {
         plans: action.payload.plans,
       };
 
+    case 'REPLACE_LEDGER':
+    case 'IMPORT_LEDGER': {
+      // Durable notifications are part of the cloud ledger, so the merged cloud
+      // snapshot is authoritative for edits and deletions. Generated notifications
+      // are device-local market projections and must survive a ledger replacement.
+      const durableReadKeys = new Set(
+        state.notifications
+          .filter((notification) => !notification.id.startsWith('gen-') && notification.read)
+          .map((notification) => notification.key),
+      );
+      const generatedNotifications = state.notifications.filter((notification) =>
+        notification.id.startsWith('gen-'),
+      );
+      const durableNotifications = action.payload.notifications
+        .filter((notification) => !notification.id.startsWith('gen-'))
+        .map((notification) =>
+          durableReadKeys.has(notification.key) ? { ...notification, read: true } : notification,
+        );
+      return {
+        ...state,
+        instruments: action.payload.instruments,
+        transactions: action.payload.transactions,
+        plans: action.payload.plans,
+        dividends: mergeDividends(action.payload.dividends, stripUserEdits(state.dividends)),
+        notifications: [...generatedNotifications, ...durableNotifications],
+      };
+    }
+
     case 'CLEAR_PERSONAL_DATA':
       // 只清个人数据三切片：市场数据（prices/fx/dividends/sourceHealth）保留，
       // 避免清空后白屏还要重新等一遍 1MB 行情。
       return { ...state, instruments: [], transactions: [], plans: [] };
 
+    case 'CLEAR_CLOUD_LEDGER':
+      return {
+        ...state,
+        instruments: [],
+        transactions: [],
+        plans: [],
+        dividends: stripUserEdits(state.dividends),
+        notifications: [],
+      };
+
     case 'HYDRATE_MARKET_DATA':
       return applyMarketData(state, action.payload.bundle, action.payload.settings);
 
     case 'RESET_STATE': {
-      // 个人数据回到初始种子，已加载的真实行情保留（避免重置后白屏），
+      // 个人数据回到空白账本，已加载的真实行情保留（避免重置后白屏），
       // 分红只清除用户手工订正、保留管道事实。随后 DataProvider 会再跑一次 hydrate。
       return {
-        ...buildPersonalState(),
+        ...emptyDataState(),
         prices: state.prices,
         fx: state.fx,
         dividends: stripUserEdits(state.dividends),
@@ -298,20 +421,34 @@ function toPersisted(state: DataState): PersistedDataState {
   return rest;
 }
 
+function emptyDataState(): DataState {
+  return {
+    instruments: [],
+    transactions: [],
+    dividends: [],
+    plans: [],
+    notifications: [],
+    prices: [],
+    fx: [],
+    lastUpdated: '',
+    sourceHealth: {},
+  };
+}
+
 function isArrayOf<T>(value: unknown): value is T[] {
   return Array.isArray(value);
 }
 
-/** 反序列化：缺字段/脏数据一律回落到个人数据基线，保证 state 形状始终合法 */
+/** 反序列化：缺字段/脏数据一律回落到空白账本，保证 state 形状始终合法 */
 function fromPersisted(raw: PersistedDataState | null): DataState {
-  const base = buildPersonalState();
+  const base = emptyDataState();
   if (!raw || typeof raw !== 'object') return base;
 
   return {
     ...base,
-    instruments: isArrayOf<DataState['instruments'][number]>(raw.instruments) && raw.instruments.length > 0
+    instruments: isArrayOf<DataState['instruments'][number]>(raw.instruments)
       ? raw.instruments
-      : base.instruments,
+      : [],
     transactions: isArrayOf<Transaction>(raw.transactions) ? raw.transactions : base.transactions,
     plans: isArrayOf<InvestmentPlan>(raw.plans) ? raw.plans : base.plans,
     notifications: isArrayOf<Notification>(raw.notifications) ? raw.notifications : [],
@@ -322,24 +459,6 @@ function fromPersisted(raw: PersistedDataState | null): DataState {
     prices: [],
     fx: [],
   };
-}
-
-/**
- * 判断本机是否已有「运行期编辑」——即挂载瞬间的 localStorage 快照里存在非空个人数据切片。
- * 首次访问（快照为 null / 三片皆空）不算 overlay：此时服务器基线本就会被完整采用，
- * 再提示「服务器有更新」纯属噪音。
- */
-function hasLocalOverlay(snapshot: PersistedDataState | null): boolean {
-  if (!snapshot) return false;
-  return (['instruments', 'transactions', 'plans'] as const).some((key) => {
-    const slice = snapshot[key] as unknown;
-    return Array.isArray(slice) && slice.length > 0;
-  });
-}
-
-/** ISO 时间戳 → 展示用日期（YYYY-MM-DD）；非法值原样返回 */
-function isoDate(value: string): string {
-  return /^\d{4}-\d{2}-\d{2}/.test(value) ? value.slice(0, 10) : value;
 }
 
 /** 清理旧版本缓存，避免 v1 种子行情占着配额还可能被误读 */
@@ -380,14 +499,15 @@ export interface DataContextValue {
   dispatch: React.Dispatch<DataAction>;
   /** 真实数据加载状态，供数据新鲜度/告警 UI 使用 */
   hydration: HydrationState;
+  cloudSync: 'LOCAL' | 'LOADING' | 'SYNCED' | 'ERROR';
+  cloudSyncError: string | null;
+  /** 仅首次恢复/切换云账号时为 true；日常后台保存不会触发隐私遮罩。 */
+  cloudHydrating: boolean;
   /** 手动重新拉取 public/data 管道数据（强制 no-cache，绕过 1 小时浏览器缓存） */
   reloadMarketData: () => void;
-  /**
-   * 重新拉取 public/data/holdings.json，用服务器基线覆盖个人数据三切片。
-   * 返回加载结果 bundle，调用方据此区分「真的从文件加载」还是「降级到内置种子」。
-   */
+  /** 兼容旧备份格式的显式导入入口；启动时不会自动读取公开 holdings.json。 */
   reloadPersonalData: () => Promise<PersonalDataBundle>;
-  /** 导出当前个人数据为 holdings.json 文件（提交回仓库即可多设备同步） */
+  /** 导出当前个人数据为私有 JSON 备份。 */
   exportPersonalData: () => void;
   /**
    * 从 holdings.json 文本导入个人数据；解析/校验失败抛错，由调用方提示。
@@ -396,7 +516,7 @@ export interface DataContextValue {
   importPersonalData: (jsonText: string) => string[];
   /**
    * 清空个人数据三切片（标的 / 流水 / 定投计划），市场数据与分红事实保留。
-   * 用于「我要从零开始记自己的账」——清空后 holdings.json 基线为空即可保持空白。
+   * 用于「我要从零开始记自己的账」。
    */
   clearPersonalData: () => void;
   addInstrument: (instrument: Instrument) => void;
@@ -424,31 +544,38 @@ export interface DataContextValue {
 const DataContext = createContext<DataContextValue | null>(null);
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
-  const { settings } = useSettings();
+  const { settings, update: updateSettings, reset: resetSettings } = useSettings();
+  const { status: authStatus, user: cloudUser, store: cloudStore } = useAuth();
   const [persisted, setPersisted] = useLocalStorage<PersistedDataState | null>(STORAGE_KEY, null);
-  const [baselineMeta, setBaselineMeta] = useLocalStorage<BaselineMeta | null>(
-    BASELINE_META_KEY,
-    null,
-  );
-  const [state, dispatch] = useReducer(reducer, persisted, fromPersisted);
+  const [state, baseDispatch] = useReducer(reducer, persisted, fromPersisted);
   const [hydration, setHydration] = useState<HydrationState>({
     status: 'LOADING',
     warnings: [],
     error: null,
   });
-  const [bypassBootError, setBypassBootError] = useState(false);
+  const [cloudSync, setCloudSync] = useState<'LOCAL' | 'LOADING' | 'SYNCED' | 'ERROR'>('LOCAL');
+  const [cloudSyncError, setCloudSyncError] = useState<string | null>(null);
+  const [cloudHydrating, setCloudHydrating] = useState(authStatus === 'CHECKING');
+  const cloudReadyRef = useRef(false);
+  const lastCloudFingerprintRef = useRef('');
+  const pendingCloudFingerprintRef = useRef('');
+  const cloudSaveQueueRef = useRef<Promise<void>>(Promise.resolve());
+  const cloudGenerationRef = useRef(0);
+  const cloudRevisionRef = useRef<number | null>(null);
+  const cleanCloudPayloadRef = useRef<LedgerPayload | null>(null);
+  const retryTimerRef = useRef<number | null>(null);
+  const stateRef = useRef<DataState>(state);
+  stateRef.current = state;
+  const activeCloudUidRef = useRef<string | null>(null);
 
   // settings 用 ref 读取：hydrate 不应因为主题/税务设置变动而重跑
   const settingsRef = useRef<AppSettings>(settings);
   settingsRef.current = settings;
 
-  // ★只取挂载瞬间的 localStorage 快照：写穿透 effect 会在首帧就把 state 回写 persisted，
-  //   若每渲染刷新此 ref，boot 的 await 结束后拿到的将是「种子回填后的 state」，
-  //   overlay 永远命中 → holdings.json 基线形同虚设。
-  const persistedRef = useRef<PersistedDataState | null>(persisted);
-
-  // 同理只取挂载瞬间的基线元信息：boot 内部会写入新值，逐渲染刷新会让「是否有更新」永远为假
-  const baselineRef = useRef<BaselineMeta | null>(baselineMeta);
+  const journal = useMemo(
+    () => (typeof window === 'undefined' ? null : new CloudSyncJournal(window.localStorage)),
+    [],
+  );
 
   // 写穿透：reducer 后自动持久化（行情/汇率不落盘）
   useEffect(() => {
@@ -457,12 +584,89 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(purgeLegacyStorage, []);
 
+  const makeLedgerPayload = useCallback(
+    (sourceState: DataState, sourceSettings: AppSettings): LedgerPayload => ({
+      schemaVersion: 1,
+      instruments: sourceState.instruments,
+      transactions: sourceState.transactions,
+      plans: sourceState.plans,
+      dividends: sourceState.dividends.filter(
+        (dividend) =>
+          dividend.manual ||
+          dividend.actualReceived !== undefined ||
+          dividend.taxWithheldOverride !== undefined,
+      ),
+      notifications: sourceState.notifications.filter(
+        (notification) => !notification.id.startsWith('gen-'),
+      ),
+      settings: sourceSettings,
+      updatedAt: new Date().toISOString(),
+    }),
+    [],
+  );
+
+  const persistDirtySnapshot = useCallback(
+    (nextState: DataState, nextSettings: AppSettings): void => {
+      const ownerUid = activeCloudUidRef.current;
+      if (!ownerUid || !journal || !cloudReadyRef.current) return;
+      const payload = makeLedgerPayload(nextState, nextSettings);
+      try {
+        const fingerprint = ledgerFingerprint(payload);
+        const existing = journal.readOutbox(ownerUid);
+        if (
+          fingerprint === existing?.fingerprint ||
+          (!existing && fingerprint === lastCloudFingerprintRef.current)
+        ) {
+          return;
+        }
+        journal.stage(
+          ownerUid,
+          payload,
+          cleanCloudPayloadRef.current,
+          cloudRevisionRef.current ?? 0,
+        );
+        setCloudSync('LOADING');
+        setCloudSyncError(null);
+      } catch (cause) {
+        setCloudSyncError(cloudErrorMessage(cause));
+        setCloudSync('ERROR');
+      }
+    },
+    [journal, makeLedgerPayload],
+  );
+
+  const dispatch = useCallback<React.Dispatch<DataAction>>(
+    (action) => {
+      const nextState = reducer(stateRef.current, action);
+      stateRef.current = nextState;
+      if (
+        action.type !== 'HYDRATE_MARKET_DATA' &&
+        action.type !== 'REPLACE_LEDGER' &&
+        action.type !== 'CLEAR_CLOUD_LEDGER' &&
+        action.type !== 'SET_LAST_UPDATED'
+      ) {
+        persistDirtySnapshot(nextState, settingsRef.current);
+      }
+      baseDispatch(action);
+    },
+    [persistDirtySnapshot],
+  );
+
+  const ledgerHasUserData = useCallback(
+    (payload: LedgerPayload) =>
+      payload.instruments.length > 0 ||
+      payload.transactions.length > 0 ||
+      payload.plans.length > 0 ||
+      payload.dividends.length > 0,
+    [],
+  );
+
   /**
    * 重新拉取市场数据并合入 state。
    *
    * @param signal 中断信号（卸载时取消）。
-   * @param cache fetch 缓存策略；默认走浏览器缓存（_headers: max-age=3600），
-   *              用户手动刷新时传 'no-cache' 强制回源。
+   * @param cache fetch 缓存策略；默认遵循托管平台响应头，用户手动刷新时传
+   *              'no-cache' 强制回源。
    */
   const hydrate = useCallback(async (signal?: AbortSignal, cache?: RequestCache): Promise<void> => {
     setHydration((prev) => ({ ...prev, status: 'LOADING', error: null }));
@@ -480,66 +684,297 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  /**
-   * 启动流程：并行拉取「个人数据基线 + 市场数据」。
-   * 个人数据先落地再合入行情，保证 applyMarketData 的通知重算基于最终持仓
-   * （所以这里不能直接复用 hydrate —— 它会在个人数据落地前就 dispatch 行情）。
-   * 冷启动用默认缓存策略：一小时内重复打开直接命中浏览器缓存，首屏不再等 ~1MB 下载。
-   * 只在挂载时跑一次；reloadMarketData / resetState 走 hydrate（不重置个人数据）。
-   */
-  const boot = useCallback(async (signal?: AbortSignal): Promise<void> => {
-    setHydration((prev) => ({ ...prev, status: 'LOADING', error: null }));
-    try {
-      const [personal, market] = await Promise.all([
-        loadPersonalData({ signal, cache: 'default' }),
-        loadMarketData({ signal, cache: 'default' }),
-      ]);
-      if (signal?.aborted) return;
-
-      const merged = mergePersonalData(personal, persistedRef.current);
-      dispatch({ type: 'INIT_PERSONAL_DATA', payload: merged });
-      dispatch({ type: 'HYDRATE_MARKET_DATA', payload: { bundle: market, settings: settingsRef.current } });
-
-      const warnings = [...personal.warnings, ...market.warnings];
-      if (personal.source === 'file') {
-        // 回访用户：本地编辑优先（overlay 已胜出），此时若服务器基线更新只「告知」，
-        // 绝不自动覆盖用户数据 —— 静默覆盖等于数据丢失。
-        const previous = baselineRef.current?.generatedAt;
-        const incoming = personal.generatedAt;
-        // ★用时间语义而非字典序：generatedAt 存在毫秒/微秒混合精度，字符串比较会误判。
-        //   incoming 的真值判断只为窄化类型（isNewerIso 对 undefined 本就返回 false）。
-        if (hasLocalOverlay(persistedRef.current) && incoming && isNewerIso(incoming, previous)) {
-          warnings.push(
-            `服务器有更新的 holdings.json（${isoDate(incoming)}），可在设置页点「从服务器重新加载」同步`,
-          );
-        }
-        setBaselineMeta({ generatedAt: incoming });
-      }
-
-      setHydration({ status: 'READY', warnings, error: null });
-    } catch (error) {
-      if (signal?.aborted) return;
-      const message = error instanceof Error ? error.message : String(error);
-      // eslint-disable-next-line no-console
-      console.error('[DataProvider] 真实数据加载失败：', error);
-      setHydration({ status: 'FAILED', warnings: [], error: message });
-    }
-  }, [setBaselineMeta]);
-
   useEffect(() => {
     const controller = new AbortController();
-    void boot(controller.signal);
+    void hydrate(controller.signal, 'default');
     return () => controller.abort();
-  }, [boot]);
+  }, [hydrate]);
+
+  const applyCloudPayload = useCallback(
+    (payload: LedgerPayload, synced: boolean): void => {
+      const canonical = canonicalizeLedgerPayload(payload);
+      pendingCloudFingerprintRef.current = ledgerFingerprint(canonical);
+      const action: DataAction = { type: 'REPLACE_LEDGER', payload: canonical };
+      stateRef.current = reducer(stateRef.current, action);
+      baseDispatch(action);
+      updateSettings(canonical.settings);
+      if (synced) lastCloudFingerprintRef.current = ledgerFingerprint(canonical);
+    },
+    [updateSettings],
+  );
+
+  const flushCloudOutbox = useCallback(
+    async (
+      ownerUid: string,
+      generation: number,
+      retryOnConflict = true,
+    ): Promise<void> => {
+      if (!journal || !cloudStore) return;
+      const isCurrent = () =>
+        cloudGenerationRef.current === generation && activeCloudUidRef.current === ownerUid;
+      const sentOutbox = journal.readOutbox(ownerUid);
+      if (!sentOutbox || !isCurrent()) return;
+
+      let outgoing = sentOutbox.payload;
+      let expectedRevision = cloudRevisionRef.current;
+      try {
+        const currentRemote = await cloudStore.load(ownerUid);
+        if (!isCurrent()) return;
+        expectedRevision = currentRemote?.revision ?? null;
+        if (currentRemote) {
+          const base = sentOutbox.basePayload ?? cleanCloudPayloadRef.current;
+          if (base && ledgerFingerprint(currentRemote.payload) !== ledgerFingerprint(base)) {
+            outgoing = mergeLedgerPayloadsThreeWay(
+              base,
+              sentOutbox.payload,
+              currentRemote.payload,
+              {
+                localRevision: sentOutbox.baseRevision + 1,
+                remoteRevision: currentRemote.revision,
+                prefer: 'local',
+              },
+            ).payload;
+            journal.rebase(ownerUid, outgoing, currentRemote.payload, currentRemote.revision);
+          }
+        }
+
+        const saved = await cloudStore.save(outgoing, ownerUid, expectedRevision);
+        if (!isCurrent()) return;
+        cloudRevisionRef.current = saved.revision;
+        cleanCloudPayloadRef.current = saved.payload;
+        lastCloudFingerprintRef.current = ledgerFingerprint(saved.payload);
+        const acknowledged = journal.acknowledge(
+          ownerUid,
+          sentOutbox,
+          saved.payload,
+          saved.revision,
+        );
+        if (acknowledged.clean) {
+          setCloudSyncError(null);
+          setCloudSync('SYNCED');
+        } else {
+          applyCloudPayload(acknowledged.payload, false);
+          setCloudSync('LOADING');
+          window.setTimeout(() => {
+            if (isCurrent()) void flushCloudOutbox(ownerUid, generation);
+          }, 0);
+        }
+      } catch (cause) {
+        if (!isCurrent()) return;
+        if (retryOnConflict && isCloudSyncConflict(cause)) {
+          const latest = await cloudStore.load(ownerUid);
+          if (!latest || !isCurrent()) throw cause;
+          const base = sentOutbox.basePayload ?? cleanCloudPayloadRef.current;
+          if (!base) throw new Error('缺少同步基线，已保留本机修改并暂停覆盖云端');
+          const merged = mergeLedgerPayloadsThreeWay(
+            base,
+            sentOutbox.payload,
+            latest.payload,
+            {
+              localRevision: sentOutbox.baseRevision + 1,
+              remoteRevision: latest.revision,
+              prefer: 'local',
+            },
+          ).payload;
+          journal.rebase(ownerUid, merged, latest.payload, latest.revision);
+          cleanCloudPayloadRef.current = latest.payload;
+          cloudRevisionRef.current = latest.revision;
+          applyCloudPayload(merged, false);
+          return flushCloudOutbox(ownerUid, generation, false);
+        }
+        setCloudSyncError(cloudErrorMessage(cause));
+        setCloudSync('ERROR');
+        if (retryTimerRef.current !== null) window.clearTimeout(retryTimerRef.current);
+        retryTimerRef.current = window.setTimeout(() => {
+          retryTimerRef.current = null;
+          if (isCurrent()) void flushCloudOutbox(ownerUid, generation);
+        }, 5_000);
+      }
+    },
+    [applyCloudPayload, cloudStore, journal],
+  );
+
+  // 登录后只读取当前 UID 的 cache/outbox；身份未确认或出错时隔离旧云账本。
+  useEffect(() => {
+    const generation = ++cloudGenerationRef.current;
+    const previousOwnerUid = activeCloudUidRef.current;
+    activeCloudUidRef.current = null;
+    cloudReadyRef.current = false;
+    pendingCloudFingerprintRef.current = '';
+    cloudRevisionRef.current = null;
+    cleanCloudPayloadRef.current = null;
+    cloudSaveQueueRef.current = Promise.resolve();
+    if (retryTimerRef.current !== null) {
+      window.clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
+
+    if (authStatus === 'CHECKING') {
+      setCloudHydrating(true);
+      return;
+    }
+
+    if (authStatus !== 'SIGNED_IN' || !cloudUser || !cloudStore || !journal) {
+      // ERROR is an unknown identity, so old cloud data must not remain visible.
+      const storedCloudOwner = window.localStorage.getItem(LAST_CLOUD_USER_KEY);
+      if (previousOwnerUid || storedCloudOwner || authStatus === 'ERROR') {
+        const clearAction: DataAction = { type: 'CLEAR_CLOUD_LEDGER' };
+        stateRef.current = reducer(stateRef.current, clearAction);
+        baseDispatch(clearAction);
+        resetSettings();
+      }
+      if (authStatus === 'SIGNED_OUT' && storedCloudOwner) {
+        // The owner-bound cache/outbox remains available for the next login. Removing only
+        // this display marker lets a genuinely anonymous ledger survive future refreshes.
+        window.localStorage.removeItem(LAST_CLOUD_USER_KEY);
+      }
+      setCloudHydrating(authStatus === 'ERROR');
+      setCloudSync(authStatus === 'ERROR' ? 'ERROR' : 'LOCAL');
+      setCloudSyncError(authStatus === 'ERROR' ? '无法确认云端账号，请刷新后重试' : null);
+      return;
+    }
+
+    const ownerUid = cloudUser.uid;
+    activeCloudUidRef.current = ownerUid;
+    setCloudHydrating(true);
+    setCloudSync('LOADING');
+    setCloudSyncError(null);
+    const isCurrent = () =>
+      cloudGenerationRef.current === generation && activeCloudUidRef.current === ownerUid;
+
+    void (async () => {
+      const cached = journal.readCache(ownerUid);
+      const outbox = journal.readOutbox(ownerUid);
+      const genericLocal = makeLedgerPayload(stateRef.current, settingsRef.current);
+      const previousCloudUser = window.localStorage.getItem(LAST_CLOUD_USER_KEY);
+      const canMigrateAnonymous = !previousCloudUser && ledgerHasUserData(genericLocal);
+      const localPayload = outbox?.payload ?? cached?.payload ??
+        makeLedgerPayload(emptyDataState(), settingsRef.current);
+      const remoteSnapshot = await cloudStore.load(ownerUid);
+      if (!isCurrent()) return;
+      const remotePayload = remoteSnapshot?.payload ?? null;
+      cloudRevisionRef.current = remoteSnapshot?.revision ?? null;
+
+      const decision = decideHydration({
+        ownerUid,
+        local: localPayload,
+        remote: remotePayload,
+        outbox,
+        remoteRevision: remoteSnapshot?.revision,
+        knownBaseFingerprint: cached?.fingerprint ?? null,
+      });
+      if (decision.mode === 'BLOCK') {
+        throw new Error('本机待同步记录属于另一个账号，已停止同步');
+      }
+
+      let target = decision.payload;
+      let migratedAnonymous = false;
+      if (canMigrateAnonymous) {
+        const merged = mergeAnonymousLedgerForLogin(target, genericLocal);
+        migratedAnonymous = ledgerFingerprint(merged) !== ledgerFingerprint(target);
+        target = merged;
+      }
+      const shouldUpload =
+        (decision.mode === 'KEEP_LOCAL' && decision.shouldUpload) ||
+        decision.mode === 'MERGE' ||
+        migratedAnonymous ||
+        (!remotePayload && ledgerHasUserData(target));
+      if (remotePayload) cleanCloudPayloadRef.current = remotePayload;
+      if (shouldUpload) {
+        journal.rebase(
+          ownerUid,
+          target,
+          remotePayload ?? makeLedgerPayload(emptyDataState(), target.settings),
+          remoteSnapshot?.revision ?? 0,
+        );
+      } else {
+        journal.acceptRemote(ownerUid, target);
+        cleanCloudPayloadRef.current = target;
+        lastCloudFingerprintRef.current = ledgerFingerprint(target);
+      }
+      applyCloudPayload(target, !shouldUpload);
+      window.localStorage.setItem(LAST_CLOUD_USER_KEY, ownerUid);
+      if (!isCurrent()) return;
+      cloudReadyRef.current = true;
+      setCloudHydrating(false);
+      setCloudSync(shouldUpload ? 'LOADING' : 'SYNCED');
+      if (shouldUpload) void flushCloudOutbox(ownerUid, generation);
+    })().catch((cause) => {
+      if (!isCurrent()) return;
+      setCloudHydrating(true);
+      setCloudSyncError(cloudErrorMessage(cause));
+      setCloudSync('ERROR');
+    });
+
+    return () => {
+      if (cloudGenerationRef.current === generation) cloudGenerationRef.current += 1;
+    };
+  }, [
+    applyCloudPayload,
+    authStatus,
+    cloudStore,
+    cloudUser?.uid,
+    flushCloudOutbox,
+    journal,
+    ledgerHasUserData,
+    makeLedgerPayload,
+    resetSettings,
+  ]);
+
+  // A payload application is a bounded React update, not a content-equality gate.
+  useEffect(() => {
+    if (!pendingCloudFingerprintRef.current || !cloudReadyRef.current) return;
+    pendingCloudFingerprintRef.current = '';
+  }, [state, settings]);
+
+  // Settings changes are outside DataContext actions, so stage them immediately after render.
+  useEffect(() => {
+    if (!cloudReadyRef.current || !activeCloudUidRef.current || !journal) return;
+    const payload = makeLedgerPayload(stateRef.current, settings);
+    if (ledgerFingerprint(payload) === lastCloudFingerprintRef.current) return;
+    try {
+      journal.stage(
+        activeCloudUidRef.current,
+        payload,
+        cleanCloudPayloadRef.current,
+        cloudRevisionRef.current ?? 0,
+      );
+      setCloudSync('LOADING');
+    } catch (cause) {
+      setCloudSyncError(cloudErrorMessage(cause));
+      setCloudSync('ERROR');
+    }
+  }, [journal, makeLedgerPayload, settings]);
+
+  // Network writes are debounced, but the journal above already contains every accepted edit.
+  useEffect(() => {
+    const ownerUid = activeCloudUidRef.current;
+    if (!cloudReadyRef.current || !ownerUid || authStatus !== 'SIGNED_IN' || !journal) return;
+    let outbox: SyncOutboxEntry | null;
+    try {
+      outbox = journal.readOutbox(ownerUid);
+    } catch (cause) {
+      setCloudSyncError(cloudErrorMessage(cause));
+      setCloudSync('ERROR');
+      return;
+    }
+    if (!outbox) return;
+    const generation = cloudGenerationRef.current;
+    const timer = window.setTimeout(() => {
+      cloudSaveQueueRef.current = cloudSaveQueueRef.current
+        .catch(() => undefined)
+        .then(() => flushCloudOutbox(ownerUid, generation));
+    }, 450);
+    return () => window.clearTimeout(timer);
+  }, [state, settings, authStatus, flushCloudOutbox, journal]);
 
   const reloadMarketData = useCallback(() => {
-    setBypassBootError(false);
     // ★手动刷新必须绕过 1 小时缓存，否则用户点了「刷新」却拿到同一份旧数据
     void hydrate(undefined, 'no-cache');
   }, [hydrate]);
 
   const reloadPersonalData = useCallback(async (): Promise<PersonalDataBundle> => {
-    // 同理：用户主动同步服务器基线 → 强制回源，避免刚提交的 holdings.json 被缓存挡住
+    // 仅保留给旧版备份迁移；新版本不会自动读取公开个人数据文件。
     const bundle: PersonalDataBundle = await loadPersonalData({ cache: 'no-cache' });
     // ★只有真的读到 holdings.json 才落地：seed-fallback 时若照样 dispatch，
     //   写穿透会把用户 localStorage 里的编辑替换成演示种子且不可撤销 ——
@@ -554,24 +989,38 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         plans: bundle.plans,
       },
     });
-    // 主动同步 = 用户已接受这份服务器基线，刷新元信息避免重复提示
-    setBaselineMeta({ generatedAt: bundle.generatedAt });
     // ★把降级信号原样交回调用方：吞掉 source 会让「读取失败回退种子」看起来像成功
     return bundle;
-  }, [setBaselineMeta]);
+  }, []);
+
+  const privacyHydrating =
+    cloudHydrating ||
+    (authStatus !== 'SIGNED_IN' && activeCloudUidRef.current !== null);
 
   const value = useMemo<DataContextValue>(() => {
     return {
       state,
       dispatch,
       hydration,
+      cloudSync,
+      cloudSyncError,
+      cloudHydrating: privacyHydrating,
       reloadMarketData,
       reloadPersonalData,
       exportPersonalData: () => {
-        triggerDownload('holdings.json', downloadHoldings(state));
+        triggerDownload(
+          'dividend-tracker-backup.json',
+          downloadLedgerBackup(makeLedgerPayload(state, settings)),
+        );
       },
       importPersonalData: (jsonText: string): string[] => {
         const raw: unknown = JSON.parse(jsonText);
+        const complete = parseLedgerBackup(raw);
+        if (complete) {
+          updateSettings(complete.settings);
+          dispatch({ type: 'IMPORT_LEDGER', payload: complete });
+          return [];
+        }
         if (!hasPersonalSlices(raw)) {
           throw new Error('文件内容为空：至少需要 instruments / transactions / plans 中的一个非空数组');
         }
@@ -613,75 +1062,43 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       pausePlan: (id) => dispatch({ type: 'PAUSE_PLAN', payload: { id } }),
       resumePlan: (id) => dispatch({ type: 'RESUME_PLAN', payload: { id } }),
       endPlan: (id) => dispatch({ type: 'END_PLAN', payload: { id } }),
-      generateDcaTx: (planId, date) => dispatch({ type: 'GENERATE_DCA_TX', payload: { planId, date } }),
+      generateDcaTx: (planId, date) => {
+        const plan = state.instruments.length > 0
+          ? state.plans.find((item) => item.id === planId)
+          : undefined;
+        const instrument = plan
+          ? state.instruments.find((item) => item.id === plan.instrumentId)
+          : undefined;
+        const fxRate = instrument
+          ? fxOn(state.fx, instrument.currency, settings.baseCurrency, date)
+          : 1;
+        dispatch({ type: 'GENERATE_DCA_TX', payload: { planId, date, fxRate } });
+      },
       setLastUpdated: (ts) => dispatch({ type: 'SET_LAST_UPDATED', payload: ts }),
       resetState: () => {
         dispatch({ type: 'RESET_STATE' });
         void hydrate();
       },
     };
-  }, [state, hydration, reloadMarketData, reloadPersonalData, hydrate]);
-
-  const hasMarketData = state.prices.length > 0;
-  const showBoot = !hasMarketData && !bypassBootError && hydration.status !== 'READY';
+  }, [
+    state,
+    hydration,
+    cloudSync,
+    cloudSyncError,
+    privacyHydrating,
+    reloadMarketData,
+    reloadPersonalData,
+    hydrate,
+    dispatch,
+    settings,
+    makeLedgerPayload,
+    updateSettings,
+  ]);
 
   return (
     <DataContext.Provider value={value}>
-      {showBoot ? (
-        <DataBootScreen
-          hydration={hydration}
-          onRetry={reloadMarketData}
-          onDismiss={() => setBypassBootError(true)}
-        />
-      ) : (
-        children
-      )}
+      {children}
     </DataContext.Provider>
-  );
-}
-
-/** 启动屏：真实数据加载中 / 加载失败（可重试或空数据继续） */
-function DataBootScreen({
-  hydration,
-  onRetry,
-  onDismiss,
-}: {
-  hydration: HydrationState;
-  onRetry: () => void;
-  onDismiss: () => void;
-}) {
-  const failed = hydration.status === 'FAILED';
-  return (
-    <div className="min-h-screen flex items-center justify-center px-6">
-      <div className="max-w-md w-full text-center space-y-3">
-        <div className="text-[15px] text-primary font-medium">
-          {failed ? '市场数据加载失败' : '正在加载市场数据…'}
-        </div>
-        <div className="text-[12px] text-secondary leading-relaxed">
-          {failed
-            ? hydration.error ?? '未知错误'
-            : '从 public/data 读取行情、汇率与分红事件'}
-        </div>
-        {failed && (
-          <div className="flex items-center justify-center gap-2 pt-1">
-            <button
-              type="button"
-              onClick={onRetry}
-              className="px-3 py-1.5 text-[12px] rounded-md bg-card-hover text-primary"
-            >
-              重试
-            </button>
-            <button
-              type="button"
-              onClick={onDismiss}
-              className="px-3 py-1.5 text-[12px] rounded-md text-secondary"
-            >
-              以空数据继续
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
   );
 }
 
