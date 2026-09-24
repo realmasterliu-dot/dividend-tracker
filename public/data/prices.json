@@ -17701,7 +17701,7 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-09-24",
-    "price": 921.6792,
+    "price": 919.5018,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "gold-api·XAU折算(代理)"
@@ -18109,9 +18109,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-09-24",
-    "price": 84019.0,
+    "price": 84172.0,
     "currency": "USD",
-    "fxRate": 6.7074,
+    "fxRate": 6.7126,
     "source": "gold-api·现价"
   }
 ]
