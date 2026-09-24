@@ -89,34 +89,49 @@ jobs:
             done
           fi
 
+      - name: 启用 pnpm
+        if: always() && steps.fetch.outcome != 'cancelled'
+        run: corepack enable && corepack prepare pnpm@11.16.0 --activate
+
       - name: 设置 Node.js
         if: always() && steps.fetch.outcome != 'cancelled'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: 构建前端 (npm run build)
+      - name: 构建并测试前端
+        id: build
         if: always() && steps.fetch.outcome != 'cancelled'
+        env:
+          VITE_CLOUDBASE_ENV_ID: ${{ secrets.TENCENT_ENV_ID }}
+          VITE_CLOUDBASE_REGION: ap-shanghai
+          VITE_CLOUDBASE_COLLECTION: user_ledgers
+          VITE_CLOUDBASE_DATABASE_KIND: ${{ secrets.TENCENT_DATABASE_KIND || 'document' }}
+          VITE_CLOUDBASE_DATABASE_INSTANCE: ${{ secrets.TENCENT_DATABASE_INSTANCE }}
+          VITE_CLOUDBASE_DATABASE_NAME: ${{ secrets.TENCENT_DATABASE_NAME }}
+          VITE_CLOUDBASE_MEMBERS_TABLE: dividend_members
+          VITE_CLOUDBASE_REGISTER_FUNCTION: dividend-register
+          VITE_CLOUDBASE_REGISTER_ENDPOINT: /api/register
         run: |
-          npm ci
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm test
+          pnpm run build
 
       - name: 检查 CloudBase 凭证
         id: cbcheck
         if: always() && steps.fetch.outcome != 'cancelled'
         run: |
-          if [ -n "${{ secrets.TENCENT_ENV_ID }}" ] && [ -n "${{ secrets.TENCENT_API_KEY }}" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
+          if [ -n "${{ secrets.TENCENT_ENV_ID }}" ] && [ -n "${{ secrets.TENCENT_CLOUDBASE_API_KEY }}" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: 部署到 CloudBase（静态网站托管）
-        if: always() && steps.fetch.outcome != 'cancelled' && steps.cbcheck.outputs.ready == 'true'
+        if: always() && steps.fetch.outcome != 'cancelled' && steps.build.outcome == 'success' && steps.cbcheck.outputs.ready == 'true'
         env:
           TENCENT_ENV_ID: ${{ secrets.TENCENT_ENV_ID }}
-          TENCENT_API_KEY: ${{ secrets.TENCENT_API_KEY }}
+          TENCENT_CLOUDBASE_API_KEY: ${{ secrets.TENCENT_CLOUDBASE_API_KEY }}
         run: |
-          npm i -g @cloudbase/cli
-          tcb login --cloudbase-api-key "$TENCENT_API_KEY" -e "$TENCENT_ENV_ID"
-          tcb hosting deploy ./dist -e "$TENCENT_ENV_ID"
+          pnpm --package=@cloudbase/cli@3.6.4 dlx tcb login --cloudbase-api-key "$TENCENT_CLOUDBASE_API_KEY" -e "$TENCENT_ENV_ID"
+          pnpm --package=@cloudbase/cli@3.6.4 dlx tcb hosting deploy ./dist -e "$TENCENT_ENV_ID"
 
       - name: 汇总报告
         if: always()

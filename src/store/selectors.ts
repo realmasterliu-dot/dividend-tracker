@@ -22,6 +22,7 @@ import {
   AggregateStats,
 } from '@/lib/calc/portfolio';
 import { breakdown } from '@/lib/calc/returns';
+import { accountingDividendEvents } from '@/lib/transactionDividend';
 
 /**
  * 派生选择器（architecture.md §2.5 selectors.ts）
@@ -103,7 +104,7 @@ function computePortfolio(state: DataState, settings: AppSettings, today: string
     state.fx,
     settings,
   );
-  const enrichedDividends = enrichAllDividends(state.dividends, {
+  const enrichedDividends = enrichAllDividends(accountingDividendEvents(state.dividends), {
     instruments: state.instruments,
     lotsMap,
     settings,

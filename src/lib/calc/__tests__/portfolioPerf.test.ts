@@ -209,9 +209,6 @@ function refBuildSnapshots(
         case 'SELL':
           invested -= (tx.amount - (tx.fee ?? 0)) * fxr;
           break;
-        case 'DIVIDEND_REINVEST':
-          invested += tx.amount * fxr;
-          break;
         case 'DIVIDEND_CASH':
           dividends += tx.amount * fxr;
           break;

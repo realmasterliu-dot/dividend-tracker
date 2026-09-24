@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { searchSymbols, SYMBOL_INDEX, SymbolSuggestion } from '@/data/symbols';
+import {
+  hasAutomaticMarketData,
+  searchSymbols,
+  SYMBOL_INDEX,
+  SymbolSuggestion,
+} from '@/data/symbols';
 
 /** 取候选列表的 code 数组，便于断言 */
 function codesOf(list: SymbolSuggestion[]): string[] {
@@ -120,5 +125,18 @@ describe('SYMBOL_INDEX', () => {
       expect(s.securityType.length).toBeGreaterThan(0);
       expect(s.custodyChannel.length).toBeGreaterThan(0);
     });
+  });
+});
+
+describe('hasAutomaticMarketData', () => {
+  it('recognizes every instrument covered by the bundled pipeline', () => {
+    ['600519.SH', '000001.SZ', '00700.HK', 'AAPL', '110011', 'BTC', 'Au99.99'].forEach((code) => {
+      expect(hasAutomaticMarketData(code)).toBe(true);
+    });
+  });
+
+  it('does not promise automatic prices for dictionary-only symbols', () => {
+    expect(hasAutomaticMarketData('MSFT')).toBe(false);
+    expect(hasAutomaticMarketData(' ETH ')).toBe(false);
   });
 });
