@@ -637,7 +637,7 @@
     {
       "id": "div-7bbffdc5226a",
       "instrumentId": "000001.SZ",
-      "status": "EX_DIVIDEND",
+      "status": "PAID",
       "payDateEstimated": true,
       "perShareAmount": 0.249,
       "currency": "CNY",
