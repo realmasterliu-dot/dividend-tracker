@@ -426,7 +426,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-09-27",
-    "price": 84987.0,
+    "price": 84456.0,
     "currency": "USD",
     "fxRate": 1.0,
     "source": "gold-api·现价"
