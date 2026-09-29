@@ -2866,7 +2866,7 @@
   {
     "instrumentId": "000001.SZ",
     "date": "2026-09-29",
-    "price": 11.34,
+    "price": 11.35,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -5674,7 +5674,7 @@
   {
     "instrumentId": "00700.HK",
     "date": "2026-09-29",
-    "price": 433.6,
+    "price": 432.0,
     "currency": "HKD",
     "fxRate": 0.854372,
     "source": "akshare·东财港股"
@@ -11813,7 +11813,7 @@
   {
     "instrumentId": "600519.SH",
     "date": "2026-09-29",
-    "price": 1235.88,
+    "price": 1235.58,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -17821,7 +17821,7 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-09-29",
-    "price": 898.6509,
+    "price": 898.694,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "gold-api·XAU折算(代理)"
@@ -18269,7 +18269,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-09-29",
-    "price": 83871.48,
+    "price": 83519.93,
     "currency": "USD",
     "fxRate": 6.7034,
     "source": "gold-api·现价"
