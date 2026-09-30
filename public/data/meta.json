@@ -1,11 +1,13 @@
 {
-  "generatedAt": "2026-09-29T18:39:29Z",
+  "generatedAt": "2026-09-30T01:17:58Z",
   "pipelineVersion": "1.0.0",
   "instrumentCount": 7,
   "warnings": [
-    "以下数据源已连续失败并进入熔断：akshare.fund_etf_hist_em, akshare.stock_us_hist, binance.klines, frankfurter.dev.latest"
+    "[600519.SH] 行情抓取失败，沿用缓存 903 条：akshare.stock_zh_a_hist(ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
+    "[000001.SZ] 行情抓取失败，沿用缓存 903 条：akshare.stock_zh_a_hist(ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
+    "以下数据源已连续失败并进入熔断：akshare.fund_etf_hist_em, binance.klines, frankfurter.dev.latest"
   ],
-  "durationSeconds": 65.5,
+  "durationSeconds": 69.8,
   "categories": [
     "prices",
     "dividends",
