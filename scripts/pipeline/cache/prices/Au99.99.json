@@ -7398,5 +7398,13 @@
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "gold-api·XAU折算(代理)"
+  },
+  {
+    "instrumentId": "Au99.99",
+    "date": "2026-10-01",
+    "price": 897.074,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "gold-api·XAU折算(代理)"
   }
 ]
