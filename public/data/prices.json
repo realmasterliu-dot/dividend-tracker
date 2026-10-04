@@ -1,14 +1,6 @@
 [
   {
     "instrumentId": "000001.SZ",
-    "date": "2025-04-11",
-    "price": 9.93,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·东财A股"
-  },
-  {
-    "instrumentId": "000001.SZ",
     "date": "2025-04-14",
     "price": 9.97,
     "currency": "CNY",
@@ -2849,14 +2841,6 @@
   },
   {
     "instrumentId": "00700.HK",
-    "date": "2025-04-11",
-    "price": 433.6,
-    "currency": "HKD",
-    "fxRate": 0.941227,
-    "source": "akshare·东财港股"
-  },
-  {
-    "instrumentId": "00700.HK",
     "date": "2025-04-14",
     "price": 444.2,
     "currency": "HKD",
@@ -5630,15 +5614,6 @@
     "currency": "HKD",
     "fxRate": 0.854479,
     "source": "akshare·东财港股"
-  },
-  {
-    "instrumentId": "110011",
-    "date": "2025-04-11",
-    "price": 5.0397,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·天天基金净值",
-    "navDate": "2025-04-11"
   },
   {
     "instrumentId": "110011",
@@ -8873,14 +8848,6 @@
   },
   {
     "instrumentId": "600519.SH",
-    "date": "2025-04-11",
-    "price": 1489.4,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·东财A股"
-  },
-  {
-    "instrumentId": "600519.SH",
     "date": "2025-04-14",
     "price": 1472.41,
     "currency": "CNY",
@@ -11718,14 +11685,6 @@
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
-  },
-  {
-    "instrumentId": "AAPL",
-    "date": "2025-04-11",
-    "price": 196.84,
-    "currency": "USD",
-    "fxRate": 7.2994,
-    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14686,14 +14645,6 @@
     "currency": "USD",
     "fxRate": 6.7046,
     "source": "akshare·新浪美股"
-  },
-  {
-    "instrumentId": "Au99.99",
-    "date": "2025-04-11",
-    "price": 727.3,
-    "currency": "CNY",
-    "fxRate": 1.0,
-    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "Au99.99",
@@ -17728,6 +17679,14 @@
     "source": "gold-api·XAU折算(代理)"
   },
   {
+    "instrumentId": "Au99.99",
+    "date": "2026-10-04",
+    "price": 892.7976,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "gold-api·XAU折算(代理)"
+  },
+  {
     "instrumentId": "BTC",
     "date": "2026-08-05",
     "price": 64661.0,
@@ -18203,6 +18162,14 @@
     "instrumentId": "BTC",
     "date": "2026-10-03",
     "price": 84871.0,
+    "currency": "USD",
+    "fxRate": 6.7046,
+    "source": "gold-api·现价"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-10-04",
+    "price": 84793.0,
     "currency": "USD",
     "fxRate": 6.7046,
     "source": "gold-api·现价"
