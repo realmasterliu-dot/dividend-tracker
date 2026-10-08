@@ -7517,7 +7517,7 @@
     "price": 330.32,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -7525,7 +7525,7 @@
     "price": 333.69,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -7533,7 +7533,7 @@
     "price": 332.89,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -7541,6 +7541,14 @@
     "price": 333.63,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
+  },
+  {
+    "instrumentId": "AAPL",
+    "date": "2026-10-07",
+    "price": 336.67,
+    "currency": "USD",
+    "fxRate": 1.0,
+    "source": "akshare·东财美股"
   }
 ]
