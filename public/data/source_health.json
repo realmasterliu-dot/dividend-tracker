@@ -5,32 +5,32 @@
     "status": "RED"
   },
   "akshare.fund_fh_em": {
-    "lastSuccess": "2026-10-10T14:31:01Z",
+    "lastSuccess": "2026-10-10T17:52:16Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.fund_open_fund_info_em": {
-    "lastSuccess": "2026-10-10T14:29:42Z",
+    "lastSuccess": "2026-10-10T17:51:15Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_fhps_detail_em": {
-    "lastSuccess": "2026-10-10T14:29:50Z",
+    "lastSuccess": "2026-10-10T17:51:19Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_dividend_payout_em": {
-    "lastSuccess": "2026-10-10T14:29:51Z",
+    "lastSuccess": "2026-10-10T17:51:20Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "akshare.stock_hk_hist": {
     "lastSuccess": "2026-10-10T01:44:39Z",
-    "consecutiveFailures": 1,
+    "consecutiveFailures": 2,
     "status": "YELLOW"
   },
   "akshare.stock_us_daily": {
-    "lastSuccess": "2026-10-10T14:29:40Z",
+    "lastSuccess": "2026-10-10T17:51:15Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
@@ -41,8 +41,8 @@
   },
   "akshare.stock_zh_a_hist": {
     "lastSuccess": "2026-10-10T14:29:35Z",
-    "consecutiveFailures": 0,
-    "status": "GREEN"
+    "consecutiveFailures": 2,
+    "status": "YELLOW"
   },
   "binance.klines": {
     "lastSuccess": "",
@@ -60,22 +60,22 @@
     "status": "RED"
   },
   "frankfurter.dev.range": {
-    "lastSuccess": "2026-10-10T14:29:30Z",
+    "lastSuccess": "2026-10-10T17:51:11Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "gold-api.crypto": {
-    "lastSuccess": "2026-10-10T14:29:46Z",
+    "lastSuccess": "2026-10-10T17:51:15Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "gold-api.xau": {
-    "lastSuccess": "2026-10-10T14:29:47Z",
+    "lastSuccess": "2026-10-10T17:51:15Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
   "nasdaq.api.dividends": {
-    "lastSuccess": "2026-10-10T14:29:54Z",
+    "lastSuccess": "2026-10-10T17:51:23Z",
     "consecutiveFailures": 0,
     "status": "GREEN"
   },
