@@ -8812,6 +8812,15 @@
     "navDate": "2026-10-09"
   },
   {
+    "instrumentId": "110011",
+    "date": "2026-10-12",
+    "price": 4.0145,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-10-12"
+  },
+  {
     "instrumentId": "600519.SH",
     "date": "2025-04-21",
     "price": 1471.42,
@@ -14561,7 +14570,7 @@
     "price": 332.89,
     "currency": "USD",
     "fxRate": 6.7046,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14569,7 +14578,7 @@
     "price": 333.63,
     "currency": "USD",
     "fxRate": 6.7046,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14577,7 +14586,7 @@
     "price": 336.67,
     "currency": "USD",
     "fxRate": 6.7046,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14585,7 +14594,7 @@
     "price": 340.42,
     "currency": "USD",
     "fxRate": 6.7023,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14593,7 +14602,7 @@
     "price": 336.64,
     "currency": "USD",
     "fxRate": 6.6921,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "Au99.99",
@@ -17630,10 +17639,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-10-09",
-    "price": 903.6337,
+    "price": 861.7,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "Au99.99",
@@ -17654,10 +17663,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-10-12",
-    "price": 904.6234,
+    "price": 858.5,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18206,9 +18215,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-10-12",
-    "price": 83887.55,
+    "price": 82404.86,
     "currency": "USD",
-    "fxRate": 6.6921,
+    "fxRate": 6.6928,
     "source": "gold-api·现价"
   }
 ]
