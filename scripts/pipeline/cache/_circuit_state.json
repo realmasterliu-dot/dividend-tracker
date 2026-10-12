@@ -1,27 +1,27 @@
 {
   "akshare.fund_etf_hist_em": {
-    "consecutiveFailures": 0,
+    "consecutiveFailures": 1,
     "lastSuccess": "2026-10-12T17:58:39Z",
     "openUntil": 0.0
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:59:47Z",
+    "lastSuccess": "2026-10-12T21:45:04Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:35Z",
+    "lastSuccess": "2026-10-12T21:43:57Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:43Z",
+    "lastSuccess": "2026-10-12T21:44:03Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:44Z",
+    "lastSuccess": "2026-10-12T21:44:04Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
@@ -31,11 +31,11 @@
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:33Z",
+    "lastSuccess": "2026-10-12T21:43:52Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
-    "consecutiveFailures": 1,
+    "consecutiveFailures": 2,
     "lastSuccess": "2026-10-12T01:18:10Z",
     "openUntil": 0.0
   },
@@ -61,22 +61,22 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:28Z",
+    "lastSuccess": "2026-10-12T21:43:47Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:39Z",
+    "lastSuccess": "2026-10-12T21:43:57Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T01:18:15Z",
+    "lastSuccess": "2026-10-12T21:43:59Z",
     "openUntil": 0.0
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-12T17:58:47Z",
+    "lastSuccess": "2026-10-12T21:44:08Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
