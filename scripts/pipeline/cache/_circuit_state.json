@@ -1,53 +1,53 @@
 {
   "akshare.fund_etf_hist_em": {
-    "consecutiveFailures": 4,
+    "consecutiveFailures": 5,
     "lastSuccess": "2026-10-14T18:00:08Z",
-    "openUntil": 1792131704.0838757
+    "openUntil": 1792178245.3360505
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:22:40Z",
+    "lastSuccess": "2026-10-16T13:18:55Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:40Z",
+    "lastSuccess": "2026-10-16T13:17:18Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:47Z",
+    "lastSuccess": "2026-10-16T13:17:28Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:48Z",
+    "lastSuccess": "2026-10-16T13:17:29Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
-    "consecutiveFailures": 3,
+    "consecutiveFailures": 4,
     "lastSuccess": "2026-10-15T00:30:07Z",
-    "openUntil": 1792131696.0301723
+    "openUntil": 1792178233.2457497
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:39Z",
+    "lastSuccess": "2026-10-16T13:17:17Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
-    "consecutiveFailures": 6,
+    "consecutiveFailures": 7,
     "lastSuccess": "2026-10-13T19:51:35Z",
-    "openUntil": 1792131696.9577377
+    "openUntil": 1792178235.596745
   },
   "akshare.stock_zh_a_hist": {
-    "consecutiveFailures": 6,
+    "consecutiveFailures": 7,
     "lastSuccess": "2026-10-14T01:11:34Z",
-    "openUntil": 1792131695.1140792
+    "openUntil": 1792178230.0109553
   },
   "binance.klines": {
-    "consecutiveFailures": 147,
+    "consecutiveFailures": 148,
     "lastSuccess": "",
-    "openUntil": 1792131703.3772225
+    "openUntil": 1792178241.7507913
   },
   "coinbase.spot": {
     "consecutiveFailures": 0,
@@ -61,22 +61,22 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:34Z",
+    "lastSuccess": "2026-10-16T13:17:08Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:43Z",
+    "lastSuccess": "2026-10-16T13:17:22Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:44Z",
+    "lastSuccess": "2026-10-16T13:17:25Z",
     "openUntil": 0.0
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-16T00:21:49Z",
+    "lastSuccess": "2026-10-16T13:17:30Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
