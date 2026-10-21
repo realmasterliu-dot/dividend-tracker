@@ -562,57 +562,65 @@
   {
     "instrumentId": "BTC",
     "date": "2026-10-14",
-    "price": 81493.69,
+    "price": 81682.01,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-10-15",
-    "price": 82401.43,
+    "price": 82245.93,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-10-16",
-    "price": 80735.25,
+    "price": 81615.64,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-10-17",
-    "price": 81202.27,
+    "price": 81491.04,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-10-18",
-    "price": 81135.63,
+    "price": 82116.0,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-10-19",
-    "price": 81814.56,
+    "price": 81938.4,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
   },
   {
     "instrumentId": "BTC",
     "date": "2026-10-20",
-    "price": 82777.63,
+    "price": 83028.15,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Binance·日K"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-10-21",
+    "price": 83210.0,
+    "currency": "USD",
+    "fxRate": 1.0,
+    "source": "Binance·日K"
   }
 ]
