@@ -7638,5 +7638,13 @@
     "currency": "USD",
     "fxRate": 1.0,
     "source": "akshare·新浪美股"
+  },
+  {
+    "instrumentId": "AAPL",
+    "date": "2026-10-23",
+    "price": 347.725,
+    "currency": "USD",
+    "fxRate": 1.0,
+    "source": "akshare·新浪美股"
   }
 ]
