@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { DataState, Instrument } from '@/types';
+import { DataState, Instrument, Notification, Transaction } from '@/types';
 import { buildPersonalState } from '@/data';
-import { reducer } from '../DataContext';
+import { mergeAnonymousLedgerForLogin, reducer } from '../DataContext';
+import type { LedgerPayload } from '@/data/cloud/types';
 import {
   AddHoldingForm,
   buildInitialBuy,
@@ -105,6 +106,377 @@ describe('reducer · CLEAR_PERSONAL_DATA', () => {
     const snapshot = JSON.stringify(base);
     reducer(base, { type: 'CLEAR_PERSONAL_DATA' });
     expect(JSON.stringify(base)).toBe(snapshot);
+  });
+});
+
+describe('reducer · CONFIRM_PENDING', () => {
+  const pending: Transaction = {
+    id: 'pending-dca',
+    instrumentId: '110011',
+    type: 'BUY',
+    status: 'PENDING',
+    date: '2026-08-12',
+    quantity: 0,
+    price: 0,
+    amount: 1000,
+    currency: 'CNY',
+    fxRate: 1,
+    source: 'DCA',
+  };
+
+  it('未提供真实成交份额时保持待确认，禁止 0 份交易入账', () => {
+    const base = { ...baseState(), transactions: [pending] };
+    const next = reducer(base, { type: 'CONFIRM_PENDING', payload: { id: pending.id } });
+    expect(next.transactions[0]).toEqual(pending);
+  });
+
+  it('正数成交份额才确认，并由计划金额反推成交价', () => {
+    const base = { ...baseState(), transactions: [pending] };
+    const next = reducer(base, {
+      type: 'CONFIRM_PENDING',
+      payload: { id: pending.id, actualQuantity: 812.5 },
+    });
+    expect(next.transactions[0].status).toBe('CONFIRMED');
+    expect(next.transactions[0].quantity).toBe(812.5);
+    expect(next.transactions[0].price).toBeCloseTo(1000 / 812.5);
+  });
+});
+
+describe('reducer · GENERATE_DCA_TX', () => {
+  it('stores the supplied transaction-date FX rate for a foreign-currency plan', () => {
+    const instrument: Instrument = {
+      ...makeInstrument('AAPL', 'Apple'),
+      market: 'US',
+      currency: 'USD',
+      custodyChannel: 'US_BROKER',
+    };
+    const base = {
+      ...baseState(),
+      instruments: [instrument],
+      transactions: [],
+      plans: [{
+        id: 'usd-plan',
+        instrumentId: instrument.id,
+        amount: 100,
+        frequency: 'MONTHLY' as const,
+        executionDay: 12,
+        startDate: '2026-08-12',
+        holidayPolicy: 'NEXT_TRADING_DAY' as const,
+        monthEndPolicy: 'LAST_TRADING_DAY' as const,
+        autoConfirm: false,
+        status: 'ACTIVE' as const,
+      }],
+    };
+
+    const next = reducer(base, {
+      type: 'GENERATE_DCA_TX',
+      payload: { planId: 'usd-plan', date: '2026-08-12', fxRate: 7.18 },
+    });
+
+    expect(next.transactions).toHaveLength(1);
+    expect(next.transactions[0]).toMatchObject({ currency: 'USD', fxRate: 7.18, status: 'PENDING' });
+  });
+});
+
+describe('reducer · DELETE_TRANSACTION', () => {
+  it('deleting a cash-dividend transaction also removes its linked manual dividend event', () => {
+    const base = baseState();
+    const transaction: Transaction = {
+      id: 'cash-dividend',
+      instrumentId: base.instruments[0].id,
+      type: 'DIVIDEND_CASH',
+      status: 'CONFIRMED',
+      date: '2026-08-12',
+      quantity: 0,
+      price: 0,
+      amount: 100,
+      currency: 'CNY',
+      fxRate: 1,
+      meta: { dividendEventId: 'manual-event' },
+    };
+    const manualEvent = {
+      ...base.dividends[0],
+      id: 'manual-event',
+      manual: true,
+    };
+    const next = reducer(
+      { ...base, transactions: [transaction], dividends: [manualEvent] },
+      { type: 'DELETE_TRANSACTION', payload: { id: transaction.id } },
+    );
+    expect(next.transactions).toEqual([]);
+    expect(next.dividends).toEqual([]);
+  });
+
+  it('does not delete a linked pipeline event when removing its transaction correction', () => {
+    const base = baseState();
+    const pipelineEvent = {
+      ...base.dividends[0],
+      id: 'pipeline-event',
+      manual: false,
+      status: 'RECONCILED' as const,
+      actualReceived: 100,
+      netAmount: 100,
+    };
+    const transaction: Transaction = {
+      id: 'cash-dividend',
+      instrumentId: pipelineEvent.instrumentId,
+      type: 'DIVIDEND_CASH',
+      status: 'CONFIRMED',
+      date: '2026-08-12',
+      quantity: 0,
+      price: 0,
+      amount: 100,
+      currency: 'CNY',
+      fxRate: 1,
+      meta: { dividendEventId: pipelineEvent.id },
+    };
+    const next = reducer(
+      { ...base, transactions: [transaction], dividends: [pipelineEvent] },
+      { type: 'DELETE_TRANSACTION', payload: { id: transaction.id } },
+    );
+    expect(next.dividends).toHaveLength(1);
+    expect(next.dividends[0]).toMatchObject({ id: pipelineEvent.id, manual: false });
+    expect(next.dividends[0].actualReceived).toBeUndefined();
+    expect(next.dividends[0].status).toBe('PAID');
+  });
+
+  it('editing a cash receipt onto a new event restores the old pipeline event', () => {
+    const base = baseState();
+    const pipelineEvent = {
+      ...base.dividends[0],
+      id: 'old-pipeline-event',
+      manual: false,
+      status: 'RECONCILED' as const,
+      actualReceived: 100,
+      netAmount: 100,
+    };
+    const newManualEvent = {
+      ...pipelineEvent,
+      id: 'new-manual-event',
+      instrumentId: 'MSFT',
+      manual: true,
+      sourceKey: 'manual-transaction:cash-dividend',
+    };
+    const transaction: Transaction = {
+      id: 'cash-dividend',
+      instrumentId: pipelineEvent.instrumentId,
+      type: 'DIVIDEND_CASH',
+      status: 'CONFIRMED',
+      date: '2026-08-12',
+      quantity: 0,
+      price: 0,
+      amount: 100,
+      currency: 'CNY',
+      fxRate: 1,
+      meta: { dividendEventId: pipelineEvent.id },
+    };
+    const next = reducer(
+      {
+        ...base,
+        transactions: [transaction],
+        dividends: [pipelineEvent, newManualEvent],
+      },
+      {
+        type: 'UPDATE_TRANSACTION',
+        payload: {
+          id: transaction.id,
+          patch: {
+            instrumentId: 'MSFT',
+            meta: { dividendEventId: newManualEvent.id },
+          },
+        },
+      },
+    );
+
+    expect(next.dividends.find((item) => item.id === pipelineEvent.id)).toMatchObject({
+      status: 'PAID',
+      manual: false,
+    });
+    expect(next.dividends.find((item) => item.id === pipelineEvent.id)?.actualReceived).toBeUndefined();
+    expect(next.dividends.find((item) => item.id === newManualEvent.id)).toBeDefined();
+  });
+});
+
+describe('reducer · REPLACE_LEDGER notifications', () => {
+  const notification = (
+    id: string,
+    key: string,
+    title: string,
+    read = false,
+  ): Notification => ({
+    id,
+    key,
+    type: 'DATA_STALE',
+    title,
+    body: title,
+    severity: 'INFO',
+    createdAt: '2026-08-12T00:00:00.000Z',
+    read,
+  });
+
+  it('applies durable cloud edits and deletions while retaining device-local generated items', () => {
+    const base = baseState();
+    const generated = notification('gen-local', 'generated', '本机行情提醒');
+    const deletedDurable = notification('manual-old', 'old', '应被远端删除');
+    const editedDurable = notification('manual-edit', 'edit', '旧文案');
+    const remoteEdited = notification('manual-edit', 'edit', '新文案');
+    const remoteAdded = notification('manual-new', 'new', '远端新增');
+    const next = reducer(
+      { ...base, notifications: [generated, deletedDurable, editedDurable] },
+      {
+        type: 'REPLACE_LEDGER',
+        payload: {
+          schemaVersion: 1,
+          instruments: base.instruments,
+          transactions: base.transactions,
+          plans: base.plans,
+          dividends: [],
+          notifications: [remoteEdited, remoteAdded],
+          settings: {
+            baseCurrency: 'CNY',
+            displayCurrency: 'CNY',
+            colorScheme: 'CN',
+            w8benFilled: false,
+            fxNeutralMode: false,
+            notificationChannels: {},
+            stalenessThresholdHours: 48,
+          },
+          updatedAt: '2026-08-12T00:00:00.000Z',
+        },
+      },
+    );
+
+    expect(next.notifications.map((item) => item.id)).toEqual([
+      'gen-local',
+      'manual-edit',
+      'manual-new',
+    ]);
+    expect(next.notifications.find((item) => item.id === 'manual-edit')?.title).toBe('新文案');
+  });
+
+  it('never rolls a durable notification from read back to unread', () => {
+    const base = baseState();
+    const localRead = notification('manual-read', 'same-key', '本机', true);
+    const remoteUnread = notification('manual-read', 'same-key', '云端更新', false);
+    const next = reducer(
+      { ...base, notifications: [localRead] },
+      {
+        type: 'REPLACE_LEDGER',
+        payload: {
+          schemaVersion: 1,
+          instruments: base.instruments,
+          transactions: base.transactions,
+          plans: base.plans,
+          dividends: [],
+          notifications: [remoteUnread],
+          settings: {
+            baseCurrency: 'CNY',
+            displayCurrency: 'CNY',
+            colorScheme: 'CN',
+            w8benFilled: false,
+            fxNeutralMode: false,
+            notificationChannels: {},
+            stalenessThresholdHours: 48,
+          },
+          updatedAt: '2026-08-12T00:00:00.000Z',
+        },
+      },
+    );
+
+    expect(next.notifications).toHaveLength(1);
+    expect(next.notifications[0]).toMatchObject({ title: '云端更新', read: true });
+  });
+
+  it('restores a calibrated pipeline dividend even before its market row is available', () => {
+    const base = { ...baseState(), dividends: [] };
+    const corrected = {
+      ...baseState().dividends[0],
+      id: 'orphaned-pipeline-correction',
+      manual: false,
+      status: 'RECONCILED' as const,
+      actualReceived: 88,
+      taxWithheldOverride: 2,
+      netAmount: 88,
+    };
+    const next = reducer(base, {
+      type: 'IMPORT_LEDGER',
+      payload: {
+        schemaVersion: 1,
+        instruments: base.instruments,
+        transactions: base.transactions,
+        plans: base.plans,
+        dividends: [corrected],
+        notifications: [],
+        settings: {
+          baseCurrency: 'CNY',
+          displayCurrency: 'CNY',
+          colorScheme: 'CN',
+          w8benFilled: false,
+          fxNeutralMode: false,
+          notificationChannels: {},
+          stalenessThresholdHours: 48,
+        },
+        updatedAt: '2026-08-12T00:00:00.000Z',
+      },
+    });
+
+    expect(next.dividends).toContainEqual(corrected);
+  });
+});
+
+describe('cloud login · anonymous ledger migration', () => {
+  const ledger = (
+    instruments: Instrument[],
+    transactions: Transaction[],
+    updatedAt: string,
+  ): LedgerPayload => ({
+    schemaVersion: 1,
+    instruments,
+    transactions,
+    plans: [],
+    dividends: [],
+    notifications: [],
+    settings: {
+      baseCurrency: 'CNY',
+      displayCurrency: 'CNY',
+      colorScheme: 'CN',
+      w8benFilled: false,
+      fxNeutralMode: false,
+      notificationChannels: {},
+      stalenessThresholdHours: 48,
+    },
+    updatedAt,
+  });
+
+  it('keeps owner records and adds anonymous records when signing into an existing ledger', () => {
+    const ownerInstrument = makeInstrument('OWNER.SH', '云端持仓');
+    const anonymousInstrument = makeInstrument('LOCAL.SH', '未登录持仓');
+    const ownerTx: Transaction = {
+      id: 'owner-tx', instrumentId: ownerInstrument.id, type: 'BUY', status: 'CONFIRMED',
+      date: '2026-08-01', quantity: 1, price: 10, amount: 10, currency: 'CNY', fxRate: 1,
+    };
+    const anonymousTx: Transaction = {
+      id: 'local-tx', instrumentId: anonymousInstrument.id, type: 'BUY', status: 'CONFIRMED',
+      date: '2026-08-12', quantity: 2, price: 20, amount: 40, currency: 'CNY', fxRate: 1,
+    };
+
+    const merged = mergeAnonymousLedgerForLogin(
+      ledger([ownerInstrument], [ownerTx], '2026-08-01T00:00:00.000Z'),
+      ledger([anonymousInstrument], [anonymousTx], '2026-08-12T00:00:00.000Z'),
+    );
+
+    expect(merged.instruments.map((item) => item.id)).toEqual(['LOCAL.SH', 'OWNER.SH']);
+    expect(merged.transactions.map((item) => item.id)).toEqual(['local-tx', 'owner-tx']);
+  });
+
+  it('uses an anonymous ledger directly when the owner has no records', () => {
+    const anonymousInstrument = makeInstrument('LOCAL.SH', '未登录持仓');
+    const anonymous = ledger([anonymousInstrument], [], '2026-08-12T00:00:00.000Z');
+    const merged = mergeAnonymousLedgerForLogin(
+      ledger([], [], '2026-08-01T00:00:00.000Z'),
+      anonymous,
+    );
+    expect(merged.instruments).toEqual([anonymousInstrument]);
   });
 });
 

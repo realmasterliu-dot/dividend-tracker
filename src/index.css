@@ -41,7 +41,7 @@
 @layer components {
   /* 数字规范：等宽 + tabular-nums + 右对齐（architecture.md §8.2） */
   .num {
-    font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
     font-variant-numeric: tabular-nums;
     text-align: right;
     font-feature-settings: 'tnum';

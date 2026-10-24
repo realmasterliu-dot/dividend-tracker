@@ -18,6 +18,8 @@ import { dataUrl } from './realData';
 import { seedInstruments } from './seed/instruments.seed';
 import { seedPlans } from './seed/plans.seed';
 import { seedTransactions } from './seed/transactions.seed';
+import type { LedgerPayload } from './cloud/types';
+import { parseLedgerPayload } from './cloud/sync';
 
 /**
  * 个人数据接入层 —— 读取用户手工维护的 public/data/holdings.json。
@@ -25,8 +27,8 @@ import { seedTransactions } from './seed/transactions.seed';
  * 边界约定（与 realData.ts 对称）：
  * - 只负责「个人数据」：instruments / transactions / plans。
  *   市场数据（prices / fx / dividends / sourceHealth）由 realData.loadMarketData() 负责。
- * - holdings.json 是「基线」：用户编辑后提交到仓库即可多设备同步；
- *   浏览器 localStorage 里的运行期编辑作为 overlay 叠加在基线之上（mergePersonalData）。
+ * - holdings.json 只用于旧版私有备份导入；运行时不会自动读取，更不能提交真实持仓到公开仓库。
+ *   登录后的多设备同步由 CloudBase 私有账本负责。
  * - 防御式解析：单条脏数据只丢自己，不影响同切片其它行，更不影响其它切片。
  * - ★空切片就是空：文件能读到时一律尊重用户意图（「清空个人数据」必须真的能清空），
  *   只有文件缺失 / 网络失败 / JSON 损坏（catch 分支）才回退内置种子，保证全新部署不白屏。
@@ -56,6 +58,8 @@ export type PersonalOverlay = Partial<PersonalSlices> | null | undefined;
 
 /** 导出文件的 schema 版本，便于将来做迁移 */
 export const HOLDINGS_VERSION = 1;
+/** Complete private backup wrapper. Version 1 remains supported as a legacy three-slice import. */
+export const LEDGER_BACKUP_VERSION = 2;
 
 const HOLDINGS_FILE = 'holdings.json';
 
@@ -159,6 +163,14 @@ function asCurrency(value: unknown, fallback: Currency = 'CNY'): Currency {
   return asEnum<Currency>(value, CURRENCIES, fallback);
 }
 
+function defaultCustodyChannel(market: Market): CustodyChannel {
+  if (market === 'HK') return 'HK_LOCAL_BROKER';
+  if (market === 'US') return 'US_BROKER';
+  if (market === 'CRYPTO') return 'CEX';
+  if (market === 'GOLD') return 'SGE';
+  return 'CN_BROKER';
+}
+
 // ============ 归一化（逐切片独立解析，单条脏数据只丢自己） ============
 
 /** holdings.instruments → Instrument[]；缺 id/symbol/name/market/currency 的条目直接跳过 */
@@ -176,16 +188,21 @@ export function normalizeInstruments(raw: unknown): Instrument[] {
     if (seen.has(id)) continue;
     seen.add(id);
 
+    const market = item.market as Market;
     const instrument: Instrument = {
       id,
       symbol,
       name,
-      market: item.market as Market,
+      market,
       currency: item.currency as Currency,
       dividendEligible: asBoolean(item.dividendEligible, true),
       securityType: asEnum<SecurityType>(item.securityType, SECURITY_TYPES, 'COMMON'),
       extraWithholdingRate: asNumber(item.extraWithholdingRate, 0),
-      custodyChannel: asEnum<CustodyChannel>(item.custodyChannel, CUSTODY_CHANNELS, 'CN_BROKER'),
+      custodyChannel: asEnum<CustodyChannel>(
+        item.custodyChannel,
+        CUSTODY_CHANNELS,
+        defaultCustodyChannel(market),
+      ),
     };
 
     const dividendOption = optEnum<DividendOption>(item.dividendOption, DIVIDEND_OPTIONS);
@@ -399,8 +416,8 @@ export interface LoadPersonalDataOptions {
   /** 便于单测注入；默认使用全局 fetch */
   fetchImpl?: typeof fetch;
   /**
-   * fetch 缓存策略，默认 'default'（遵循 _headers 的 max-age=3600）。
-   * 用户在设置页点「从服务器重新加载」时传 'no-cache'，确保拿到刚提交的基线。
+   * fetch 缓存策略，默认 'default'（遵循 CloudBase 控制台的缓存规则）。
+   * 显式重新加载旧备份时传 'no-cache'，确保绕过浏览器缓存。
    */
   cache?: RequestCache;
 }
@@ -479,7 +496,7 @@ export function mergePersonalData(
 
 // ============ 导出 ============
 
-/** 把当前个人数据序列化为 holdings.json 文本，供「导出」按钮下载后提交回仓库 */
+/** 把当前个人数据序列化为 holdings.json 文本，仅供用户保存在私有位置备份。 */
 export function downloadHoldings(
   state: Pick<DataState, 'instruments' | 'transactions' | 'plans'>,
 ): string {
@@ -492,4 +509,26 @@ export function downloadHoldings(
     plans: state.plans,
   };
   return `${JSON.stringify(payload, null, 2)}\n`;
+}
+
+/** Serialize every durable ledger slice; market prices and FX stay renewable and are omitted. */
+export function downloadLedgerBackup(ledger: LedgerPayload): string {
+  return `${JSON.stringify({
+    version: LEDGER_BACKUP_VERSION,
+    exportedAt: new Date().toISOString(),
+    ledger,
+  }, null, 2)}\n`;
+}
+
+/**
+ * Parse a complete v2 backup. Returns null only when the input is not a v2 file,
+ * allowing callers to fall back to the legacy holdings.json importer.
+ */
+export function parseLedgerBackup(raw: unknown): LedgerPayload | null {
+  if (!isRecord(raw) || raw.version !== LEDGER_BACKUP_VERSION) return null;
+  const parsed = parseLedgerPayload(raw.ledger);
+  if (!parsed.ok) {
+    throw new Error(`完整账本备份已损坏：${parsed.issues.slice(0, 8).join('；')}`);
+  }
+  return parsed.value;
 }
