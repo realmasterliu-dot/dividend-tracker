@@ -1,27 +1,27 @@
 {
   "akshare.fund_etf_hist_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:54Z",
+    "lastSuccess": "2026-10-26T19:17:24Z",
     "openUntil": 0.0
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:14:57Z",
+    "lastSuccess": "2026-10-26T19:18:32Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:49Z",
+    "lastSuccess": "2026-10-26T19:17:23Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:58Z",
+    "lastSuccess": "2026-10-26T19:17:28Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:58Z",
+    "lastSuccess": "2026-10-26T19:17:29Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
@@ -31,7 +31,7 @@
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:49Z",
+    "lastSuccess": "2026-10-26T19:17:22Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
@@ -40,8 +40,8 @@
     "openUntil": 1793049227.737012
   },
   "akshare.stock_zh_a_hist": {
-    "consecutiveFailures": 2,
-    "lastSuccess": "2026-10-26T00:18:04Z",
+    "consecutiveFailures": 0,
+    "lastSuccess": "2026-10-26T19:17:21Z",
     "openUntil": 0.0
   },
   "binance.klines": {
@@ -61,12 +61,12 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:42Z",
+    "lastSuccess": "2026-10-26T19:17:19Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:13:53Z",
+    "lastSuccess": "2026-10-26T19:17:24Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
@@ -76,7 +76,7 @@
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-26T15:14:01Z",
+    "lastSuccess": "2026-10-26T19:17:30Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
