@@ -7334,5 +7334,29 @@
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "600519.SH",
+    "date": "2026-10-27",
+    "price": 1355.9,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "600519.SH",
+    "date": "2026-10-28",
+    "price": 1330.75,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
+  },
+  {
+    "instrumentId": "600519.SH",
+    "date": "2026-10-29",
+    "price": 1338.03,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·东财A股"
   }
 ]
