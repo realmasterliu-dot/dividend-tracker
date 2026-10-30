@@ -1,12 +1,14 @@
 {
-  "generatedAt": "2026-10-29T18:57:58Z",
+  "generatedAt": "2026-10-30T02:01:55Z",
   "pipelineVersion": "1.0.0",
   "instrumentCount": 7,
   "warnings": [
-    "[00700.HK] 行情抓取失败，沿用缓存 923 条：akshare.stock_hk_hist(ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
-    "以下数据源已连续失败并进入熔断：binance.klines, frankfurter.dev.latest"
+    "[600519.SH] 行情抓取失败，沿用缓存 920 条：akshare.stock_zh_a_hist(ConnectionError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2)",
+    "[000001.SZ] 行情抓取失败，沿用缓存 920 条：akshare.stock_zh_a_hist(ConnectionError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2)",
+    "[00700.HK] 行情抓取失败，沿用缓存 923 条：akshare.stock_hk_hist(ReadTimeout: HTTPSConnectionPool(host='33.push2his.eastmoney.com', port=443): Read timed out. (read timeout=15))",
+    "以下数据源已连续失败并进入熔断：akshare.stock_hk_hist, akshare.stock_us_hist, binance.klines, frankfurter.dev.latest"
   ],
-  "durationSeconds": 68.6,
+  "durationSeconds": 359.1,
   "categories": [
     "prices",
     "dividends",
