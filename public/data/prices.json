@@ -5658,9 +5658,17 @@
   {
     "instrumentId": "00700.HK",
     "date": "2026-10-29",
-    "price": 380.8,
+    "price": 377.6,
     "currency": "HKD",
     "fxRate": 0.849001,
+    "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-10-30",
+    "price": 383.6,
+    "currency": "HKD",
+    "fxRate": 0.847968,
     "source": "akshare·东财港股"
   },
   {
@@ -8902,6 +8910,15 @@
     "fxRate": 1.0,
     "source": "akshare·天天基金净值",
     "navDate": "2026-10-29"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-10-30",
+    "price": 4.0128,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-10-30"
   },
   {
     "instrumentId": "600519.SH",
@@ -17850,10 +17867,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-10-30",
-    "price": 816.1,
+    "price": 839.1556,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "akshare·黄金ETF518880(代理)"
+    "source": "gold-api·XAU折算(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18546,9 +18563,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-10-30",
-    "price": 76565.59,
+    "price": 77099.38,
     "currency": "USD",
-    "fxRate": 6.6616,
+    "fxRate": 6.6529,
     "source": "gold-api·现价"
   }
 ]
