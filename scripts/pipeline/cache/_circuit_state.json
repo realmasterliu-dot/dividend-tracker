@@ -1,37 +1,37 @@
 {
   "akshare.fund_etf_hist_em": {
-    "consecutiveFailures": 1,
+    "consecutiveFailures": 2,
     "lastSuccess": "2026-10-30T02:00:50Z",
     "openUntil": 0.0
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:06:05Z",
+    "lastSuccess": "2026-10-30T18:37:06Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:33Z",
+    "lastSuccess": "2026-10-30T18:35:52Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:41Z",
+    "lastSuccess": "2026-10-30T18:35:56Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:42Z",
+    "lastSuccess": "2026-10-30T18:35:57Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:25Z",
+    "lastSuccess": "2026-10-30T18:35:50Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:32Z",
+    "lastSuccess": "2026-10-30T18:35:51Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
@@ -61,22 +61,22 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:19Z",
+    "lastSuccess": "2026-10-30T18:35:48Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:37Z",
+    "lastSuccess": "2026-10-30T18:35:52Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:38Z",
+    "lastSuccess": "2026-10-30T18:35:53Z",
     "openUntil": 0.0
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-10-30T15:04:44Z",
+    "lastSuccess": "2026-10-30T18:35:59Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
