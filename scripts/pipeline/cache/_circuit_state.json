@@ -6,32 +6,32 @@
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:15:27Z",
+    "lastSuccess": "2026-11-01T18:26:11Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:08Z",
+    "lastSuccess": "2026-11-01T18:25:01Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:17Z",
+    "lastSuccess": "2026-11-01T18:25:04Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:18Z",
+    "lastSuccess": "2026-11-01T18:25:05Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
-    "consecutiveFailures": 2,
+    "consecutiveFailures": 3,
     "lastSuccess": "2026-10-31T17:42:33Z",
-    "openUntil": 0.0
+    "openUntil": 1793579099.0281289
   },
   "akshare.stock_us_daily": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:07Z",
+    "lastSuccess": "2026-11-01T18:25:00Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_hist": {
@@ -40,8 +40,8 @@
     "openUntil": 1793567644.0303767
   },
   "akshare.stock_zh_a_hist": {
-    "consecutiveFailures": 2,
-    "lastSuccess": "2026-11-01T01:05:41Z",
+    "consecutiveFailures": 0,
+    "lastSuccess": "2026-11-01T18:24:58Z",
     "openUntil": 0.0
   },
   "binance.klines": {
@@ -61,22 +61,22 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:00Z",
+    "lastSuccess": "2026-11-01T18:24:56Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
-    "consecutiveFailures": 1,
-    "lastSuccess": "2026-11-01T01:05:50Z",
+    "consecutiveFailures": 0,
+    "lastSuccess": "2026-11-01T18:25:01Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:12Z",
+    "lastSuccess": "2026-11-01T18:25:01Z",
     "openUntil": 0.0
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-01T15:14:19Z",
+    "lastSuccess": "2026-11-01T18:25:08Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
