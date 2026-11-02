@@ -17793,10 +17793,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-10-30",
-    "price": 830.3431,
+    "price": 811.5,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "Au99.99",
@@ -17813,6 +17813,14 @@
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "gold-api·XAU折算(代理)"
+  },
+  {
+    "instrumentId": "Au99.99",
+    "date": "2026-11-02",
+    "price": 795.0,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18522,6 +18530,14 @@
     "instrumentId": "BTC",
     "date": "2026-11-01",
     "price": 77849.94,
+    "currency": "USD",
+    "fxRate": 6.6529,
+    "source": "gold-api·现价"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-11-02",
+    "price": 78498.73,
     "currency": "USD",
     "fxRate": 6.6529,
     "source": "gold-api·现价"
