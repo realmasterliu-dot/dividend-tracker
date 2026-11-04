@@ -1851,6 +1851,29 @@
       "recordDate": "1988-11-21",
       "exDate": "1988-11-21",
       "isSpecial": false
+    },
+    {
+      "id": "div-f170fd0f34c0",
+      "instrumentId": "AAPL",
+      "status": "DECLARED",
+      "payDateEstimated": false,
+      "perShareAmount": 0.27,
+      "currency": "USD",
+      "quantityAtRecord": 0,
+      "grossAmount": 0,
+      "taxRateApplied": 0,
+      "taxWithheld": 0,
+      "contingentTax": 0,
+      "netAmount": 0,
+      "taxBracket": "NONE",
+      "dividendForm": "CASH",
+      "manual": false,
+      "sourceKey": "nasdaq:div:AAPL:2026-11-12",
+      "announceDate": "2026-11-02",
+      "recordDate": "2026-11-12",
+      "exDate": "2026-11-12",
+      "payDate": "2026-11-16",
+      "isSpecial": false
     }
   ]
 }

@@ -2850,7 +2850,7 @@
   {
     "instrumentId": "000001.SZ",
     "date": "2026-11-04",
-    "price": 11.71,
+    "price": 11.74,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -5674,9 +5674,9 @@
   {
     "instrumentId": "00700.HK",
     "date": "2026-11-04",
-    "price": 393.0,
+    "price": 401.6,
     "currency": "HKD",
-    "fxRate": 0.850408,
+    "fxRate": 0.85043,
     "source": "akshare·东财港股"
   },
   {
@@ -8920,6 +8920,15 @@
     "navDate": "2026-11-03"
   },
   {
+    "instrumentId": "110011",
+    "date": "2026-11-04",
+    "price": 4.0866,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-11-04"
+  },
+  {
     "instrumentId": "600519.SH",
     "date": "2025-05-13",
     "price": 1510.72,
@@ -11770,7 +11779,7 @@
   {
     "instrumentId": "600519.SH",
     "date": "2026-11-04",
-    "price": 1455.0,
+    "price": 1446.44,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -14747,6 +14756,14 @@
     "instrumentId": "AAPL",
     "date": "2026-11-03",
     "price": 331.9,
+    "currency": "USD",
+    "fxRate": 6.6723,
+    "source": "akshare·东财美股"
+  },
+  {
+    "instrumentId": "AAPL",
+    "date": "2026-11-04",
+    "price": 351.95,
     "currency": "USD",
     "fxRate": 6.6723,
     "source": "akshare·东财美股"
@@ -17882,18 +17899,18 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-11-03",
-    "price": 841.0234,
+    "price": 798.9,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "Au99.99",
     "date": "2026-11-04",
-    "price": 844.799,
+    "price": 822.9,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18626,9 +18643,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-04",
-    "price": 76867.75,
+    "price": 80668.48,
     "currency": "USD",
     "fxRate": 6.6723,
-    "source": "gold-api·现价"
+    "source": "Coinbase·现价"
   }
 ]

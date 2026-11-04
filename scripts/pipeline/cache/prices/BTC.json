@@ -730,9 +730,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-04",
-    "price": 76867.75,
+    "price": 80668.48,
     "currency": "USD",
     "fxRate": 1.0,
-    "source": "gold-api·现价"
+    "source": "Coinbase·现价"
   }
 ]
