@@ -11779,7 +11779,7 @@
   {
     "instrumentId": "600519.SH",
     "date": "2026-11-05",
-    "price": 1430.88,
+    "price": 1452.0,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -14763,7 +14763,7 @@
   {
     "instrumentId": "AAPL",
     "date": "2026-11-05",
-    "price": 346.89,
+    "price": 345.46,
     "currency": "USD",
     "fxRate": 6.6684,
     "source": "akshare·东财美股"
@@ -18651,7 +18651,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-05",
-    "price": 76683.81,
+    "price": 75985.22,
     "currency": "USD",
     "fxRate": 6.6684,
     "source": "gold-api·现价"
