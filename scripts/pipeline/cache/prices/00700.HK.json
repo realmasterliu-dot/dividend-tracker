@@ -7414,5 +7414,13 @@
     "currency": "HKD",
     "fxRate": 1.0,
     "source": "akshare·东财港股"
+  },
+  {
+    "instrumentId": "00700.HK",
+    "date": "2026-11-05",
+    "price": 423.6,
+    "currency": "HKD",
+    "fxRate": 1.0,
+    "source": "akshare·东财港股"
   }
 ]
