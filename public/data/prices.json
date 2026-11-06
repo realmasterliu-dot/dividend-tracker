@@ -2850,7 +2850,7 @@
   {
     "instrumentId": "000001.SZ",
     "date": "2026-11-06",
-    "price": 11.71,
+    "price": 11.81,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -5674,7 +5674,7 @@
   {
     "instrumentId": "00700.HK",
     "date": "2026-11-06",
-    "price": 425.6,
+    "price": 419.8,
     "currency": "HKD",
     "fxRate": 0.851213,
     "source": "akshare·东财港股"
@@ -11779,7 +11779,7 @@
   {
     "instrumentId": "600519.SH",
     "date": "2026-11-06",
-    "price": 1438.59,
+    "price": 1453.0,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -14726,7 +14726,7 @@
     "price": 344.63,
     "currency": "USD",
     "fxRate": 6.6529,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14734,7 +14734,7 @@
     "price": 338.32,
     "currency": "USD",
     "fxRate": 6.6483,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14742,7 +14742,7 @@
     "price": 331.9,
     "currency": "USD",
     "fxRate": 6.6723,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14750,7 +14750,7 @@
     "price": 349.51,
     "currency": "USD",
     "fxRate": 6.6723,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "AAPL",
@@ -14758,7 +14758,15 @@
     "price": 344.17,
     "currency": "USD",
     "fxRate": 6.6684,
-    "source": "akshare·新浪美股"
+    "source": "akshare·东财美股"
+  },
+  {
+    "instrumentId": "AAPL",
+    "date": "2026-11-06",
+    "price": 343.4,
+    "currency": "USD",
+    "fxRate": 6.6713,
+    "source": "akshare·东财美股"
   },
   {
     "instrumentId": "Au99.99",
@@ -17899,10 +17907,10 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-11-06",
-    "price": 870.2178,
+    "price": 825.3,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18651,9 +18659,9 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-06",
-    "price": 75673.36,
+    "price": 75674.15,
     "currency": "USD",
     "fxRate": 6.6713,
-    "source": "gold-api·现价"
+    "source": "Coinbase·现价"
   }
 ]
