@@ -7706,9 +7706,9 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-11-09",
-    "price": 837.5,
+    "price": 888.4773,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "akshare·黄金ETF518880(代理)"
+    "source": "gold-api·XAU折算(代理)"
   }
 ]
