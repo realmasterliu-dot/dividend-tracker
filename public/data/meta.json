@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-09T01:43:50Z",
+  "generatedAt": "2026-11-09T18:52:26Z",
   "pipelineVersion": "1.0.0",
   "instrumentCount": 7,
   "warnings": [
     "以下数据源已连续失败并进入熔断：binance.klines, frankfurter.dev.latest"
   ],
-  "durationSeconds": 88.91,
+  "durationSeconds": 79.52,
   "categories": [
     "prices",
     "dividends",
