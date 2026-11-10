@@ -5664,6 +5664,14 @@
     "source": "akshare·东财港股"
   },
   {
+    "instrumentId": "00700.HK",
+    "date": "2026-11-10",
+    "price": 418.2,
+    "currency": "HKD",
+    "fxRate": 0.850938,
+    "source": "akshare·东财港股"
+  },
+  {
     "instrumentId": "110011",
     "date": "2025-05-19",
     "price": 5.2117,
@@ -14722,10 +14730,10 @@
   {
     "instrumentId": "AAPL",
     "date": "2026-11-09",
-    "price": 350.335,
+    "price": 350.69,
     "currency": "USD",
     "fxRate": 6.6728,
-    "source": "akshare·东财美股"
+    "source": "akshare·新浪美股"
   },
   {
     "instrumentId": "Au99.99",
@@ -17866,10 +17874,18 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-11-09",
-    "price": 888.4773,
+    "price": 837.5,
     "currency": "CNY",
     "fxRate": 1.0,
-    "source": "gold-api·XAU折算(代理)"
+    "source": "akshare·黄金ETF518880(代理)"
+  },
+  {
+    "instrumentId": "Au99.99",
+    "date": "2026-11-10",
+    "price": 839.1,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·黄金ETF518880(代理)"
   },
   {
     "instrumentId": "BTC",
@@ -18646,5 +18662,13 @@
     "currency": "USD",
     "fxRate": 6.6728,
     "source": "Coinbase·现价"
+  },
+  {
+    "instrumentId": "BTC",
+    "date": "2026-11-10",
+    "price": 74487.03,
+    "currency": "USD",
+    "fxRate": 6.6728,
+    "source": "gold-api·现价"
   }
 ]
