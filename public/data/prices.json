@@ -14763,7 +14763,7 @@
   {
     "instrumentId": "AAPL",
     "date": "2026-11-10",
-    "price": 347.12,
+    "price": 348.79,
     "currency": "USD",
     "fxRate": 6.6703,
     "source": "akshare·东财美股"
@@ -18699,7 +18699,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-10",
-    "price": 73286.14,
+    "price": 73581.33,
     "currency": "USD",
     "fxRate": 6.6703,
     "source": "gold-api·现价"

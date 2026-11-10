@@ -1,32 +1,32 @@
 {
   "akshare.fund_etf_hist_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:24Z",
+    "lastSuccess": "2026-11-10T20:27:40Z",
     "openUntil": 0.0
   },
   "akshare.fund_fh_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:27:38Z",
+    "lastSuccess": "2026-11-10T20:28:48Z",
     "openUntil": 0.0
   },
   "akshare.fund_open_fund_info_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:19Z",
+    "lastSuccess": "2026-11-10T20:27:39Z",
     "openUntil": 0.0
   },
   "akshare.stock_fhps_detail_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:29Z",
+    "lastSuccess": "2026-11-10T20:27:44Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_dividend_payout_em": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:30Z",
+    "lastSuccess": "2026-11-10T20:27:44Z",
     "openUntil": 0.0
   },
   "akshare.stock_hk_hist": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:17Z",
+    "lastSuccess": "2026-11-10T20:27:37Z",
     "openUntil": 0.0
   },
   "akshare.stock_us_daily": {
@@ -36,12 +36,12 @@
   },
   "akshare.stock_us_hist": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:19Z",
+    "lastSuccess": "2026-11-10T20:27:39Z",
     "openUntil": 0.0
   },
   "akshare.stock_zh_a_hist": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:15Z",
+    "lastSuccess": "2026-11-10T20:27:35Z",
     "openUntil": 0.0
   },
   "binance.klines": {
@@ -61,12 +61,12 @@
   },
   "frankfurter.dev.range": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:14Z",
+    "lastSuccess": "2026-11-10T20:27:33Z",
     "openUntil": 0.0
   },
   "gold-api.crypto": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:23Z",
+    "lastSuccess": "2026-11-10T20:27:40Z",
     "openUntil": 0.0
   },
   "gold-api.xau": {
@@ -76,7 +76,7 @@
   },
   "nasdaq.api.dividends": {
     "consecutiveFailures": 0,
-    "lastSuccess": "2026-11-10T16:26:31Z",
+    "lastSuccess": "2026-11-10T20:27:47Z",
     "openUntil": 0.0
   },
   "open.er-api.latest": {
