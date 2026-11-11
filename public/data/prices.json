@@ -2850,7 +2850,7 @@
   {
     "instrumentId": "000001.SZ",
     "date": "2026-11-11",
-    "price": 11.82,
+    "price": 11.71,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -11779,7 +11779,7 @@
   {
     "instrumentId": "600519.SH",
     "date": "2026-11-11",
-    "price": 1418.88,
+    "price": 1402.3,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "akshare·东财A股"
@@ -18699,7 +18699,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-11",
-    "price": 74053.87,
+    "price": 74397.67,
     "currency": "USD",
     "fxRate": 6.6707,
     "source": "gold-api·现价"
