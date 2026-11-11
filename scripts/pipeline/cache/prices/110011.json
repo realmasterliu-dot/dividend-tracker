@@ -8404,5 +8404,14 @@
     "fxRate": 1.0,
     "source": "akshare·天天基金净值",
     "navDate": "2026-11-10"
+  },
+  {
+    "instrumentId": "110011",
+    "date": "2026-11-11",
+    "price": 4.0516,
+    "currency": "CNY",
+    "fxRate": 1.0,
+    "source": "akshare·天天基金净值",
+    "navDate": "2026-11-11"
   }
 ]
