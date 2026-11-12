@@ -5674,7 +5674,7 @@
   {
     "instrumentId": "00700.HK",
     "date": "2026-11-12",
-    "price": 403.2,
+    "price": 398.8,
     "currency": "HKD",
     "fxRate": 0.850028,
     "source": "akshare·东财港股"
@@ -17907,7 +17907,7 @@
   {
     "instrumentId": "Au99.99",
     "date": "2026-11-12",
-    "price": 831.3862,
+    "price": 831.9865,
     "currency": "CNY",
     "fxRate": 1.0,
     "source": "gold-api·XAU折算(代理)"
@@ -18707,7 +18707,7 @@
   {
     "instrumentId": "BTC",
     "date": "2026-11-12",
-    "price": 71659.55,
+    "price": 71439.85,
     "currency": "USD",
     "fxRate": 6.6683,
     "source": "gold-api·现价"
