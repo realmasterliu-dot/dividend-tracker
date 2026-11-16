@@ -10,11 +10,11 @@ export function DcaPage() {
   const [editing, setEditing] = useState<InvestmentPlan | null>(null);
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="mx-auto w-full max-w-[1120px] space-y-4 px-4 py-5 sm:px-5 lg:px-8 lg:py-8">
       <div>
-        <h2 className="text-[18px] font-bold text-primary">定投</h2>
-        <p className="text-[12px] text-secondary mt-0.5">
-          自动排期 → PENDING 流水 → 净值 T+1 回填份额 → 批量确认（默认 auto_confirm=false）
+        <h1 className="text-[20px] font-semibold text-primary">定投计划</h1>
+        <p className="mt-1 max-w-2xl text-[12px] leading-5 text-secondary">
+          记下投资节奏，到计划日再核对真实成交。计划不会替你下单，也不会在未确认时改变持仓。
         </p>
       </div>
 

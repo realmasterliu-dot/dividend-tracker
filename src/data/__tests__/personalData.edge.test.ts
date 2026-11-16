@@ -796,16 +796,14 @@ describe('告警 token 契约 · R1 过滤器不被文案改动静默架空', ()
     expect(pickPersonal([])).toEqual([]);
   });
 
-  it('boot() 的「服务器有更新」文案也必须带 token（源码级契约检查）', () => {
+  it('启动流程不得再自动读取公开 holdings.json（隐私回归契约）', () => {
     const src = readFileSync(
       fileURLToPath(new URL('../../store/DataContext.tsx', import.meta.url)),
       'utf-8',
     );
-    const pushed = [...src.matchAll(/warnings\.push\(\s*`([^`]*)`/g)].map((m) => m[1]);
-
-    // 失败提示：boot 新增/改写了告警文案，请保证仍含 'holdings.json'，
-    // 否则 DataSettings 的 personalWarnings 过滤器会把它丢掉（R1 回归）。
-    expect(pushed.length).toBeGreaterThan(0);
-    for (const text of pushed) expect(text).toContain('holdings.json');
+    // 真实个人数据只能来自本机或已登录用户的 CloudBase 账本；公开 JSON 仅保留为
+    // 显式导入/导出兼容能力，不得在 mount effect 中再次调用旧 boot 流程。
+    expect(src).not.toMatch(/void\s+boot\s*\(/);
+    expect(src).toMatch(/void\s+hydrate\(controller\.signal/);
   });
 });

@@ -1,46 +1,44 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { List, Plus, WalletCards } from 'lucide-react';
 import { HoldingsTable } from '@/components/holdings/HoldingsTable';
-import { AddHoldingModal } from '@/components/holdings/AddHoldingModal';
+import { TransactionForm } from '@/components/transactions/TransactionForm';
 import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 
-/** 持仓表页（14 列密集表格） */
+/** 账本首页：第一笔买入就是新增持仓，不再提供“只建标的不记买入”的错误路径。 */
 export function HoldingsPage() {
-  const [hint] = useState(true);
-  const [addOpen, setAddOpen] = useState(false);
+  const [recordOpen, setRecordOpen] = useState(false);
 
   return (
-    <div className="p-4 space-y-3">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto w-full max-w-[1280px] space-y-4 p-4 sm:p-5 lg:p-8">
+      <div className="flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-[18px] font-bold text-primary">持仓</h2>
-          <p className="text-[12px] text-secondary mt-0.5">
-            持仓由交易流水推导（FIFO）· 点击行展开 TaxLot 明细 · 列可排序/隐藏
-          </p>
+          <h1 className="text-[20px] font-semibold text-primary">我的账本</h1>
+          <p className="mt-1 text-[12px] text-secondary">持仓由每一笔真实记录自动汇总，无需重复填写。</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="primary" size="sm" onClick={() => setAddOpen(true)}>
-            <Plus size={13} /> 新增持仓
-          </Button>
-          <Badge variant="gray">行高 32-36px</Badge>
-          <Link to="/transactions" className="text-[12px] text-declared hover:underline">录入流水 →</Link>
-        </div>
+        <Button variant="gold" onClick={() => setRecordOpen(true)}>
+          <Plus size={16} /> 记一笔
+        </Button>
       </div>
 
-      {hint && (
-        <div className="rounded-md border border-line bg-card/40 px-3 py-2 text-[11px] text-secondary">
-          💡 涨跌表现用「文字色 + 极淡背景条」表示，不用整行色块；不可分红资产（黄金/加密）股息率列显示 <span className="num text-disabled">—</span>
-        </div>
-      )}
+      <div className="flex min-h-11 items-center gap-1 rounded-xl border border-line bg-card p-1 sm:w-fit">
+        <span className="flex min-h-9 flex-1 items-center justify-center gap-1.5 rounded-lg bg-card-hover px-4 text-[12px] font-medium text-primary sm:flex-none">
+          <WalletCards size={15} /> 持仓
+        </span>
+        <Link
+          to="/transactions"
+          className="flex min-h-9 flex-1 items-center justify-center gap-1.5 rounded-lg px-4 text-[12px] text-secondary hover:bg-card-hover hover:text-primary sm:flex-none"
+        >
+          <List size={15} /> 流水
+        </Link>
+      </div>
 
       <Card bodyClassName="p-0">
-        <HoldingsTable />
+        <HoldingsTable onRecord={() => setRecordOpen(true)} />
       </Card>
 
-      <AddHoldingModal open={addOpen} onClose={() => setAddOpen(false)} />
+      <TransactionForm open={recordOpen} onClose={() => setRecordOpen(false)} />
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function Input({ label, hint, className, id, ...rest }: InputProps) {
       <input
         id={inputId}
         className={clsx(
-          'w-full rounded-md bg-[#0E1420] border border-line px-2.5 py-1.5 text-[13px] text-primary placeholder:text-disabled focus:outline-none focus:border-declared/60 transition-colors',
+          'min-h-11 w-full rounded-lg bg-[#0E1420] border border-line px-3 py-2.5 text-[16px] sm:text-[13px] text-primary placeholder:text-disabled focus:outline-none focus:border-declared/60 transition-colors',
           'font-mono tabular-nums',
           className,
         )}

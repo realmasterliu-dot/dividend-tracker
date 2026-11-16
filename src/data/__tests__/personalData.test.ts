@@ -122,6 +122,11 @@ describe('normalizeInstruments（防御式解析）', () => {
     expect(minimal.extraWithholdingRate).toBe(0);
     expect(minimal.custodyChannel).toBe('CN_BROKER');
     expect(minimal.tags).toBeUndefined();
+
+    const [legacyHk] = normalizeInstruments([
+      { id: '00700.HK', symbol: '00700.HK', name: '腾讯控股', market: 'HK', currency: 'HKD' },
+    ]);
+    expect(legacyHk.custodyChannel).toBe('HK_LOCAL_BROKER');
   });
 
   it('缺 id / symbol / name / market / currency 的单条被剔除', () => {
@@ -302,7 +307,7 @@ describe('loadPersonalData（永不抛出，失败降级种子）', () => {
     expect(bundle.warnings.some((w) => w.includes('Unexpected token'))).toBe(true);
   });
 
-  it('默认请求 /data/holdings.json 带 default 缓存（遵循 _headers 的 max-age=3600）', async () => {
+  it('默认请求 /data/holdings.json 带 default 缓存（遵循托管端缓存规则）', async () => {
     const seen: { url: string; init: RequestInit }[] = [];
     const spy = (async (input: unknown, init?: RequestInit) => {
       seen.push({ url: String(input), init: init ?? {} });
@@ -436,7 +441,7 @@ describe('downloadHoldings（导出文本可回环解析）', () => {
     expect(roundTrip.instruments).toEqual(baseline.instruments);
   });
 
-  it('导出 → 归一化回环后内容不变（可直接提交回 public/data）', () => {
+  it('导出 → 归一化回环后内容不变（可作为私有备份重新导入）', () => {
     const roundTrip = normalizePersonalData(JSON.parse(downloadHoldings(baseline)));
     expect(roundTrip).toEqual(baseline);
   });

@@ -230,9 +230,9 @@ describe('enrichDividend（三态推导 + 回填偏差率）', () => {
         instrumentId: '000001.SZ',
         status: 'PAID',
         announceDate: '2026-01-01',
-        recordDate: '2026-01-15',
-        exDate: '2026-01-16',
-        payDate: '2026-01-20',
+        recordDate: '2026-05-15',
+        exDate: '2026-05-16',
+        payDate: '2026-05-20',
         payDateEstimated: false,
         perShareAmount: 0.5,
         currency: 'CNY',
@@ -247,7 +247,11 @@ describe('enrichDividend（三态推导 + 回填偏差率）', () => {
         manual: false,
         sourceKey: 'k',
       },
-      ctx(),
+      ctx({
+        lotsMap: new Map([
+          ['000001.SZ', [mkLot(addDays(TODAY, -100), 1000)]],
+        ]),
+      }),
     );
     expect(enriched.grossAmount).toBeCloseTo(500, 6);
     expect(enriched.taxRateApplied).toBeCloseTo(0.1, 6);
@@ -284,6 +288,37 @@ describe('enrichDividend（三态推导 + 回填偏差率）', () => {
     );
     // gross = 100；实际到账 95 → 偏差 -5%
     expect(enriched.deviationPct).toBeCloseTo(-0.05, 6);
+    // 已校准金额是到账事实，不应再按估算税率重复扣减。
+    expect(enriched.netAmount).toBe(95);
+  });
+
+  it('手工事件即使仍标为 PAID，也以实际到账作为净额真值', () => {
+    const enriched = enrichDividend(
+      {
+        id: 'manual-paid',
+        instrumentId: '000001.SZ',
+        status: 'PAID',
+        payDate: '2026-01-20',
+        payDateEstimated: false,
+        perShareAmount: 1,
+        currency: 'CNY',
+        quantityAtRecord: 100,
+        grossAmount: 0,
+        taxRateApplied: 0,
+        taxWithheld: 0,
+        contingentTax: 0,
+        netAmount: 0,
+        actualReceived: 93,
+        taxBracket: 'NONE',
+        dividendForm: 'CASH',
+        manual: true,
+        sourceKey: 'manual-transaction:tx-1',
+      },
+      ctx(),
+    );
+
+    expect(enriched.grossAmount).toBe(100);
+    expect(enriched.netAmount).toBe(93);
   });
 
   it('isPaidStatus 仅 PAID/RECONCILED 视为已到账', () => {

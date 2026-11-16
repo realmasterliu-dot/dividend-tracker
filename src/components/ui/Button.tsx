@@ -22,7 +22,7 @@ export function Button({ variant = 'outline', size = 'md', full, className, chil
     <button
       className={clsx(
         'inline-flex items-center justify-center gap-1.5 rounded-md transition-colors disabled:opacity-40 disabled:cursor-not-allowed',
-        size === 'sm' ? 'px-2 py-1 text-[12px]' : 'px-3 py-1.5 text-[13px]',
+        size === 'sm' ? 'min-h-9 px-3 py-1.5 text-[12px]' : 'min-h-11 px-4 py-2.5 text-[14px] sm:text-[13px]',
         variants[variant],
         full && 'w-full',
         className,

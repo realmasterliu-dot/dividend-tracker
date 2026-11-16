@@ -45,4 +45,13 @@ describe('币种换算（PRD §11.1 A5：CNY/USD 切换正确）', () => {
   it('HKD→CNY 使用独立汇率键', () => {
     expect(fxOn(FX, 'HKD', 'CNY', '2026-08-10')).toBeCloseTo(0.92, 6);
   });
+
+  it('HKD→USD 缺少直接报价时经 CNY 正确交叉换算', () => {
+    expect(latestFx(FX, 'HKD', 'USD')).toBeCloseTo(0.92 / 7.2, 6);
+    expect(fxOn(FX, 'HKD', 'USD', '2026-08-10')).toBeCloseTo(0.92 / 7.2, 6);
+  });
+
+  it('USD→HKD 缺少直接报价时使用反向交叉汇率', () => {
+    expect(latestFx(FX, 'USD', 'HKD')).toBeCloseTo(7.2 / 0.92, 6);
+  });
 });

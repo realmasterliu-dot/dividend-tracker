@@ -354,7 +354,7 @@ describe('loadMarketData（Promise.allSettled 单文件降级）', () => {
     expect(bundle.lastUpdated).toBe('2026-08-04T00:00:00Z');
   });
 
-  it('默认请求带 default 缓存（遵循 _headers 的 max-age=3600，首屏可命中浏览器缓存）', async () => {
+  it('默认请求带 default 缓存提示，由实际托管响应头决定是否命中', async () => {
     const seen: RequestInit[] = [];
     const spy = (async (input: unknown, init?: RequestInit) => {
       seen.push(init ?? {});
@@ -378,6 +378,16 @@ describe('loadMarketData（Promise.allSettled 单文件降级）', () => {
     await loadMarketData({ fetchImpl: spy, cache: 'no-cache' });
     expect(seen).toHaveLength(5);
     expect(seen.every((i) => i.cache === 'no-cache')).toBe(true);
+  });
+
+  it('单个请求长期不返回时按超时降级，不让启动无限等待', async () => {
+    const never = (() => new Promise<Response>(() => undefined)) as unknown as typeof fetch;
+    const startedAt = Date.now();
+    const bundle = await loadMarketData({ fetchImpl: never, timeoutMs: 10 });
+
+    expect(Date.now() - startedAt).toBeLessThan(500);
+    expect(bundle.warnings.filter((warning) => warning.includes('请求超时'))).toHaveLength(5);
+    expect(bundle.prices).toEqual([]);
   });
 });
 
@@ -669,8 +679,9 @@ describe('applyMarketData（覆盖市场切片 / 保留个人数据 / 重算通�
     expect(next.transactions).toBe(base.transactions);
     expect(next.plans).toBe(base.plans);
     expect(next.prices).toEqual([]);
-    // 手工录入的分红事件仍在
-    expect(next.dividends.map((d) => d.id)).toEqual(['manual-1']);
+    // 手工录入和已经校准过的管道分红都属于个人账本，管道临时全挂也不能丢。
+    expect(next.dividends.map((d) => d.id)).toEqual(['d1', 'manual-1']);
+    expect(next.dividends.find((d) => d.id === 'd1')?.actualReceived).toBe(480);
   });
 
   it('不修改传入的 base state（reducer 纯函数约束）', () => {

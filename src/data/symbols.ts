@@ -118,6 +118,25 @@ export const SYMBOL_INDEX: SymbolSuggestion[] = [
   { code: 'ETH', name: 'Ethereum', market: 'CRYPTO', currency: 'USD', securityType: 'CRYPTO', custodyChannel: 'CEX' },
 ];
 
+/**
+ * The bundled data pipeline currently refreshes only these instruments.
+ * Other symbols remain valid ledger entries, but their valuation falls back
+ * to cost until the pipeline is extended or a price is imported manually.
+ */
+const AUTOMATIC_MARKET_DATA_CODES = new Set([
+  '600519.SH',
+  '000001.SZ',
+  '00700.HK',
+  'AAPL',
+  '110011',
+  'BTC',
+  'AU99.99',
+]);
+
+export function hasAutomaticMarketData(code: string): boolean {
+  return AUTOMATIC_MARKET_DATA_CODES.has(code.trim().toUpperCase());
+}
+
 /** 匹配时忽略的交易所后缀（如 600519.SH → 600519） */
 const EXCHANGE_SUFFIX_RE = /\.(SH|SZ|HK)$/;
 
